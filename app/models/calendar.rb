@@ -4,4 +4,6 @@ class Calendar < ActiveRecord::Base
   has_many :users, through: :user_calendars
 
   belongs_to :owner, class_name: User.name
+
+  ATTRIBUTES_PARAMS = [:name, :description, :user_id]
 end

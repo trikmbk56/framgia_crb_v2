@@ -6,3 +6,9 @@ en:
     sign_out: "Sign out"
     edit: "Edit Profile"
     crb: "Conference Room Booking"
+  calendar:
+    create: "CREATE"
+    save: "Save"
+    success_calendar: "Calendar was created"
+    danger_calendar: "Create calendar was failed"
+    add: "Add"

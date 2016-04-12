@@ -1,0 +1,2 @@
+Fabricator :attendee do
+end

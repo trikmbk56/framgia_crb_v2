@@ -1,0 +1,6 @@
+en:
+  calendars:
+    delete_calendar: "Delete calendar"
+    deleted: "Calendar was deleted successfully."
+    not_deleted: "Calendar wasn't deleted successfully."
+    confirm_delete: "Are you sure to delete this calendar?"

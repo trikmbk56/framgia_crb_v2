@@ -20,6 +20,7 @@ gem "config"
 gem "devise"
 gem "cancancan"
 gem "kaminari"
+gem "jquery-ui-rails"
 
 group :development, :test do
   gem "pry"

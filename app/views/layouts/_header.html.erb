@@ -2,14 +2,15 @@
   <div id="logo">
     <p class="logo_left"><%= link_to t("layout.framgia_crb"), "#" %></p>
   </div>
-  
+
   <ul>
-    <% if user_signed_in? %>    
+    <% if user_signed_in? %>
       <li><%= link_to t("session.link.sign_out"), destroy_user_session_path,
         method: :delete %>
       </li>
-    <% else %>   
+      <li><%= link_to t("session.link.edit"), edit_user_registration_path %></li>
+    <% else %>
       <li><%= link_to t("layout.log_in"), new_user_session_path %></li>
-    <% end %>    
+    <% end %>
   </ul>
 </header>

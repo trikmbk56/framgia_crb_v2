@@ -9,6 +9,11 @@
     html: {method: :put} do |f| %>
     <%= devise_error_messages! %>
 
+    <div class="field" >
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-border-bottom" %>
+    </div>
+
     <div class="field">
       <%= f.label :email %><br/>
       <%= f.email_field :email, autofocus: true, class: "form-border-bottom" %>
@@ -45,14 +50,6 @@
   <% end %>
 
   <h3><%= t "devise.registrations.cancel_account" %></h3>
-
-  <p>
-    <%= t "devise.registrations.unhappy" %>
-    <%= button_to t("devise.registrations.cancel_account"),
-      registration_path(resource_name),
-      data: {confirm: t("devise.registrations.confirm_delete")},
-      method: :delete, class: "btn btn-danger" %>
-  </p>
 
   <%= link_to t("devise.registrations.back"), :back %>
 </div>

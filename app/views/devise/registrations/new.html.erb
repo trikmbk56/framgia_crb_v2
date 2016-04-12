@@ -5,6 +5,11 @@
     url: registration_path(resource_name) do |f| %>
     <%= devise_error_messages! %>
 
+    <div class="field" >
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-border-bottom" %>
+    </div>
+
     <div class="field">
       <%= f.label :email %><br/>
       <%= f.email_field :email, autofocus: true, class: "form-border-bottom" %>

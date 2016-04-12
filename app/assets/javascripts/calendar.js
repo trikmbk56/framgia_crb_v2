@@ -7,7 +7,20 @@ $(document).ready(function() {
     },
     defaultView: 'agendaWeek',
     businessHours: true,
-    editable: true
+    editable: true,
+    events: function(start, end, timezone, callback) {
+      $.ajax({
+        url: '/api/events',
+        dataType: 'json',
+        success: function(doc) {
+          var events = [];
+          events = doc.map(function(data) {
+            return {title: data.title, start: data.start_time, end: data.end_time}
+          });
+          callback(events);
+        }
+      });
+    }
   });
 
   $('#miniCalendar').datepicker({

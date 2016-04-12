@@ -12,4 +12,8 @@ Rails.application.routes.draw do
   end
   resources :calendars, only: [:index, :new, :create]
   resources :events, except: [:index, :destroy]
+
+  namespace :api do
+    resources :events, only: :index
+  end
 end

@@ -1,0 +1,8 @@
+<%= @user.name %><br/>
+<%= @user.email %><br/>
+<% @user.calendars.each do |calendar| %>
+  <%= link_to calendar.name, "#" %><br/>
+<% end %>
+<% @user.events.each do |event| %>
+  <%= link_to event.title, "#" %><br/>
+<% end %>

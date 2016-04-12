@@ -1,5 +1,4 @@
 <%= form_for @event do |f| %>
-  <%= f.hidden_field :user_id, value: current_user.id %>
   <div class="form-group">
     <%= f.label t "lables.title" %>
     <%= f.text_field :title, placeholder: t("placeholder.new_event"), autofocus: true %>

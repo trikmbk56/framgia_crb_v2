@@ -1,6 +1,7 @@
 en:
   flashs:
     created: "Event was created successfully."
+    updated: "Event was updated successfully."
   buttons:
     cancel: "Cancel"
     save: "Save"

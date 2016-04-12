@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :users, only: :show do
     resources :calendars
   end
+  resources :events, only: [:new, :create]
 end

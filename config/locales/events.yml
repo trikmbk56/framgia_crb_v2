@@ -1,0 +1,20 @@
+en:
+  flashs:
+    created: "Event was created successfully."
+  buttons:
+    cancel: "Cancel"
+    save: "Save"
+  lables:
+    attendees: "Attendees"
+    attachment: "Attachment"
+    calendar: "Calendar"
+    color: "Event color"
+    description: "Description"
+    finish_time: "Finish time"
+    room: "Room"
+    start_time: "Start time"
+    title: "Event title"
+  links:
+    add_attachment: "Add attachment"
+  placeholder:
+    new_event: "Untitled Event"

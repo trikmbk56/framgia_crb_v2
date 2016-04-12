@@ -1,7 +1,15 @@
 <header id="header">
+  <div id="logo">
+    <p class="logo_left"><%= link_to t("layout.framgia_crb"), "#" %></p>
+  </div>
+  
   <ul>
-    <li id="logo"><%= link_to t("layout.framgia_crb"), "#" %></li>
-    <li><%= link_to t("layout.sign_up"), "#" %></li>
-    <li><%= link_to t("layout.log_in"), "#" %></li>
+    <% if user_signed_in? %>    
+      <li><%= link_to t("session.link.sign_out"), destroy_user_session_path,
+        method: :delete %>
+      </li>
+    <% else %>   
+      <li><%= link_to t("layout.log_in"), new_user_session_path %></li>
+    <% end %>    
   </ul>
 </header>

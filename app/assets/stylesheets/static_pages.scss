@@ -5,29 +5,43 @@ body {
 
 #header {
   width: 100%;
+  background-color: #EFEDED;
   ul {
     border: 1px solid #e7e7e7;
-    background-color: #0AB8F2;
     margin: 0;
     padding: 0;
     overflow: hidden;
   }
   #logo {
     font-family: "Helvetica Neue", sans-serif;
-    font-size: 25px;
+    font-size: 28px;
     float: left;
     border-right: none;
+    width: 20%;
+    .logo_left {
+      margin: 10px 10px;
+      a {
+        text-decoration: none;
+        color: #0726AE;
+        font-weight: bold;
+        font-family: Book Antiqua, Palatino, serif;
+        &:hover {
+          color: #747070;
+        }
+      }
+    }
   }
   li {
     float: right;
     list-style-type: none;
-    font-size: 20px;
+    font-size: 14px;
     a {
       display: block;
       text-align: center;
       padding: 18px 16px;
       text-decoration: none;
       border-right: none;
+      color: #747070;
     }
   }
 }
@@ -44,5 +58,42 @@ body {
   background-color: #EFEDED;
   .text-muted {
     margin: 20px 20px;
+    font-size: 14px;
   }
+}
+
+.field {
+  margin-top: 20px;
+}
+
+.btn {
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #4790E3;
+}
+
+.btn-danger {
+  background-color: red;
+}
+
+.form-border-bottom {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #4790E3;
+}
+
+.col-md-6 {
+  width: 50%;
+}
+
+.col-md-offset-3 {
+  margin-left: 25%;
 }

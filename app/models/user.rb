@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :rememberable, :trackable, :validatable,
     :registerable
-  
+
   has_many :user_calendars, dependent: :destroy
   has_many :calendars, dependent: :destroy
   has_many :shared_calendars, through: :user_calendars, source: :calendar

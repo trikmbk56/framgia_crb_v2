@@ -1,0 +1,29 @@
+<div class="calcontent">
+  <div class="top-nav"></div>
+  <div class="mothertable" id="calendar">
+    <div class="left-nav">
+      <div class="button-create">
+        <div class="btn-group">
+          <%= link_to t("calendar.create"), "#", class: "btn btn-danger" %>
+          <button type="button" class="btn btn-danger dropdown-toggle create"
+            data-toggle="dropdown" aria-haspopup="true">
+            <span class="caret"></span>
+            <span class="sr-only"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><textarea></textarea>
+              <button type="button"><%= t "add" %></button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mini-calendar"></div>
+      <div class="my-calendar">
+        <% @calendars.each do |calendar| %>
+          <%= calendar.name %><br>
+        <% end %>
+      </div>
+      <div class="other-calendar"></div>
+    </div>
+    <div class="mainbody"></div>
+  </div>
+</div>

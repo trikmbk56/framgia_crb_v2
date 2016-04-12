@@ -9,4 +9,20 @@ class CalendarsController < ApplicationController
     end
     redirect_to user_calendars_path current_user
   end
+
+  def create
+    @calendar.user_id = current_user
+    if @calendar.save
+      flash[:success] = t "calendar.success_calendar"
+      redirect_to calendars_path
+    else
+      flash[:danger] = t "calendar.danger_calendar"
+      render :new
+    end
+  end
+
+  private
+  def calendar_params
+    params.require(:calendar).permit Calendar::ATTRIBUTES_PARAMS
+  end
 end

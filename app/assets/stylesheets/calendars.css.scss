@@ -1,18 +1,73 @@
-/* calendar */
+/*calendar index*/
 
-.mothertable {
-  margin-left: 40px;
-  margin-right: 40px;
-}
+#calcontent {
+  padding: 0;
+  div {
+    display: block;
+  }
 
-#calendar {
-  .left-nav {
-    width:200px;
-    float:left;
+  #vr-nav {
+    margin-top: 9px;
+    padding-bottom: 9px;
+    background: #fff;
+    border-bottom: 1px solid #ebebeb;
+    padding: 0 0 9px;
+    margin: 9px 0 0;
+    position: relative;
+  }
+
+  #nav {
+    margin-left: 30px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    margin: 0 0 0 30px;
+    width: 145px;
+    -moz-transition: all .218s;
+    -webkit-transition: all .218s;
+  }
+
+  #sidebar {
+    width: 145px;
+  }
+
+  #mothertable {
+    position: relative;
+  }
+
+  #sidebar {
+    padding-top: 9px;
+    padding: 9px 0 10px;
+    white-space: nowrap;
   }
 
   .mainbody {
-    margin-left: 5px;
+    margin-left: 184px;
+    padding-top: 9px;
+    -moz-transition: margin-left .218s;
+    -webkit-transition: margin-left .218s;
+  }
+
+  /*sidebar*/
+
+  .btn-group {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    .dropdown-toggle:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    .btn {
+      position: relative;
+      float: left;
+      &:first-child:not(:last-child):not(.dropdown-toggle) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
   }
 
   .caret {
@@ -66,18 +121,109 @@
       display: block;
     }
   }
+
+  /*my calendar*/
+
+  .calHeader {
+    line-height: 20px;
+    padding: 2px 0;
+    margin-left: -16px;
+    margin-right: -5px;
+    color: #222;
+    font-weight: normal;
+    line-height: 30px;
+    padding: 0;
+    position: relative;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px 5px 5px 10px;
+    zoom: 1;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+
+  h2 {
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .goog-zippy-collapsed .zippy-arrow {
+    background-position: -153px -81px;
+  }
+
+  .zippy-arrow {
+    display: -moz-inline-box;
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    line-height: 0;
+    vertical-align: middle;
+    background-image: url(//calendar.google.com/googlecalendar/images/combined_v46_vr.png);
+  }
+
+  .clstMenu {
+    background: url(//calendar.google.com/googlecalendar/images/combined_v46_vr.png) -217px 0;
+    border: 1px solid #b5b5b5;
+    border-radius: 1px;
+    height: 11px;
+    font-size: 1px;
+    overflow: hidden;
+    position: absolute;
+    right: 5px;
+    text-indent: -100px;
+    top: 10px;
+    width: 11px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+  }
+
+  /*clone sub my calendar */
+  .collapse.in {
+    display: block;
+  }
+
+  .collapse {
+    display: none;
+    ol, ul {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    li {
+      display: list-item;
+      text-align: -webkit-match-parent;
+    }
+    .list-group {
+      padding-left: 0;
+      margin-bottom: 20px;
+      .list-group-item {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #fff;
+      }
+    }
+  }
 }
 
 /* mini calendar */
 td {
-  font-size: 12px;
+  font-size: 10px;
 }
 th {
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .ui-datepicker-inline {
-  width: 166px !important;
+  width: 145px !important;
   display: block;
   border: none !important;
 }

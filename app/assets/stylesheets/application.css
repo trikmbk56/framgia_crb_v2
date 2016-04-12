@@ -14,4 +14,8 @@
  *= require_self
  *= require jquery-ui
  *= require fullcalendar
+ *= require calendars
+ *= require custom
+ *= require sessions
+ *= require static_pages
  */

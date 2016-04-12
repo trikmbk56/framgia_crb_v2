@@ -39,4 +39,12 @@ $(document).ready(function() {
       $(this).parent().addClass('open');
     };
   });
+
+  $('#clst_my').click(function(){
+    if ($('#collapse1').hasClass('in')){
+      $('#collapse1').removeClass('in')
+    } else{
+      $('#collapse1').addClass('in')
+    };
+  });
 });

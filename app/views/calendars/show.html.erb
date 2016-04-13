@@ -1,5 +1,10 @@
 <li><%= @calendar.name %></li>
 <li>
+  <%= link_to t("calendars.events.clear_all_events"),
+    user_calendar_destroy_events_path(current_user, @calendar), method: :delete,
+    data: {confirm: t("calendars.events.confirm_clear_all_events")} %>
+</li>
+<li>
   <%= link_to t("calendars.delete_calendar"), user_calendar_path(current_user, @calendar),
     method: :delete, data: {confirm: t("calendars.confirm_delete")} %>
 </li>

@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   resources :users, only: :show do
     resources :calendars
   end
-  resources :events, only: [:new, :create]
   resources :calendars, only: [:index, :new, :create]
+  resources :events, except: [:index, :destroy]
 end

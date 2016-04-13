@@ -5,6 +5,6 @@ class Ability
     user ||= User.new
     can :show, User, id: user.id
     can :manage, Calendar
-    can :create, Event
+    can :manage, Event
   end
 end

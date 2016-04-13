@@ -1,0 +1,8 @@
+<%= @event.title %><br/>
+<%= l @event.start_time, format: :date_format %></br/>
+<%= l @event.finish_time, format: :date_format %></br/>
+<%= @event.description %><br/>
+<%= @event.owner_name %><br/>
+<% @event.attendees.each do |attendee| %>
+  <%= attendee.user_name %>
+<% end %>

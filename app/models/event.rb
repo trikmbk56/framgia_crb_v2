@@ -7,4 +7,7 @@ class Event < ActiveRecord::Base
 
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :user_id,
     :calendar_id, :start_time, :finish_time]
+  belongs_to :owner, class_name: User.name, foreign_key: :user_id
+
+  delegate :name, to: :owner, prefix: :owner, allow_nil: true
 end

@@ -23,11 +23,11 @@ $(document).ready(function() {
     }
   });
 
-  $('#miniCalendar').datepicker({
+  $('#mini-calendar').datepicker({
     dateFormat: 'DD, d MM, yy',
       onSelect: function(dateText,dp){
-        $('#calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText)));
-        $('#calendar').fullCalendar('changeView','agendaDay');
+        $('#full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText)));
+        $('#full-calendar').fullCalendar('changeView','agendaWeek');
       }
   });
 

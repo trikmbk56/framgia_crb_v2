@@ -8,13 +8,13 @@ class EventsController < ApplicationController
     else
       render :new
     end
-    redirect_to events_path
+    redirect_to user_event_path current_user, @event
   end
 
   def update
     if @event.update_attributes event_params
       flash[:success] = t "flashs.updated"
-      redirect_to events_path
+      redirect_to user_event_path current_user, @event
     else
       render :edit
     end

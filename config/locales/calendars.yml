@@ -4,3 +4,8 @@ en:
     deleted: "Calendar was deleted successfully."
     not_deleted: "Calendar wasn't deleted successfully."
     confirm_delete: "Are you sure to delete this calendar?"
+    events:
+      clear_all_events: "Delete all events"
+      not_cleared_event: "Events weren't cleared successfully."
+      cleared_event: "Events were cleared successfully."
+      confirm_clear_all_events: "Are you sure to clear all events?"

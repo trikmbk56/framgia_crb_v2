@@ -52,7 +52,10 @@ en:
       confirm_delete: "Are you sure"
       back: "Back"
       sign_up: "Sign up"
+      create_account: "Create Your Calendar Account"
       minimum: "characters minimum"
+      need_account: "You just need to have an account"
+      access_service: "A free account gives you access to many services and products of Calendar."
     sessions:
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."

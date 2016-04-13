@@ -149,8 +149,21 @@ input[type=checkbox] {
   width: 25%;
 }
 
+.col-md-9 {
+  width: 75%;
+}
+
 .col-md-offset-5 {
   margin-left: 37.5%;
+}
+
+.col-md-offset-9 {
+  margin-left: 75%;
+}
+
+.col-md-right-3 {
+  margin-left: 75%;
+  width: 25%;
 }
 
 .center {

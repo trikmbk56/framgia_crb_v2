@@ -27,7 +27,7 @@ html, body {
       margin: 10px 10px;
       a {
         text-decoration: none;
-        color: #0726AE;
+        color: #337ab7;
         font-weight: bold;
         font-family: Book Antiqua, Palatino, serif;
         &:hover {
@@ -62,39 +62,4 @@ html, body {
     margin: 20px 20px;
     font-size: 14px;
   }
-}
-
-.field {
-  margin-top: 20px;
-}
-
-.btn {
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #4790E3;
-}
-
-.btn-danger {
-  background-color: red;
-}
-
-.form-border-bottom {
-  padding: 10px;
-  width: 100%;
-  border: none;
-  border-bottom: 2px solid #4790E3;
-}
-
-.col-md-6 {
-  width: 50%;
-}
-
-.col-md-offset-3 {
-  margin-left: 25%;
 }

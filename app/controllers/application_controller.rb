@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
     flash[:alert] = exception.message
     redirect_to root_path
   end
-
+  
+  private
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end

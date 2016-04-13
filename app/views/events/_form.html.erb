@@ -1,4 +1,4 @@
-<%= form_for @event do |f| %>
+<%= form_for [current_user, @event]  do |f| %>
   <div class="form-group">
     <%= f.label t "lables.title" %>
     <%= f.text_field :title, placeholder: t("placeholder.new_event"), autofocus: true %>

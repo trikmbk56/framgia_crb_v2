@@ -1,24 +1,30 @@
 en:
-  flashs:
-    created: "Event was created successfully."
-    updated: "Event was updated successfully."
-  buttons:
-    cancel: "Cancel"
-    save: "Save"
-  lables:
-    attendees: "Attendees"
-    attachment: "Attachment"
-    calendar: "Calendar"
-    color: "Event color"
-    description: "Description"
-    finish_time: "Finish time"
-    room: "Room"
-    start_time: "Start time"
-    title: "Event title"
-  links:
-    add_attachment: "Add attachment"
-  placeholder:
-    new_event: "Untitled Event"
-  time:
-    formats:
-      date_format: "%m/%d/%Y : %H %M"
+  events:
+    confirm:
+      delete: "Are you sure?"
+    flashs:
+      created: "Event was created successfully."
+      updated: "Event was updated successfully."
+      deleted: "Event deleted"
+      not_deleted: "Event wasn't delete."
+    buttons:
+      cancel: "Cancel"
+      delete: "Delete"
+      save: "Save"
+    lables:
+      attendees: "Attendees"
+      attachment: "Attachment"
+      calendar: "Calendar"
+      color: "Event color"
+      description: "Description"
+      finish_time: "Finish time"
+      room: "Room"
+      start_time: "Start time"
+      title: "Event title"
+    links:
+      add_attachment: "Add attachment"
+    placeholder:
+      new_event: "Untitled Event"
+    time:
+      formats:
+        date_format: "%m/%d/%Y %H:%M"

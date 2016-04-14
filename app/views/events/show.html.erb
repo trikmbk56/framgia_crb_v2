@@ -1,8 +1,13 @@
 <%= @event.title %><br/>
-<%= l @event.start_time, format: :date_format %></br/>
-<%= l @event.finish_time, format: :date_format %></br/>
+<%= l @event.start_time, format: t("events.time.formats.date_format") %></br/>
+<%= l @event.finish_time, format: t("events.time.formats.date_format") %></br/>
 <%= @event.description %><br/>
 <%= @event.owner_name %><br/>
 <% @event.attendees.each do |attendee| %>
   <%= attendee.user_name %>
 <% end %>
+<li>
+  <%= link_to t("events.buttons.delete"),
+    user_event_path(current_user, @event), method: :delete,
+    data: {confirm: t("events.confirm.delete")} %>
+</li>

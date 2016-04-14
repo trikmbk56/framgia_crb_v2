@@ -1,30 +1,30 @@
 <%= form_for [current_user, @event]  do |f| %>
   <div class="form-group">
-    <%= f.label t "lables.title" %>
-    <%= f.text_field :title, placeholder: t("placeholder.new_event"), autofocus: true %>
+    <%= f.label t "events.lables.title" %>
+    <%= f.text_field :title, placeholder: t("events.placeholder.new_event"), autofocus: true %>
   </div>
   <div class="form-group">
-    <%= f.label t "lables.start_time" %>
+    <%= f.label t "events.lables.start_time" %>
     <%= f.text_field :start_time %>
-    <%= f.label t "lables.finish_time" %>
+    <%= f.label t "events.lables.finish_time" %>
     <%= f.text_field :finish_time %>
   </div>
   <div class="form-group">
-    <%= f.label t "lables.calendar" %>
-    <%= f.collection_select(:calendar_id, Calendar.all, :id, :name) %>
+    <%= f.label t "events.lables.calendar" %>
+    <%= f.collection_select(:calendar_id, @calendars, :id, :name) %>
   </div>
   <div class="form-group">
-    <%= f.label t "lables.description" %>
+    <%= f.label t "events.lables.description" %>
     <%= f.text_area :description %>
   </div>
   <div class="form-group">
-    <%= f.label t "lables.attachment" %>
-    <%= link_to t("links.add_attachment"), "#" %>
+    <%= f.label t "events.lables.attachment" %>
+    <%= link_to t("events.links.add_attachment"), "#" %>
   </div>
   <div class="form-group">
-    <%= f.label t "lables.color" %>
+    <%= f.label t "events.lables.color" %>
     <%= f.text_field :color %>
   </div>
-  <%= f.submit t("buttons.save") %>
-  <%= link_to t("buttons.cancel"), "#" %>
+  <%= f.submit t("events.buttons.save") %>
+  <%= link_to t("events.buttons.cancel"), root_path, "data-no-turbolink": true %>
 <% end %>

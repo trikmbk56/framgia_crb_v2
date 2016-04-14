@@ -185,6 +185,12 @@
     -webkit-border-radius: 1px;
   }
 
+  .clstMenu-open {
+    background-position: -217px, -62px;
+    border-color: #666;
+    outline: none;
+  }
+
   /*clone sub my calendar */
   .collapse.in {
     display: block;

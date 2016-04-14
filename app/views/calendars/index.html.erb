@@ -4,7 +4,7 @@
     <div id="nav">
       <div id="sidebar">
         <div class="btn-group">
-          <%= link_to t("calendar.create"), new_user_event_path(current_user),
+          <%= link_to t("calendar.create_event"), new_user_event_path(current_user),
             class: "btn btn-danger" %>
           <button type="button" class="btn btn-danger dropdown-toggle create"
             data-toggle="dropdown" aria-haspopup="true">
@@ -31,10 +31,15 @@
         <div id="collapse1" class="panel-collapse collapse"
           aria-expanded="true">
           <ul class="list-group">
+            <li class="list-group-item">
+              <%= link_to t("calendar.create_calendar"),
+                new_user_calendar_path(current_user) %>
+            </li>
             <% @calendars.each do |calendar| %>
               <li class="list-group-item">
                 <%= calendar.name %>
-                <%= link_to t("calendar.edit"), "#" %>
+                <%= link_to t("calendar.edit"),
+                  edit_user_calendar_path(current_user, calendar) %>
               </li>
             <% end %>
           </ul>

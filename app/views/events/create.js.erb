@@ -1,0 +1,6 @@
+<% if @event.errors.any? %>
+  $("#error-messages").html("<%= j(render "shared/errors_messages", object: @event) %>");
+<% else %>
+  hiddenCreateEventDialog();
+<% end %>
+

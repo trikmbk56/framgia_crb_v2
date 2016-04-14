@@ -4,6 +4,7 @@ en:
       delete: "Are you sure?"
     flashs:
       created: "Event was created successfully."
+      not_created: "Event was't create."
       updated: "Event was updated successfully."
       deleted: "Event deleted"
       not_deleted: "Event wasn't delete."

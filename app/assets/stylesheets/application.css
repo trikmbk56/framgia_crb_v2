@@ -18,4 +18,6 @@
  *= require custom
  *= require sessions
  *= require static_pages
+ *= require select2
+ *= require select2-bootstrap
  */

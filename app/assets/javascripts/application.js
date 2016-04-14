@@ -19,3 +19,5 @@
 //= require calendar
 //= require i18n
 //= require i18n/translations
+//= require event
+//= require select2

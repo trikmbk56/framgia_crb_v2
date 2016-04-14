@@ -34,7 +34,9 @@ namespace :db do
         end_time_day = date_time.change({hour: 10})
         event = Fabricate :event, start_time: start_time_day,
           finish_time: end_time_day, calendar_id: calendar.id, user_id: user.id
-        Fabricate :attendee, user_id: 2, event_id: event.id
+        3.times do |j|
+          Fabricate :attendee, user_id: j + 1, event_id: event.id
+        end
       end
     end
   end

@@ -9,6 +9,7 @@ en:
       not_updated: "Event wasn't updated."
       deleted: "Event deleted"
       not_deleted: "Event wasn't delete."
+      delete_attendee: "Attendee deleted"
     buttons:
       cancel: "Cancel"
       delete: "Delete"
@@ -21,6 +22,7 @@ en:
       color: "Event color"
       description: "Description"
       finish_time: "Finish time"
+      owner_name: "Owner"
       room: "Room"
       start_time: "Start time"
       title: "Event title"

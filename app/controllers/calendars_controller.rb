@@ -4,11 +4,20 @@ class CalendarsController < ApplicationController
   def create
     @calendar.user_id = current_user
     if @calendar.save
-      flash[:success] = t "calendar.success_calendar"
+      flash[:success] = t "calendar.success_create"
       redirect_to root_path
     else
-      flash[:danger] = t "calendar.danger_calendar"
+      flash[:danger] = t "calendar.danger_create"
       render :new
+    end
+  end
+
+  def update
+    if @calendar.update_attributes calendar_params
+      flash[:success] = t "calendar.success_update"
+      redirect_to user_calendars_path current_user
+    else
+      render :edit
     end
   end
 

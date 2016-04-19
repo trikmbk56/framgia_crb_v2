@@ -15,6 +15,7 @@ en:
       delete: "Delete"
       save: "Save"
       edit: "Edit event"
+      go_back: "Back"
     lables:
       attendees: "Attendees"
       attachment: "Attachment"
@@ -26,6 +27,7 @@ en:
       room: "Room"
       start_time: "Start time"
       title: "Event title"
+      to: "to"
     links:
       add_attachment: "Add attachment"
     placeholder:
@@ -33,5 +35,8 @@ en:
     time:
       formats:
         date_format: "%m/%d/%Y %H:%M"
+        short_date: "%d-%m-%Y"
+        short_time: "%H:%M"
     popup:
       time_label: "Time"
+

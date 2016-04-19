@@ -11,4 +11,8 @@ module ApplicationHelper
       when :success then "alert-success"
     end
   end
+
+  def datetime_format object, format
+    object ? l(object, format: t("events.time.formats.#{format}")) : nil
+  end
 end

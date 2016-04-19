@@ -177,3 +177,104 @@
   width: 13px;
   position: absolute;
 }
+
+/* Create event new page */
+#event {
+  .form-action {
+    margin: 10px 10px 10px 0px;
+    border-bottom: 1px solid #ebebeb;
+    padding: 10px;
+    padding-top: 0px;
+  }
+
+  .form-group {
+    padding: 0 0 10px 10px;
+    width: 50%;
+  }
+
+  .form-control {
+    margin-top: 5px;
+  }
+
+  .btn {
+    padding: 6px 25px;
+  }
+
+  .btn-cancel {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #cccccc;
+    &:focus {
+      color: #333333;
+      background-color: #e6e6e6;
+      border-color: #8c8c8c;
+    }
+    &:hover {
+      color: #333333;
+      background-color: #e6e6e6;
+      border-color: #adadad;
+    }
+  }
+
+  select {
+    width: 97%;
+  }
+
+  .fix-width-date {
+    width: 75px;
+    display: inline-block;
+  }
+
+  .fix-width-time {
+    width: 48px;
+    display: inline-block;
+  }
+
+  textarea {
+    height: 50px;
+  }
+
+  label {
+    font-weight: bold;
+  }
+}
+
+.btn-go-back {
+  background: #f5f5f5;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#f1f1f1));
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #f1f1f1);
+  background-image: -moz-linear-gradient(top, #f5f5f5, #f1f1f1);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #f1f1f1);
+  background-image: -o-linear-gradient(top, #f5f5f5, #f1f1f1);
+  background-image: linear-gradient(top, #f5f5f5, #f1f1f1);
+  border: 1px solid #dcdcdc;
+  border: 1px solid rgba(0, 0 , 0 , 0.1);
+  border-radius: 2px;
+  color: #444;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: bold;
+  height: 27px;
+  line-height: 24px;
+  min-width: 54px;
+  outline: none;
+  padding: 6px 25px;
+  margin-right: 5px;
+  text-align: center;
+  transition: all .218s;
+  -moz-border-radius: 2px;
+  -moz-transition: all .218s;
+  -moz-user-select: none;
+  -o-transition: all .218s;
+  -webkit-border-radius: 2px;
+  -webkit-transition: all .218s;
+  -webkit-user-select: none;
+  i {
+    background: url(image_path("combined_v46_vr.png")) -106px -77px no-repeat;
+    display: inline-block;
+    height: 13px;
+    width: 15px;
+    vertical-align: middle;
+    opacity: .65;
+  }
+}

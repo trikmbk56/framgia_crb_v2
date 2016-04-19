@@ -22,3 +22,7 @@
 //= require event
 //= require select2
 //= require user
+//= require jquery.timepicker
+//= require datepair
+//= require jquery.datepair
+//= require event

@@ -6,4 +6,9 @@ class Api::EventsController < ApplicationController
     @data = @events.map{|event| event.json_data}
     render json: @data
   end
+
+  def destroy
+    @event = Event.find_by params[:id]
+    render text: @event.destroy ? t("events.flashs.deleted") : t("events.flashs.not_deleted")
+  end
 end

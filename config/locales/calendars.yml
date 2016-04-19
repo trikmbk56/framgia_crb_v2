@@ -9,3 +9,5 @@ en:
       not_cleared_event: "Events weren't cleared successfully."
       cleared_event: "Events were cleared successfully."
       confirm_clear_all_events: "Are you sure to clear all events?"
+      confirm_delete_event: "Are you sure delete event?"
+      alert_error_delete_event: "Can not delete event."

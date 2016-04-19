@@ -21,6 +21,7 @@ gem "devise"
 gem "cancancan"
 gem "kaminari"
 gem "jquery-ui-rails"
+gem "i18n-js", ">= 3.0.0.rc11"
 
 group :development, :test do
   gem "pry"

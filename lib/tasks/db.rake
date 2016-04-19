@@ -28,7 +28,7 @@ namespace :db do
       end
 
       puts "Creating event"
-      5.times do |i|
+      10.times do |i|
         date_time = DateTime.now + i.days
         start_time_day = date_time.change({hour: 8})
         end_time_day = date_time.change({hour: 10})

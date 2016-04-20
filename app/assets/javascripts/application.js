@@ -21,3 +21,4 @@
 //= require i18n/translations
 //= require event
 //= require select2
+//= require user

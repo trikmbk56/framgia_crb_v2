@@ -93,3 +93,61 @@
     }
   }
 }
+
+#update-profile {
+  margin-right: 100px;
+  .button {
+    margin-top: 20px;
+    .rc-button {
+      width: 30%;
+      float: right;
+    }
+  }
+
+  #change-profile-form {
+    margin: 30px 180px;
+    padding: 25px;
+    background: none repeat scroll 0% 0%;
+    border: 1px solid #E5E5E5;
+    width: 890px;
+    .form {
+      margin: 0 50px 0 150px;
+    }
+
+    .field-name {
+      position: absolute;
+      margin-top: 15px;
+    }
+
+    .update-button {
+      padding-right: 68px;
+    }
+  }
+
+  #my-modal {
+    .update-password {
+      padding-right: 65px;
+    }
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+  }
+}

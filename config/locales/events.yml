@@ -42,4 +42,12 @@ en:
         short_time: "%H:%M"
     popup:
       time_label: "Time"
+    dialog:
+      time: "When"
+      calendar: "Calendar"
+      event: "Event"
+      placeholder: "Event title"
+      title_error: "Invalid event title"
+      edit_event: "Edit event"
+      create_event: "Create event"
 

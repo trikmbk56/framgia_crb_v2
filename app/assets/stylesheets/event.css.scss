@@ -28,7 +28,6 @@
   font-size: 13px;
   clear: both;
   position: relative;
-  line-height: 60px;
 }
 
 .period-tile {
@@ -44,6 +43,12 @@
   color: #9b9b9b;
   font-size: 11px;
   font-weight: bold;
+}
+
+.error-title {
+  color: red;
+  line-height: 18px;
+  height: 18px;
 }
 
 .event-time {
@@ -168,6 +173,14 @@
   outline: 0 none transparent;
 }
 
+.button-edit {
+  background-color: #4CAF50;
+  background-image: -moz-linear-gradient(center top, #4d90fe, #4787ed);
+  border: 1px solid #4CAF50;
+  box-shadow: none;
+  color: #fff;
+}
+
 .bubble-close {
   background: url(image_path("combined_v46_vr.png")) -228px -48px;
   cursor: pointer;
@@ -178,7 +191,30 @@
   position: absolute;
 }
 
-/* Create event new page */
+.prong-dk {
+  border: 9px solid;
+  border-color: #ccc transparent;
+}
+
+.prong-dk, .prong-lt {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.prong-lt {
+  border: 8px solid;
+  border-color: #fff transparent;
+  left: 1px;
+}
+
+.no-prong, .top-prong, .bottom-prong {
+    position: absolute;
+    height: 9px;
+    width: 18px;
+    overflow: hidden;
+}
+
 #event {
   .form-action {
     margin: 10px 10px 10px 0px;

@@ -1,21 +1,17 @@
-$(document).ready(function() {
+$(document).on('page:change', function() {
   var start_date, finish_date, event_title;
 
   $('#full-calendar').fullCalendar({
     header: {
-      left: 'today prev,next',
+      left: 'prev,next today',
       center: 'title',
-      right: 'agendaDay,agendaWeek,agendaFourDay,month'
+      right: 'month,agendaWeek,agendaFourDay,agendaDay'
     },
     views: {
       agendaFourDay: {
         type: 'agenda',
         duration: {days: 4},
         buttonText: '4 days'
-      },
-      timetable: {
-        type: 'custom',
-        buttonText: 'Time table',
       }
     },
     defaultView: 'agendaWeek',
@@ -46,30 +42,27 @@ $(document).ready(function() {
       });
     },
     eventClick: function(event, jsEvent, view) {
-      $('#popup').offset({left: jsEvent.pageX-200, top: jsEvent.pageY});
-      $('#popup').css('visibility', 'visible');
-      popupOriginal();
-      if(event.title == '')
-        $('#title-popup').html(I18n.t('calendars.events.no_title'));
-      else
-        $('#title-popup').html(event.title);
-      var time_format = 'MMMM Do YYYY, h:mm a';
-      var time = event.start.format(time_format) + ' - ' +
-        event.end.format(time_format);
-      $('#time-event-popup').html(time);
-      var edit_url = '/users/' + $('#current-user-id-popup').html() +
-       '/events/' + event.id + '/edit';
-      $('#btn-edit-event').attr('href', edit_url);
+      initDialogEventClick(event);
+      dialogCordinate(jsEvent, 'popup', 'prong-popup');
+      hiddenDialog('new-event-dialog');
+      showDialog('popup');
+      unSelectCalendar();
       deleteEventPopup(event);
       clickEditTitle(event);
     },
     dayClick: function(date, jsEvent, view) {
-      showCreateEventDialog(date, date, jsEvent, true);
       setDateTime(date, date);
+      initDialogCreateEvent(date, date, true);
+      dialogCordinate(jsEvent, 'new-event-dialog', 'prong');
+      hiddenDialog('popup');
+      showDialog('new-event-dialog');
     },
     select: function(start, end, jsEvent) {
-      showCreateEventDialog(start, end, jsEvent, false);
       setDateTime(start, end);
+      initDialogCreateEvent(start, end, false);
+      dialogCordinate(jsEvent, 'new-event-dialog', 'prong');
+      hiddenDialog('popup');
+      showDialog('new-event-dialog');
     },
     eventResize: function(event, delta, revertFunc) {
       updateEvent(event);
@@ -78,6 +71,17 @@ $(document).ready(function() {
       updateEvent(event);
     }
   });
+
+  function initDialogEventClick(event) {
+    if(event.title == '')
+      $('#title-popup').html(I18n.t('calendars.events.no_title'));
+    else
+      $('#title-popup').html(event.title);
+    $('#time-event-popup').html(eventDateTimeFormat(event.start, event.end, false));
+    var edit_url = '/users/' + $('#current-user-id-popup').html() +
+     '/events/' + event.id + '/edit';
+    $('#btn-edit-event').attr('href', edit_url);
+  }
 
   function clickEditTitle(event) {
     $('#title-popup').click(function() {
@@ -94,7 +98,8 @@ $(document).ready(function() {
 
   function updateEventPopup(event) {
     $('#btn-save-event').click(function() {
-      $('#popup').css('visibility', 'hidden');
+      hiddenDialog('popup');
+      url = '/api/events/' + event.id;
       if(event.title == '')
         event.title = I18n.t('calendars.events.no_title');
       updateEvent(event);
@@ -104,10 +109,9 @@ $(document).ready(function() {
   function deleteEventPopup(event) {
     $('#btn-delete-event').unbind('click');
     $('#btn-delete-event').click(function() {
-      $('#popup').css('visibility', 'hidden');
+      hiddenDialog('popup');
       var temp = confirm(I18n.t('calendars.events.confirm_delete_event'));
-      if (temp === true)
-        {
+      if (temp === true) {
           $('#full-calendar').fullCalendar('removeEvents', event.id);
           url = '/api/events/' + event.id
           $.ajax({
@@ -123,8 +127,7 @@ $(document).ready(function() {
   }
 
   $('.cancel-popup-event').click(function() {
-    $('#popup').css('visibility', 'hidden');
-    $('#title-input-popup').val('');
+    hiddenDialog('popup');
   });
 
   function popupOriginal() {
@@ -188,52 +191,83 @@ $(document).ready(function() {
       && !$(event.target).closest('#event-popup').hasClass('dropdown-menu')){
       $('#source-popup').removeClass('open');
     }
+
+    if (($(event.target).closest('#new-event-dialog').length == 0)
+      && ($(event.target).closest('.fc-body').length == 0)) {
+      hiddenDialog('new-event-dialog');
+    }
+
+    if (($(event.target).closest('#popup').length == 0)
+      && ($(event.target).closest('.fc-body').length == 0)) {
+      hiddenDialog('popup');
+    }
   });
 
   $('#bubble-close').click(function() {
-    $('#full-calendar').fullCalendar('unselect');
-    hiddenCreateEventDialog();
+    unSelectCalendar();
+    hiddenDialog('new-event-dialog');
   });
 
-  function showCreateEventDialog(start, end, jsEvent, dayClick) {
-    var dialog = $('#new-event-dialog');
+  function dialogCordinate(jsEvent, dialogId, prongId) {
+    var dialog = $('#' + dialogId);
     var dialogW = $(dialog).width();
     var dialogH = $(dialog).height();
     var windowW = $(window).width();
     var windowH = $(window).height();
     var xCordinate, yCordinate;
+    var prongRotateX, prongXCordinate, prongYCordinate;
 
-    if(jsEvent.pageX - dialogW/2 < 0) {
-      xCordinate = jsEvent.pageX - dialogW/2;
-    } else if(windowW - jsEvent.pageX < dialogW/2) {
-      xCordinate = windowW - 2 * dialogW/2;
+    if(jsEvent.clientX - dialogW/2 < 0) {
+      xCordinate = jsEvent.clientX - dialogW/2;
+    } else if(windowW - jsEvent.clientX < dialogW/2) {
+      xCordinate = windowW - 2 * dialogW/2 - 10;
     } else {
-      xCordinate = jsEvent.pageX - dialogW/2;
+      xCordinate = jsEvent.clientX - dialogW/2;
     }
 
-    if(jsEvent.pageY - dialogH < 0) {
-      yCordinate = jsEvent.pageY + 10;
+    if(jsEvent.clientY - dialogH < 0) {
+      yCordinate = jsEvent.clientY + 20;
+      prongRotateX = 180;
+      prongYCordinate = -9;
     } else {
-      yCordinate = jsEvent.pageY - dialogH - 10;
+      yCordinate = jsEvent.clientY - dialogH - 20;
+      prongRotateX = 0;
+      prongYCordinate = dialogH;
     }
 
-    $(dialog).css({'top':yCordinate, 'left':xCordinate});
+    prongXCordinate = jsEvent.clientX - xCordinate - 10;
 
+    $(dialog).css({'top': yCordinate, 'left': xCordinate});
+    $('#' + prongId).css({
+      'top': prongYCordinate,
+      'left': prongXCordinate,
+      'transform': 'rotateX(' + prongRotateX + 'deg)'
+    });
+  }
+
+  function initDialogCreateEvent(start, end, dayClick) {
+    var title = $('#event-title');
+    $(title).focus();
+    $(title).val('');
     $('#start-time').val(dateTimeFormat(start, dayClick));
     $('#finish-time').val(dateTimeFormat(end, dayClick));
     $('.event-time').text(eventDateTimeFormat(start, end, dayClick));
+  }
 
+  function showDialog(dialogId) {
+    var dialog = $('#' + dialogId);
     $(dialog).removeClass('dialog-hidden');
     $(dialog).addClass('dialog-visible');
   }
 
-  hiddenCreateEventDialog = function() {
-    var dialog = $('#new-event-dialog');
+  hiddenDialog = function(dialogId) {
+    var dialog = $('#' + dialogId);
     $(dialog).addClass('dialog-hidden');
     $(dialog).removeClass('dialog-visible');
-    $('#event-title').val('');
-    $('#start-time').val('');
-    $('#finish-time').val('')
+  }
+
+  function unSelectCalendar() {
+    $('#full-calendar').fullCalendar('unselect');
   }
 
   $('#new-event-btn').on('click', function(event) {
@@ -245,17 +279,20 @@ $(document).ready(function() {
       type: 'POST',
       dataType: 'script',
       data: $(form).serialize(),
-      success: function(data) {
-        var eventData;
-        eventData = {
-          title: event_title,
-          start: start_date,
-          end: finish_date
-        };
-        $('#full-calendar').fullCalendar('renderEvent', eventData, true);
-        $('#full-calendar').fullCalendar('unselect');
-      }
+      success: function(data) {}
     });
+  });
+
+  $('#edit-event-btn').on('click', function(event) {
+    event.preventDefault();
+    var form =  $('#new_event');
+    var url = $(form).attr('action') + '/new';
+    var data = $(form).serialize();
+    window.location.href = url + '?data='+ data;
+  });
+
+  $('#event-title').click(function(event) {
+    $('.error-title').text('');
   });
 
   function setDateTime(start, end) {
@@ -263,12 +300,12 @@ $(document).ready(function() {
     finish_date = end;
   }
 
-  function eventDateTimeFormat(startDate, endDate, dayClick) {
+  function eventDateTimeFormat(startDate, finishDate, dayClick) {
     if (dayClick) {
       return startDate.format('dddd DD-MM-YYYY');
     } else {
       return startDate.format('dddd') + ' ' + startDate.format('H:mm A') + ' To '
-        + endDate.format('H:mm A') + ' ' + startDate.format('DD-MM-YYYY');
+        + finishDate.format('H:mm A') + ' ' + startDate.format('DD-MM-YYYY');
     }
   }
 

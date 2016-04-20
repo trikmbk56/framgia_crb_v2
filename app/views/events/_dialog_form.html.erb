@@ -3,7 +3,7 @@
     <div id="bubble-close" class="bubble-close"></div>
     <div id="bubbleContent" class="bubblecontent">
       <div class="tab-container">
-        <div class="tab-labels"><a class="tab-label e active">Event</a>
+        <div class="tab-labels"><a class="tab-label e active"><%= t "events.dialog.event" %></a>
         </div>
         <div class="tab-content">
           <%= form_for [current_user, @event], remote: true do |f| %>
@@ -12,18 +12,19 @@
             <div class="state-container">
               <div class="tab-panel e active">
                 <div class="tile-content">
-                  <%= f.text_field :title, id: "event-title", class: "gcal-textinput", placeholder: "visit uncle" %>
+                  <%= f.text_field :title, id: "event-title", class: "gcal-textinput",
+                    placeholder: t("events.dialog.placeholder"), required: true %>
+                  <div class="error-title"></div>
                 </div>
                 <div class="tile period-tile">
                   <div class="tile-label">
-                    <label>When</label>
+                    <label><%= t "events.dialog.time" %></label>
                   </div>
-                  <div class="tile-content event-time">
-                  </div>
+                  <div class="tile-content event-time"></div>
                 </div>
                 <div class="select-calendar tile select-tile">
                   <div class="tile-label">
-                    <label>Calendar</label>
+                    <label><%= t "events.dialog.calendar" %></label>
                   </div>
                   <div class="calendar-container tile-content">
                     <div>
@@ -35,7 +36,8 @@
                 </div>
                 <div class="action">
                   <div class="right-actions">
-                    <%= f.submit id: "new-event-btn", class: "button button-action" %>
+                    <button id="edit-event-btn" class="button button-edit"><%= t "events.dialog.edit_event" %></button>
+                    <button id="new-event-btn", class="button button-action"><%= t "events.dialog.create_event" %></button>
                   </div>
                 </div>
               </div>
@@ -43,6 +45,10 @@
           <% end %>
         </div>
       </div>
+    </div>
+    <div id="prong" class="bottom-prong">
+      <div class="prong-dk"></div>
+      <div class="prong-lt"></div>
     </div>
   </div>
 </div>

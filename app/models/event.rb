@@ -9,6 +9,10 @@ class Event < ActiveRecord::Base
   belongs_to :calendar
   belongs_to :owner, class_name: User.name, foreign_key: :user_id
 
+  validates :start_date, presence: true
+  validates :finish_date, presence: true
+  validates :title, presence: true
+
   delegate :name, to: :owner, prefix: :owner, allow_nil: true
 
   scope :my_events, ->user_id do

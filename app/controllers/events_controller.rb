@@ -1,7 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
   before_action :load_calendars, only: [:new, :edit]
-  before_action :format_date, only: [:create, :update]
   before_action :load_attendees, only: [:new, :edit, :show]
 
   def show
@@ -16,10 +15,12 @@ class EventsController < ApplicationController
         format.html do
           redirect_to user_event_path current_user, @event
         end
-        format.js
+        format.js {@data = @event.json_data}
       else
         flash[:error] = t "events.flashs.not_created"
-        format.html render :new
+        format.html do
+          redirect_to new_user_event_path current_user
+        end
         format.js
       end
     end

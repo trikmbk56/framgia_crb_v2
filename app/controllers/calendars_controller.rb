@@ -1,6 +1,11 @@
 class CalendarsController < ApplicationController
   load_and_authorize_resource
 
+  def index
+    @calendars = current_user.calendars
+    @event = Event.new
+  end
+
   def create
     @calendar.user_id = current_user
     if @calendar.save

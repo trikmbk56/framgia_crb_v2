@@ -1,0 +1,48 @@
+<div id = "new-event-dialog" class="dialog dialog-hidden">
+  <div class="bubblemain">
+    <div id="bubble-close" class="bubble-close"></div>
+    <div id="bubbleContent" class="bubblecontent">
+      <div class="tab-container">
+        <div class="tab-labels"><a class="tab-label e active">Event</a>
+        </div>
+        <div class="tab-content">
+          <%= form_for [current_user, @event], remote: true do |f| %>
+            <%= f.hidden_field :start_time, id: "start-time" %>
+            <%= f.hidden_field :finish_time, id: "finish-time" %>
+            <div class="state-container">
+              <div class="tab-panel e active">
+                <div class="tile-content">
+                  <%= f.text_field :title, id: "event-title", class: "gcal-textinput", placeholder: "visit uncle" %>
+                </div>
+                <div class="tile period-tile">
+                  <div class="tile-label">
+                    <label>When</label>
+                  </div>
+                  <div class="tile-content event-time">
+                  </div>
+                </div>
+                <div class="select-calendar tile select-tile">
+                  <div class="tile-label">
+                    <label>Calendar</label>
+                  </div>
+                  <div class="calendar-container tile-content">
+                    <div>
+                      <%= f.select :calendar_id,
+                        options_for_select(@calendars.collect{|calendar| [calendar.name, calendar.id]}),
+                        {}, {class: "goog-flat-menu-button gcalSelect"} %>
+                    </div>
+                  </div>
+                </div>
+                <div class="action">
+                  <div class="right-actions">
+                    <%= f.submit id: "new-event-btn", class: "button button-action" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

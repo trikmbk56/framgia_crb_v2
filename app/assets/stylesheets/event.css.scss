@@ -1,0 +1,179 @@
+.dialog {
+  z-index: 1001;
+  width: 400px;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.dialog-visible {
+  visibility: visible;
+}
+
+.dialog-hidden {
+  visibility: hidden;
+  top: 0;
+}
+
+.bubblemain {
+  outline: medium none;
+  padding: 16px;
+  position: relative;
+}
+
+.tile-content {
+  color: #1b1b1b;
+  font-family: Arial;
+  font-size: 13px;
+  clear: both;
+  position: relative;
+  line-height: 60px;
+}
+
+.period-tile {
+  color: #1b1b1b;
+  font-family: Arial;
+  font-size: 13px;
+  clear: both;
+}
+
+.tile-label {
+  height: 18px;
+  line-height: 18px;
+  color: #9b9b9b;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.event-time {
+  line-height: 24px;
+}
+
+.gcal-textinput, UNUSED.gcal-contenteditable-textinput.textarea {
+  box-sizing: border-box;
+  color: #1b1b1b;
+  padding: 3px;
+  width: 100%;
+}
+
+.action {
+    color: #1b1b1b;
+    font-family: Arial;
+    font-size: 13px;
+    clear: both;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    line-height: 30px;
+    .right-actions {
+      display: inline-block;
+      float: right;
+      margin-right: -16px;
+    }
+}
+
+.select-calendar {
+  color: #1b1b1b;
+  font-family: Arial;
+  font-size: 13px;
+  clear: both;
+  .title-label {
+    height: 18px;
+    line-height: 18px;
+    color: #9b9b9b;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .calendar-container {
+    height: 36px;
+    line-height: 36px;
+    position: relative;
+    div {
+      position: absolute;
+      width: 100%;
+      line-height: initial;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+      select {
+        box-sizing: border-box;
+        color: #1b1b1b;
+        padding: 3px;
+        width: 100%;
+      }
+    }
+  }
+  .gcalSelect.goog-flat-menu-button {
+    background-color: #fff;
+    background-image: none;
+  }
+  .gcalSelect {
+    display: inline-block;
+    padding-left: 0;
+    position: relative;
+  }
+}
+
+.tab-container .tab-label {
+  cursor: pointer;
+}
+
+.tab-container .tab-label {
+  border-right: 1px solid #999;
+  color: black;
+  margin-left: 1ex;
+  padding-right: 1ex;
+}
+
+.tab-container .tab-label:first-child {
+  margin-left: 0;
+}
+
+.tab-container .tab-label:last-child {
+  border-right: medium none;
+  padding-right: 0;
+}
+
+.tab-container .tab-label.active {
+  font-weight: bold;
+}
+
+.button {
+  border-radius: 2px;
+  cursor: default;
+  font-size: 11px;
+  font-weight: bold;
+  height: 27px;
+  line-height: 27px;
+  margin-right: 16px;
+  min-width: 54px;
+  outline: 0 none;
+  padding: 0 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.button-action {
+  background-color: #4d90fe;
+  background-image: -moz-linear-gradient(center top, #4d90fe, #4787ed);
+  border: 1px solid #3079ed;
+  box-shadow: none;
+  color: #fff;
+}
+
+.button-action:focus {
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 1px #fff inset;
+  outline: 0 none transparent;
+}
+
+.bubble-close {
+  background: url(image_path("combined_v46_vr.png")) -228px -48px;
+  cursor: pointer;
+  height: 13px;
+  right: 16px;
+  top: 16px;
+  width: 13px;
+  position: absolute;
+}

@@ -9,12 +9,19 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.build event_params
-    if @event.save
-      flash[:success] = t "events.flashs.created"
-    else
-      render :new
+    respond_to do |format|
+      if @event.save
+        flash[:success] = t "events.flashs.created"
+        format.html do
+          redirect_to user_event_path current_user, @event
+        end
+        format.js
+      else
+        flash[:error] = t "events.flashs.not_created"
+        format.html render :new
+        format.js
+      end
     end
-    redirect_to user_event_path current_user, @event
   end
 
   def update

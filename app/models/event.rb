@@ -17,6 +17,7 @@ class Event < ActiveRecord::Base
 
   def json_data
     {
+      id: id,
       title: title,
       start_time: format_datetime(start_time),
       end_time: format_datetime(finish_time)

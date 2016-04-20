@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
-  #root "static_pages#index"
-  root "calendars#index"
+  root "static_pages#index"
   devise_for :users
   resources :users, only: :show do
     resources :calendars do
@@ -11,6 +10,6 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :events, only: :index
+    resources :events, only: [:index, :destroy]
   end
 end

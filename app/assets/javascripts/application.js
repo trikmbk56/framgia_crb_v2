@@ -17,3 +17,5 @@
 //= require moment.min
 //= require fullcalendar
 //= require calendar
+//= require i18n
+//= require i18n/translations

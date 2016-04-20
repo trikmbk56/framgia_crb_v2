@@ -25,6 +25,7 @@ config/settings/test.yml
 config/environments/*.local.yml
 .DS_Store
 /.idea
-
+app/assets/javascripts/i18n/translations.js
 # Ignore application configuration
 /config/application.yml
+

@@ -1,6 +1,7 @@
 /*calendar index*/
 
 #calcontent {
+  z-index: 1000;
   padding: 0;
   div {
     display: block;
@@ -315,4 +316,15 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
 #miniCalendar {
   float: left;
+}
+
+/*pupup*/
+#popup {
+  background-color: white;
+  width: 400px;
+  height: 223px;
+  visibility: hidden;
+  border: 1px solid;
+  position: absolute;
+  z-index: 1001;
 }

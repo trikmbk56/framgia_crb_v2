@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     resources :calendars do
       resource :destroy_events, only: :destroy
     end
-    resources :events, except: :index
+    resources :events, except: :index do
+      resources :attendees, only: :destroy
+    end
   end
 
   namespace :api do

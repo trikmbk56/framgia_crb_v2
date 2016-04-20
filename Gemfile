@@ -22,6 +22,7 @@ gem "cancancan"
 gem "kaminari"
 gem "jquery-ui-rails"
 gem "i18n-js", ">= 3.0.0.rc11"
+gem "select2-rails"
 
 group :development, :test do
   gem "pry"

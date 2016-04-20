@@ -2,6 +2,11 @@ class EventsController < ApplicationController
   load_and_authorize_resource
   before_action :load_calendars, only: [:new, :edit]
 
+  def new
+    @event.attendees.build
+    @users = User.all
+  end
+
   def create
     @event = current_user.events.build event_params
     if @event.save

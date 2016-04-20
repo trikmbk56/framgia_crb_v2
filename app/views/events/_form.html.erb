@@ -17,6 +17,13 @@
     <%= f.label t "events.lables.description" %>
     <%= f.text_area :description %>
   </div>
+
+  <div class="form-group">
+    <%= f.label :attendee %>
+    <%= f.select :attendee_ids, @users.collect {|user| [user.name, user.id]}, {},
+      {id: "attendee", multiple: :true} %>
+  </div>
+
   <div class="form-group">
     <%= f.label t "events.lables.attachment" %>
     <%= link_to t("events.links.add_attachment"), "#" %>

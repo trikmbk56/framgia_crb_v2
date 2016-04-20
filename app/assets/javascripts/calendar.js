@@ -3,9 +3,9 @@ $(document).ready(function() {
 
   $('#full-calendar').fullCalendar({
     header: {
-      left: 'prev,next today',
+      left: 'today prev,next',
       center: 'title',
-      right: 'month,agendaWeek,agendaFourDay,agendaDay'
+      right: 'agendaDay,agendaWeek,agendaFourDay,month'
     },
     views: {
       agendaFourDay: {
@@ -139,6 +139,12 @@ $(document).ready(function() {
     $('.data-none-display').css('display', 'none');
   }
 
+  $('.fc-prev-button, .fc-next-button, .fc-today-button').click(function() {
+    var moment = $('#full-calendar').fullCalendar('getDate');
+    $('#mini-calendar').datepicker();
+    $('#mini-calendar').datepicker('setDate', new Date(moment.format('MM/DD/YYYY')));
+  });
+
   $('#mini-calendar').datepicker({
     dateFormat: 'DD, d MM, yy',
       onSelect: function(dateText,dp) {
@@ -157,11 +163,18 @@ $(document).ready(function() {
   });
 
   $('#clst_my').click(function() {
-    if ($('#collapse1').hasClass('in')) {
+    if ($('#collapse1').hasClass('in')){
       $('#collapse1').removeClass('in')
     } else{
       $('#collapse1').addClass('in')
     };
+  });
+
+  $(document).click(function() {
+    if (!$(event.target).hasClass('create')
+      && !$(event.target).closest('#event-popup').hasClass('dropdown-menu')){
+      $('#source-popup').removeClass('open');
+    }
   });
 
   $('#bubble-close').click(function() {

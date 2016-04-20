@@ -1,12 +1,32 @@
 <div id="popup">
+  <div id="current-user-id-popup" hidden><%= current_user.id %></div>
   <div id="head-popup">
-    <div id="title"></div>
+    <div class="title-popup-wap" >
+      <div id="color-event"></div>
+      <input id="title-input-popup" class="title-popup data-none-display">
+      <div id="title-popup" class="title-popup data-display"></div>
+      <div class="close-popup cancel-popup-event"></div>
+    </div>
   </div>
-  <div id="data">
-
+  <div id="data-popup" class="content-popup">
+    <div id="time-data">
+      <label class="time-label"><%= t "events.popup.time_label" %></label>
+      <span id="time-event-popup"></span>
+    </div>
   </div>
   <div id="footer-popup">
-    <button id="btn-delete-event"><%= t "events.buttons.delete" %></button>
+    <button id="btn-delete-event" class="btn data-display">
+      <%= t "events.buttons.delete" %>
+    </button>
+    <button class="btn data-none-display cancel-popup-event">
+      <%= t "events.buttons.cancel" %>
+    </button>
+    <a id="btn-edit-event" class="btn data-display btn-right ">
+      <%= t "events.buttons.edit" %>
+    </a>
+    <button id="btn-save-event" class="btn data-none-display btn-right ">
+      <%= t "events.buttons.save" %>
+    </button>
   </div>
 </div>
 

@@ -22,22 +22,64 @@ $(document).ready(function() {
         }
       });
     },
-    eventClick: function(events, jsEvent, view) {
+    eventClick: function(event, jsEvent, view) {
       $('#popup').offset({left: jsEvent.pageX-200, top: jsEvent.pageY});
       $('#popup').css('visibility', 'visible');
-      deleteEventPopup(events);
+      popupOriginal();
+      $('#title-popup').html(event.title);
+      var time_format = 'MMMM Do YYYY, h:mm a';
+      var time = event.start.format(time_format) + ' - ' +
+        event.end.format(time_format);
+      $('#time-event-popup').html(time);
+      var edit_url = '/users/' + $('#current-user-id-popup').html() +
+       '/events/' + event.id + '/edit';
+      $('#btn-edit-event').attr('href', edit_url);
+      deleteEventPopup(event);
+      clickEditTitle(event);
     },
   });
 
-  function deleteEventPopup(events) {
+  function clickEditTitle(event) {
+    $('#title-popup').click(function() {
+      $('.data-display').css('display', 'none');
+      $('.data-none-display').css('display', 'inline-block');
+      $('#title-input-popup').val(event.title);
+      $('#title-input-popup').unbind('change');
+      $('#title-input-popup').on('change', function(e) {
+        event.title = e.target.value;
+      });
+      updateEventPopup(event);
+    });
+  }
+
+  function updateEventPopup(event) {
+    $('#btn-save-event').click(function() {
+      $('#popup').css('visibility', 'hidden');
+      url = '/api/events/' + event.id
+      $.ajax({
+        url: url,
+        data: {title: event.title},
+        type: 'PUT',
+        dataType: 'text',
+        success: function(text) {
+          $('#full-calendar').fullCalendar('updateEvent', event);
+        },
+        error: function(text) {
+          alert(text);
+        }
+      });
+    });
+  }
+
+  function deleteEventPopup(event) {
     $('#btn-delete-event').unbind('click');
     $('#btn-delete-event').click(function() {
       $('#popup').css('visibility', 'hidden');
       var temp = confirm(I18n.t('calendars.events.confirm_delete_event'));
       if (temp === true)
         {
-          $('#full-calendar').fullCalendar('removeEvents', events.id);
-          url = '/api/events/' + events.id
+          $('#full-calendar').fullCalendar('removeEvents', event.id);
+          url = '/api/events/' + event.id
           $.ajax({
             url: url,
             type: 'DELETE',
@@ -49,6 +91,16 @@ $(document).ready(function() {
         }
     });
   }
+
+  function popupOriginal() {
+    $('#title-input-popup').val('');
+    $('.data-display').css('display', 'inline-block');
+    $('.data-none-display').css('display', 'none');
+  }
+
+  $('.cancel-popup-event').click(function() {
+    $('#popup').css('visibility', 'hidden');
+  });
 
   $('#mini-calendar').datepicker({
     dateFormat: 'DD, d MM, yy',

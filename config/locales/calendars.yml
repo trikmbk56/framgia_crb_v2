@@ -11,3 +11,4 @@ en:
       confirm_clear_all_events: "Are you sure to clear all events?"
       confirm_delete_event: "Are you sure delete event?"
       alert_error_delete_event: "Can not delete event."
+      no_title: "No title"

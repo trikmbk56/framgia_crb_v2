@@ -49,7 +49,10 @@ $(document).ready(function() {
       $('#popup').offset({left: jsEvent.pageX-200, top: jsEvent.pageY});
       $('#popup').css('visibility', 'visible');
       popupOriginal();
-      $('#title-popup').html(event.title);
+      if(event.title == '')
+        $('#title-popup').html(I18n.t('calendars.events.no_title'));
+      else
+        $('#title-popup').html(event.title);
       var time_format = 'MMMM Do YYYY, h:mm a';
       var time = event.start.format(time_format) + ' - ' +
         event.end.format(time_format);
@@ -87,6 +90,8 @@ $(document).ready(function() {
     $('#btn-save-event').click(function() {
       $('#popup').css('visibility', 'hidden');
       url = '/api/events/' + event.id
+      if(event.title == '')
+        event.title = I18n.t('calendars.events.no_title');
       $.ajax({
         url: url,
         data: {title: event.title},
@@ -123,15 +128,16 @@ $(document).ready(function() {
     });
   }
 
+  $('.cancel-popup-event').click(function() {
+    $('#popup').css('visibility', 'hidden');
+    $('#title-input-popup').val('');
+  });
+
   function popupOriginal() {
     $('#title-input-popup').val('');
     $('.data-display').css('display', 'inline-block');
     $('.data-none-display').css('display', 'none');
   }
-
-  $('.cancel-popup-event').click(function() {
-    $('#popup').css('visibility', 'hidden');
-  });
 
   $('#mini-calendar').datepicker({
     dateFormat: 'DD, d MM, yy',

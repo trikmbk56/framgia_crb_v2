@@ -5,12 +5,14 @@ en:
     flashs:
       created: "Event was created successfully."
       updated: "Event was updated successfully."
+      not_updated: "Event wasn't updated."
       deleted: "Event deleted"
       not_deleted: "Event wasn't delete."
     buttons:
       cancel: "Cancel"
       delete: "Delete"
       save: "Save"
+      edit: "Edit event"
     lables:
       attendees: "Attendees"
       attachment: "Attachment"
@@ -28,3 +30,5 @@ en:
     time:
       formats:
         date_format: "%m/%d/%Y %H:%M"
+    popup:
+      time_label: "Time"

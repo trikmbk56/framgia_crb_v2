@@ -7,8 +7,15 @@ class Api::EventsController < ApplicationController
     render json: @data
   end
 
+  def update
+    @event = Event.find_by id: params[:id]
+    render text: @event.update_attributes(title: params[:title]) ? 
+      t("events.flashs.updated") : t("events.flashs.not_updated")
+  end
+
   def destroy
-    @event = Event.find_by params[:id]
-    render text: @event.destroy ? t("events.flashs.deleted") : t("events.flashs.not_deleted")
+    @event = Event.find_by id: params[:id]
+    render text: @event.destroy ? 
+      t("events.flashs.deleted") : t("events.flashs.not_deleted")
   end
 end

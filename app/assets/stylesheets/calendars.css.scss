@@ -320,11 +320,87 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
 /*pupup*/
 #popup {
+  padding: 16px;
   background-color: white;
   width: 400px;
-  height: 223px;
   visibility: hidden;
-  border: 1px solid;
+  box-shadow: 0 3px 2px 3px rgba(0, 0, 0, 0.2);
   position: absolute;
   z-index: 1001;
+  .time-label {
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    color: #9b9b9b
+  }
+
+  #title-popup {
+    color: #373AD7;
+    font-size: 15px;
+    font-weight: bold;
+    width: 335px;
+    overflow: hidden;
+    padding: 0px 5px;
+    &:hover {
+      background-color: #f1f1f1
+    }
+  }
+
+  #title-input-popup {
+    font-size: 15px;
+    width: 335px;
+    input {
+      width: 100%;
+    }
+  }
+  
+  #time-event-popup {
+    font-size: 13px;
+  }
+
+  .btn {
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 0px 10px;
+    background-color: #f5f5f5;
+    &:hover {
+      background-color: #e6e6e6;
+      border-color: #adadad;
+    }
+  }
+
+  .btn-right {
+    color: white;
+    float: right;
+    background-color: #4d90fe;
+    &:hover {
+      background-color: #286090;
+      border-color: #204d74;
+    }
+  }
+
+  .data-none-display {
+    display: none;
+  }
+
+  .data-display {
+    display: inline-block;
+  }
+
+  .close-popup {
+    background: url(//calendar.google.com/googlecalendar/images/combined_v46_vr.png) -228px -48px;
+    cursor: pointer;
+    height: 13px;
+    right: 16px;
+    top: 16px;
+    width: 13px;
+    position: absolute;
+    display: inline-block;
+  }
+  #footer-popup {
+    margin-top: 40px;
+  }
 }

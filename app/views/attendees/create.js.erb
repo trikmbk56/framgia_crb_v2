@@ -1,0 +1,4 @@
+$("#new_attendee").unbind("ajax:success");
+$("#new_attendee").bind("ajax:success", function(){
+  $(".event").append("<li><%= @attendee.user_name %></li>")
+});

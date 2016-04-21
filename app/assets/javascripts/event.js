@@ -9,6 +9,7 @@ $(document).on('page:change', function(){
     theme: 'bootstrap',
     tokenSeparators: [',', ' ']
   });
+  $('#add_attendee').select2();
 
   $('#dateTime .time').timepicker({
     timeFormat: 'g:ia',

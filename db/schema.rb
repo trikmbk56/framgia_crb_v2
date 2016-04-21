@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20160411062223) do
     t.datetime "updated_at",           null: false
   end
 
+  add_index "attendees", ["user_id", "event_id"], name: "index_attendees_on_user_id_and_event_id", unique: true, using: :btree
+
   create_table "calendars", force: :cascade do |t|
     t.integer  "user_id",     limit: 4
     t.string   "name",        limit: 255

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       resources :attendees, only: :destroy
     end
   end
-
+  resources :attendees
   namespace :api do
     resources :events, only: [:index, :destroy, :update]
   end

@@ -32,6 +32,9 @@ en:
       add_attachment: "Add attachment"
     placeholder:
       new_event: "Untitled Event"
+    attendee:
+      add_attendee: "Add Attendee"
+      success: "Add attendee successfully"
     time:
       formats:
         date_format: "%m/%d/%Y %H:%M"

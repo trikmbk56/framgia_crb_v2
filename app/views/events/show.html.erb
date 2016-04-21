@@ -3,15 +3,23 @@
 <%= l @event.finish_date, format: t("events.time.formats.date_format") %></br/>
 <%= @event.description %><br/>
 <%= @event.owner_name %><br/>
-<% @event.attendees.each do |attendee| %>
-  <li>
-    <%= attendee.user_name %>
-    <%= link_to t("events.buttons.delete"),
+
+<%= form_for @attendee, remote: true do |f| %>
+  <%= f.hidden_field :event_id, value: @event.id %>
+  <%= f.select :user_id, @users.collect{ |a| [a.name, a.id] }, {}, {id: "add_attendee"} %>
+  <%= f.submit t "events.attendee.add_attendee" %>
+<% end %>
+<div class="event" >
+  <% @event.attendees.each do |attendee| %>
+    <li>
+      <%= attendee.user_name %>
+      <%= link_to t("events.buttons.delete"),
       user_event_attendee_path(current_user, @event, attendee),
       method: :delete, data: {confirm: t("events.confirm.delete")},
       remote: true, class: "delete_attendee" %>
-  </li>
-<% end %>
+    </li>
+  <% end %>
+</div>
 <li>
   <%= link_to t("events.buttons.delete"),
     user_event_path(current_user, @event), method: :delete,

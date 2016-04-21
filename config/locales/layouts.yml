@@ -2,10 +2,11 @@ en:
   layout:
     sign_up: "Sign up"
     log_in: "Log in"
-    framgia_crb: "FramgiaCRB"
+    framgia_crb: "CRB"
     sign_out: "Sign out"
     edit: "Edit Profile"
     crb: "Conference Room Booking"
+    calendar-logo: "Calendar"
   calendar:
     create_event: "CREATE"
     save: "Save"
@@ -16,3 +17,5 @@ en:
     edit: "edit"
     success_update: "Calendar was updated"
     create_calendar: "Create Calendar"
+    example: "Example: Dinner with Michael 7pm tomorrow"
+    quick_add: "Quick Add"

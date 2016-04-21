@@ -33,8 +33,9 @@
 <div id="calcontent">
   <div id="mothertable">
     <div id="nav">
+      <div class="logo"><%= t "layout.calendar-logo" %></div>
       <div id="sidebar">
-        <div class="btn-group">
+        <div class="btn-group" id="source-popup">
           <%= link_to t("calendar.create_event"), new_user_event_path(current_user),
             class: "btn btn-danger" %>
           <button type="button" class="btn btn-danger dropdown-toggle create"
@@ -42,10 +43,16 @@
             <span class="caret"></span>
             <span class="sr-only"></span>
           </button>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" id="event-popup">
             <li>
-              <textarea></textarea>
-              <button type="button"><%= t "add" %></button>
+              <div class="qab-container gcal-popup">
+                <label><%= t "calendar.quick_add" %></label>
+                <textarea ></textarea>
+                <div class="btn-quick-add">
+                  <%= link_to t("calendar.add"), "#" %>
+                </div>
+                <p><%= t "calendar.example" %></p>
+              </div>
             </li>
           </ul>
         </div>

@@ -11,7 +11,7 @@ html, body {
 #header {
   width: 100%;
   background-color: #EFEDED;
-  height: 10%;
+  height: 44px;
   ul {
     margin: 0;
     padding: 0;
@@ -25,11 +25,12 @@ html, body {
     width: 20%;
     .logo_left {
       margin: 10px 10px;
+      padding-left: 20px;
       a {
         text-decoration: none;
         color: #337ab7;
         font-weight: bold;
-        font-family: Book Antiqua, Palatino, serif;
+        font-family: Book Antiqua, Palatino, sans-serif;
         &:hover {
           color: #747070;
         }

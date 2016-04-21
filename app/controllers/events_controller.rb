@@ -1,7 +1,6 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
   before_action :load_calendars, only: [:new, :edit]
-  before_action :format_date, only: [:create, :update]
   before_action :load_attendees, only: [:new, :edit]
 
   def show
@@ -55,14 +54,5 @@ class EventsController < ApplicationController
   def load_attendees
     @event.attendees.build
     @users = User.all
-  end
-
-  def format_date
-    start_time = params[:start_time]
-    finish_time = params[:finish_time]
-    start_date = params[:start_date]
-    finish_date = params[:finish_date]
-    params[:event][:start_date] = "#{start_date} #{start_time}".to_datetime
-    params[:event][:finish_date] = "#{finish_date} #{finish_time}".to_datetime
   end
 end

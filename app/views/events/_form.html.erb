@@ -18,14 +18,14 @@
       <%= f.hidden_field :start_date %>
       <%= f.hidden_field :finish_date %>
       <%= text_field_tag :start_date, datetime_format(@event.start_date, "short_date"),
-        class: "date start form-control fix-width-date" %>
+        class: "date start form-control fix-width-date date-time" %>
       <%= text_field_tag :start_time, datetime_format(@event.start_date, "short_time"),
-        class: "time start form-control fix-width-time" %>
+        class: "time start form-control fix-width-time date-time" %>
       <%= f.label t "events.lables.to" %>
       <%= text_field_tag :finish_time, datetime_format(@event.finish_date, "short_time"),
-        class: "time finish form-control fix-width-time" %>
+        class: "time finish form-control fix-width-time date-time" %>
       <%= text_field_tag :finish_date, datetime_format(@event.finish_date, "short_date"),
-        class: "date finish form-control fix-width-date" %>
+        class: "date finish form-control fix-width-date date-time" %>
     </div>
     <div class="form-group">
       <%= f.label t "events.lables.calendar" %>

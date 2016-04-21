@@ -164,8 +164,7 @@ $(document).on('page:change', function() {
   $('#mini-calendar').datepicker({
     dateFormat: 'DD, d MM, yy',
       onSelect: function(dateText,dp) {
-        $('#full-calendar').fullCalendar('gotoDate',new Date(Date.parse(dateText)));
-        $('#full-calendar').fullCalendar('changeView','agendaWeek');
+        $('#full-calendar').fullCalendar('gotoDate', new Date(Date.parse(dateText)));
       }
   });
 
@@ -178,11 +177,23 @@ $(document).on('page:change', function() {
     };
   });
 
+  $('.caret').click(function() {
+    if ($(this).closest('div').hasClass('open')) {
+      $(this).closest('div').removeClass('open');
+    }
+    else{
+      $(this).closest('div').addClass('open');
+      event.stopPropagation();
+    };
+  });
+
   $('#clst_my').click(function() {
-    if ($('#collapse1').hasClass('in')){
+    if ($('#collapse1').hasClass('in')) {
       $('#collapse1').removeClass('in')
+      $('.zippy-arrow').css({'background-position': '-153px -81px'});
     } else{
       $('#collapse1').addClass('in')
+      $('.zippy-arrow').css({'background-position': '-141px -81px'});
     };
   });
 
@@ -201,6 +212,82 @@ $(document).on('page:change', function() {
       && ($(event.target).closest('.fc-body').length == 0)) {
       hiddenDialog('popup');
     }
+  });
+
+  $(document).keydown(function(e) {
+    if (e.keyCode == 27) {
+      $('#source-popup').removeClass('open');
+      $('#sub-menu-my-calendar, #menu-of-calendar').removeClass('sub-menu-visible');
+      $('#sub-menu-my-calendar, #menu-of-calendar').addClass('sub-menu-hidden');
+      $('.list-group-item').removeClass('background-hover');
+    }
+  });
+
+  $('#title-event-value').bind('keypress keydown keyup change', function() {
+    var title = $('#title-event-value').val();
+    var user_id = $('#current-user-id-popup').html();
+    var edit_link = 'users/' + user_id.toString()
+      + '/events/new?event%5Btitle%5D=' + title.toString();
+    $('#link-to-event').attr('href', edit_link);
+  });
+
+  $('#clst_my_menu').click(function() {
+    var position = $('#clst_my_menu').offset();
+    $('#menu-of-calendar').removeClass('sub-menu-visible');
+    $('#menu-of-calendar').addClass('sub-menu-hidden');
+    $('#source-popup').removeClass('open');
+    $('#sub-menu-my-calendar').css({'top': position.top + 13, 'left': position.left});
+    if ($('#sub-menu-my-calendar').hasClass('sub-menu-visible')){
+      $('#sub-menu-my-calendar').removeClass('sub-menu-visible');
+      $('#sub-menu-my-calendar').addClass('sub-menu-hidden');
+    } else{
+      $('#sub-menu-my-calendar').removeClass('sub-menu-hidden');
+      $('#sub-menu-my-calendar').addClass('sub-menu-visible');
+    };
+    event.stopPropagation();
+  });
+
+  $(document).click(function() {
+    $('#sub-menu-my-calendar').removeClass('sub-menu-visible');
+    $('#sub-menu-my-calendar').addClass('sub-menu-hidden');
+    if (!$(event.target).hasClass('clstMenu-child')) {
+      $('#menu-of-calendar').removeClass('sub-menu-visible');
+      $('#menu-of-calendar').addClass('sub-menu-hidden');
+    };
+    if ($('#menu-of-calendar').hasClass('sub-menu-hidden')) {
+      $('.list-group-item').removeClass('background-hover');
+    };
+  });
+
+  $('.clstMenu-child').click(function() {
+    var windowH = $(window).height();
+    var position = $(this).offset();
+    $('#id-of-calendar').html($(this).attr('id'));
+    var menu_height = $('#menu-of-calendar').height();
+    if ((position.top + 12 + menu_height) >= windowH ) {
+      $('#menu-of-calendar').
+        css({'top': position.top - menu_height - 2, 'left': position.left});
+    }else {
+      $('#menu-of-calendar').
+        css({'top': position.top + 12, 'left': position.left});
+    };
+    if ($('#menu-of-calendar').hasClass('sub-menu-visible')) {
+      $('#menu-of-calendar').removeClass('sub-menu-visible');
+      $('#menu-of-calendar').addClass('sub-menu-hidden');
+      $(this).parent().removeClass('background-hover');
+    } else{
+      $('#menu-of-calendar').removeClass('sub-menu-hidden');
+      $('#menu-of-calendar').addClass('sub-menu-visible');
+      $(this).parent().addClass('background-hover');
+    };
+  });
+
+  $('#edit-calendar').click(function() {
+    var id_calendar = $('#id-of-calendar').html();
+    var user_id = $('#current-user-id-popup').html();
+    var edit_link = 'users/' + user_id.toString()
+      + '/calendars/' + id_calendar.toString() + '/edit';
+    $('#edit-calendar').attr('href', edit_link);
   });
 
   $('#bubble-close').click(function() {

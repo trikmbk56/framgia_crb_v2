@@ -20,3 +20,13 @@ en:
     create_calendar: "Create Calendar"
     example: "Example: Dinner with Michael 7pm tomorrow"
     quick_add: "Quick Add"
+    sub_menu:
+      create_calendar: "Create new calendar"
+      setting: "Settings"
+      display: "Display on this Calendar"
+      calendar_setting: "Calendar Settings"
+      view_trash: "View Trash"
+      create_event_on_calendar: "Create event on this calendar"
+      share_calendar: "Share this Calendar"
+      edit_notification: "Edit notifications"
+

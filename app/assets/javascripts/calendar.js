@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var start_time, end_time, event_title;
+  var start_date, finish_date, event_title;
 
   $('#full-calendar').fullCalendar({
     header: {
@@ -38,8 +38,8 @@ $(document).ready(function() {
         success: function(doc) {
           var events = [];
           events = doc.map(function(data) {
-            return {title: data.title, start: data.start_time,
-              end: data.end_time, id: data.id}
+            return {title: data.title, start: data.start_date,
+              end: data.finish_date, id: data.id}
           });
           callback(events);
         }
@@ -70,6 +70,12 @@ $(document).ready(function() {
     select: function(start, end, jsEvent) {
       showCreateEventDialog(start, end, jsEvent, false);
       setDateTime(start, end);
+    },
+    eventResize: function(event, delta, revertFunc) {
+      updateEvent(event);
+    },
+    eventDrop: function(event, delta, revertFunc) {
+      updateEvent(event);
     }
   });
 
@@ -89,21 +95,9 @@ $(document).ready(function() {
   function updateEventPopup(event) {
     $('#btn-save-event').click(function() {
       $('#popup').css('visibility', 'hidden');
-      url = '/api/events/' + event.id
       if(event.title == '')
         event.title = I18n.t('calendars.events.no_title');
-      $.ajax({
-        url: url,
-        data: {title: event.title},
-        type: 'PUT',
-        dataType: 'text',
-        success: function(text) {
-          $('#full-calendar').fullCalendar('updateEvent', event);
-        },
-        error: function(text) {
-          alert(text);
-        }
-      });
+      updateEvent(event);
     });
   }
 
@@ -137,6 +131,25 @@ $(document).ready(function() {
     $('#title-input-popup').val('');
     $('.data-display').css('display', 'inline-block');
     $('.data-none-display').css('display', 'none');
+  }
+
+  function updateEvent(event){
+    setDateTime(event.start, event.end);
+    var id = event.id;
+    url = '/api/events/' + id;
+    $.ajax({
+      url: url,
+      data: {
+        title: event.title,
+        start: start_date.format(),
+        end: finish_date.format()
+      },
+      type: 'PUT',
+      dataType: 'text',
+      success: function(text) {
+        $('#full-calendar').fullCalendar('updateEvent', event);
+      }
+    });
   }
 
   $('.fc-prev-button, .fc-next-button, .fc-today-button').click(function() {
@@ -236,8 +249,8 @@ $(document).ready(function() {
         var eventData;
         eventData = {
           title: event_title,
-          start: start_time,
-          end: end_time
+          start: start_date,
+          end: finish_date
         };
         $('#full-calendar').fullCalendar('renderEvent', eventData, true);
         $('#full-calendar').fullCalendar('unselect');
@@ -246,16 +259,16 @@ $(document).ready(function() {
   });
 
   function setDateTime(start, end) {
-    start_time = start;
-    end_time = end;
+    start_date = start;
+    finish_date = end;
   }
 
-  function eventDateTimeFormat(startTime, endTime, dayClick) {
+  function eventDateTimeFormat(startDate, endDate, dayClick) {
     if (dayClick) {
-      return startTime.format('dddd DD-MM-YYYY');
+      return startDate.format('dddd DD-MM-YYYY');
     } else {
-      return startTime.format('dddd') + ' ' + startTime.format('H:mm A') + ' To '
-        + endTime.format('H:mm A') + ' ' + startTime.format('DD-MM-YYYY');
+      return startDate.format('dddd') + ' ' + startDate.format('H:mm A') + ' To '
+        + endDate.format('H:mm A') + ' ' + startDate.format('DD-MM-YYYY');
     }
   }
 

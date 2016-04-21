@@ -21,7 +21,7 @@ class Event < ActiveRecord::Base
       id: id,
       title: title,
       start_date: format_datetime(start_date),
-      end_date: format_datetime(finish_date)
+      finish_date: format_datetime(finish_date)
     }
   end
 

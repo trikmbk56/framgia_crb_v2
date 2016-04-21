@@ -14,10 +14,11 @@
  *= require jquery-ui
  *= require fullcalendar
  *= require calendars
+ *= require event
  *= require custom
  *= require sessions
  *= require static_pages
  *= require select2
  *= require select2-bootstrap
- *= require event
+ *= require jquery.timepicker
  */

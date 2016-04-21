@@ -9,8 +9,8 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :repeat_every
       t.references :user
       t.references :calendar
-      t.datetime :start_time
-      t.datetime :finish_time
+      t.datetime :start_date
+      t.datetime :finish_date
       t.datetime :end_time
 
       t.timestamps null: false

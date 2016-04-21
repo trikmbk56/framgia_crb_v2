@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
 
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :user_id,
-    :calendar_id, :start_time, :finish_time, attendee_ids: []]
+    :calendar_id, :start_date, :finish_date, attendee_ids: []]
 
   has_many :attendees, dependent: :destroy
   has_many :users, through: :attendees
@@ -20,8 +20,8 @@ class Event < ActiveRecord::Base
     {
       id: id,
       title: title,
-      start_time: format_datetime(start_time),
-      end_time: format_datetime(finish_time)
+      start_date: format_datetime(start_date),
+      end_date: format_datetime(finish_date)
     }
   end
 

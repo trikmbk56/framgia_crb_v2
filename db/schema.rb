@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20160411062223) do
     t.integer  "repeat_every", limit: 4
     t.integer  "user_id",      limit: 4
     t.integer  "calendar_id",  limit: 4
-    t.datetime "start_time"
-    t.datetime "finish_time"
+    t.datetime "start_date"
+    t.datetime "finish_date"
     t.datetime "end_time"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false

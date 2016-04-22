@@ -1,8 +1,46 @@
-<%= @user.email %><br/>
-<%= @user.name %>
-<% @user.calendars.each do |calendar| %>
-  <%= link_to calendar.name, "#" %><br/>
-<% end %>
-<% @user.events.each do |event| %>
-  <%= link_to event.title, "#" %><br/>
-<% end %>
+<div class="user-info-body">
+  <div class="u-title">
+    <h2><%= t "user.info.title" %></h2>
+  </div>
+  <div class="u-content">
+    <div class="col col-1">
+      <div class="user-info ">
+        <div class="u-avatar"><%= get_avatar current_user %></div>
+        <div class="u-name">
+          <h3><%=link_to @user.name, edit_user_registration_path %></h3>
+        </div>
+        <div class="u-email">
+          <b><%= t "user.info.email" %></b>
+          <i><%= @user.email %><br/></i>
+        </div>
+      </div>
+      <div class="u-calendar">
+        <h4 class="x-title"><%= t "user.info.calendars.title" %></h4>
+        <ul class="list-unstyled user_data">
+          <% @user.calendars.each do |calendar| %>
+            <li>
+              <label class="checkbox-calendar">
+                <%= check_box_tag "checkbox-calendar", calendar.id,
+                  true, class: "calendar-checkbox" %>
+                <%= calendar.name %>
+              </label>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="user-events col col-2">
+      <h3 class="x-title"><%= t "user.info.events.title" %></h3>
+      <div class="event-content"> 
+        <ul id="event-list-id">
+          <%= render "event", events: @events, user: @user %>
+        </ul>
+      </div>
+      <div class="event-load">
+        <button id="load-more-event" class="btn-load" rel="1">
+          <%= t "user.info.events.button" %>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

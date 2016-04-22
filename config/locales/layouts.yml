@@ -7,6 +7,7 @@ en:
     edit: "Edit Profile"
     crb: "Conference Room Booking"
     calendar-logo: "Calendar"
+    show: "Profile"
   calendar:
     create_event: "CREATE"
     save: "Save"

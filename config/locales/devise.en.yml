@@ -1,6 +1,18 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 en:
+  user:
+    info:
+      title: "User's Information"
+      email: "Email: "
+      calendars:
+        title: "Calendars"
+      events:
+        title: "Upcoming events"
+        start: "Begin"
+        finish: "until"
+        button: "Load more"
+        calendar: "Calendar: "
   devise:
     confirmations:
       confirmed: "Your email address has been successfully confirmed."

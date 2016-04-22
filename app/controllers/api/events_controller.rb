@@ -2,9 +2,19 @@ class Api::EventsController < ApplicationController
   respond_to :json
 
   def index
-    @events = current_user.events
-    @data = @events.map{|event| event.json_data}
-    render json: @data
+    if params[:page].present? || params[:calendar_id]
+      @data = current_user.events.upcoming_event(params[:calendar_id]).
+        page(params[:page]).per Settings.users.upcoming_event
+      respond_to do |format|
+        format.html {
+          render partial: "users/event", locals: {events: @data, user: current_user}
+        }
+      end
+    else
+      @events = current_user.events
+      @data = @events.map{|event| event.json_data}
+      render json: @data
+    end
   end
 
   def update

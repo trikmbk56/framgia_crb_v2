@@ -1,13 +1,21 @@
 <%= form_for [current_user, @calendar] do |f| %>
-  <div>
+  <div class="form-action">
+    <%= link_to root_path, title: t("events.buttons.go_back"),
+      "data-no-turbolink": true, class: "btn-go-back" do %>
+      <i class="go-back"></i>
+    <% end %>
+    <%= f.submit t("events.buttons.save"), class: "btn btn-primary" %>
+    <%= link_to t("events.buttons.cancel"), root_path, class: "btn btn-default",
+      "data-no-turbolink": true %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name, required: true %>
+    <%= f.text_field :name, required: true, class: "form-control" %>
   </div>
-  <div>
+  
+  <div class="form-group" >
     <%= f.label :description %>
-    <%= f.text_area :description, required: true %>
-  </div>
-  <div>
-    <%= f.submit t "calendar.save" %>
+    <%= f.text_area :description, required: true, class: "form-control" %>
   </div>
 <% end %>

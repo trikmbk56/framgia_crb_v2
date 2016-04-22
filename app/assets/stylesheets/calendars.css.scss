@@ -444,3 +444,17 @@ span.ui-icon.ui-icon-circle-triangle-e {
     margin-top: 40px;
   }
 }
+
+#calendar-form {
+  .form-action {
+    margin: 10px 10px 10px 0px;
+    border-bottom: 1px solid #ebebeb;
+    padding: 10px;
+    padding-top: 0px;
+  }
+
+  .form-group {
+    padding: 0 0 10px 10px;
+    width: 50%;
+  }
+}

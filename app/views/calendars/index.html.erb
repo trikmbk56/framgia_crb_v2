@@ -26,6 +26,12 @@
         </div>
       </div>
       <div class="mini-calendar">
+        <h2 id="title-mini-calendar" class="calHeader goog-zippy-collapsed">
+          <div class="hover-my-calendar">
+            <span class="h zippy-arrow-mini-calendar" unselectable="off">&nbsp;</span>
+            <span class="calHeaderSpace"><%= t "calendar.mini_calendar" %></span>
+          </div>
+        </h2>
         <div id="mini-calendar"></div>
       </div>
       <div id="my-calendar">
@@ -42,13 +48,13 @@
             <% @calendars.each do |calendar| %>
               <li class="list-group-item">
                 <label class="divBox">
-                  <%= check_box_tag "calendar-select-id-#{calendar.id}", 
+                  <%= check_box_tag "calendar-select-id-#{calendar.id}",
                     calendar.id, true, class: "calendar-select"  %>
-                  <label id="<%= "label-calendar-select-#{calendar.id}" %>" 
-                    class="<%= "color-#{calendar.color.id}" %>" 
+                  <label id="<%= "label-calendar-select-#{calendar.id}" %>"
+                    class="<%= "color-#{calendar.color.id}" %>"
                     for="<%= "calendar-select-id-#{calendar.id}" %>">
                   </label>
-                  <%= calendar.name %>
+                  <span><%= calendar.name %></span>
                 </label>
                 <span id="<%= calendar.id %>"
                   class="clstMenu clstMenu-child" rel="<%= calendar.color.id %>">
@@ -69,25 +75,37 @@
       <%= link_to t("calendar.sub_menu.create_calendar"),
         new_user_calendar_path(current_user) %>
     </div>
-    <div><%= link_to t("calendar.sub_menu.setting"), "#" %></div>
+<!--     <div class="disable">
+      <%= link_to t("calendar.sub_menu.setting"), "#" %>
+    </div> -->
   </div>
   <div id="menu-of-calendar" class="sub-menu menu-calendar sub-menu-hidden">
     <input type="hidden" id="menu-calendar-id">
     <div id="id-of-calendar"></div>
-    <p><%= link_to t("calendar.sub_menu.display"), "#" %></p>
-    <p>
+<!--     <div class="disable">
+      <%= link_to t("calendar.sub_menu.display"), "#" %>
+    </div> -->
+    <div>
       <%= link_to t("calendar.sub_menu.calendar_setting"), "#",
         id: "edit-calendar" %>
-    </p>
-    <p><%= link_to t("calendar.sub_menu.view_trash"), "#" %></p>
-    <p><%= link_to t("calendar.sub_menu.create_event_on_calendar"), "#" %></p>
-    <p><%= link_to t("calendar.sub_menu.share_calendar"), "#" %></p>
-    <p><%= link_to t("calendar.sub_menu.edit_notification"), "#" %></p>
+    </div>
+    <!-- <div class="disable">
+      <%= link_to t("calendar.sub_menu.view_trash"), "#" %>
+    </div>
+    <div class="disable">
+      <%= link_to t("calendar.sub_menu.create_event_on_calendar"), "#" %>
+    </div>
+    <div class="disable">
+      <%= link_to t("calendar.sub_menu.share_calendar"), "#" %>
+    </div>
+    <div class="disable">
+      <%= link_to t("calendar.sub_menu.edit_notification"), "#" %>
+    </div> -->
     <div class="divider"></div>
     <div class="checkbox-color">
       <% @colors.each_with_index do |color, index| %>
         <div class="<%= "l-color" %>" >
-          <input type="checkbox" class="input-assumpte" 
+          <input type="checkbox" class="input-assumpte"
             id="<%= "input-color-#{color.id}" %>" rel="<%= color.id %>">
           <label class="<%= "color-#{color.id}" %>" for="<%= "input-color-#{color.id}" %>"></label>
         </div>

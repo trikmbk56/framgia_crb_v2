@@ -36,7 +36,8 @@ class Event < ActiveRecord::Base
       title: title,
       start_date: format_datetime(start_date),
       finish_date: format_datetime(finish_date),
-      color_id: calendar.color.id
+      color_id: calendar.color.id,
+      calendar: calendar.name
     }
   end
 

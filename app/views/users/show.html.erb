@@ -5,13 +5,36 @@
   <div class="u-content">
     <div class="col col-1">
       <div class="user-info ">
-        <div class="u-avatar"><%= get_avatar current_user %></div>
+        <input type="hidden" id="user-id" value="<%= @user.id %>">
+          <div class="u-avatar">
+            <label>
+              <div id="user-avatar"><%= get_avatar @user %></div>
+              <%= form_for @user, url: api_user_path(@user), remote: true do |form| %>
+                <%= form.hidden_field :name, value: @user.name %>
+                <%= form.hidden_field :email, value: @user.email %>
+                <%= form.hidden_field :status, value: "UpdateUserAvatar" %>
+                <%= form.file_field :avatar, id: "choose-file-btn" %>
+                <%= form.submit t("user.info.save_avatar"), id: "submit-file-btn" %>
+              <% end %>
+            </label>
+          </div>
         <div class="u-name">
-          <h3><%=link_to @user.name, edit_user_registration_path %></h3>
+          <i id='user-name'><%= link_to @user.name, edit_user_registration_path %></i>
+          <button class="edit-info-btn" id="username-edit"></button>
+        </div>
+        <div id="u-name-input">
+          <input type="text" name="newUsername" 
+            value="<%= @user.name %>" id="username-input">
+          <button class="save-info-btn" id="username-save"><%= t "user.info.save" %></button>
         </div>
         <div class="u-email">
-          <b><%= t "user.info.email" %></b>
-          <i><%= @user.email %><br/></i>
+          <i id="user-email"><%= @user.email %></i>
+          <button class="edit-info-btn" id="email-edit"></button>
+        </div>
+        <div id="u-email-input">
+          <input type="text" name="newEmail" 
+            value="<%= @user.email %>" id="email-input">
+          <button class="save-info-btn" id="email-save"><%= t "user.info.save" %></button>
         </div>
       </div>
       <div class="u-calendar">

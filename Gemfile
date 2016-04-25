@@ -23,6 +23,7 @@ gem "kaminari"
 gem "jquery-ui-rails"
 gem "i18n-js", ">= 3.0.0.rc11"
 gem "select2-rails"
+gem "paperclip", "~> 5.0.0.beta1"
 
 group :development, :test do
   gem "pry"

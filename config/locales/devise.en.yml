@@ -13,6 +13,11 @@ en:
         finish: "until"
         button: "Load more"
         calendar: "Calendar: "
+      save: "Save"
+      save_avatar: "Save Avatar"
+      update:
+        success: "Update success"
+        error: "Update error"
   devise:
     confirmations:
       confirmed: "Your email address has been successfully confirmed."

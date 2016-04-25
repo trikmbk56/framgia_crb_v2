@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def get_avatar user
-    avatar_url =  user.avatar.nil? ? image_path("user.png") : user.avatar
-    image_tag(avatar_url, alt: user.name, class: "img-circle")
+    url = user.avatar.exists? ? user.avatar.url(:small) : image_path("user.png")
+    image_tag(url, alt: user.name, class: "img-circle")
   end
 end

@@ -84,4 +84,101 @@ $(document).on('page:change', function() {
       $('#sub-menu-setting').addClass('sub-menu-visible');
     };
   });
+
+  $('.u-name').hover(function() {
+    $('#username-edit').show();
+    }, function(){
+    $('#username-edit').hide();
+  });
+
+  $('.u-email').hover(function() {
+    $('#email-edit').show();
+    }, function(){
+    $('#email-edit').hide();
+  });
+
+  $('.edit-info-btn').click(function() {
+    if ($(this).parent().attr('class') == 'u-name') {
+      $('.u-name').hide();
+      $('#u-name-input').show();
+    } else {
+      $('.u-email').hide();
+      $('#u-email-input').show();
+    }
+  });
+
+  $('.save-info-btn').click(function() {
+    if ($(this).parent().attr('id') == 'u-name-input') {
+      updateUsername($('#username-input').val());
+    } else {
+      updateEmail($('#email-input').val());
+    }
+  }); 
+
+  function updateUsername(newUsername) {
+    var user_id = $('#user-id').val();
+    var url = '/api/users/' + user_id;
+    $.ajax({
+      url: url,
+      data: {
+        user: {
+          name: newUsername,
+          email: $('#user-email').text()
+        },
+        status: "UpdateUserInformation"
+      },
+      type: 'PUT',
+      dataType: 'text',
+      success: function(text){
+        $('#user-name a').text(newUsername);
+        $('.u-name').show();
+        $('#u-name-input').hide ();
+        alert(text);
+      }
+    });
+  }
+
+  function updateEmail(newEmail) {
+    var user_id = $('#user-id').val();
+    var url = '/api/users/' + user_id;
+    $.ajax({
+      url: url,
+      data: {
+        user: {
+          name: $('#user-name').text(),
+          email: newEmail
+        },
+        status: "UpdateUserInformation"
+      },
+      type: 'PUT',
+      dataType: 'text',
+      success: function(text){
+        $('#user-email').text(newEmail);
+        $('.u-email').show();
+        $('#u-email-input').hide ();
+        alert(text);
+      }
+    });
+  }
+
+  $('#choose-file-btn').change(function(event) {
+    $('#submit-file-btn').show();
+    var files = event.target.files;
+    var image = files[0];
+    var reader = new FileReader();
+    reader.onload = function(file) {
+      var img = new Image();
+      img.src = file.target.result;
+      if (img.width > img.height)
+        img.setAttribute("width", "150px");
+      else 
+        img.setAttribute("height", "150px");
+      $('#user-avatar').html(img);
+    }
+    reader.readAsDataURL(image);;
+  });
+
+  $('#submit-file-btn').click(function() {
+    $(this).hide();
+  });
 });

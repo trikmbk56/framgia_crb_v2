@@ -27,10 +27,51 @@ ul {
     width: 100%;
     .user-info {
       background-color: #F5F7FA;
-      text-align: center;
       padding: 10px;
+      text-align: center;
+      .u-avatar {
+        #choose-file-btn {
+          display: none;
+        }
+
+        #submit-file-btn {
+          display: none;
+          margin-bottom: 10px
+        }
+      }
+
       .u-name {
         color: blue;
+        margin-bottom: 10px;
+
+        &:hover {
+          background-color: #FDFBDB;
+        }
+      }
+
+      #u-name-input {
+        display: none;
+        margin-bottom: 10px;
+      }
+
+      #u-email-input {
+        display: none;
+      }
+
+      .edit-info-btn {
+        float: right;
+        background: url(image_path("combined_v46_vr.png")) -273px -34px no-repeat;
+        height: 19px;
+        width: 19px;
+        position: relative;
+        border: 0;
+        display: none;
+      }
+
+      .u-email {
+        &:hover {
+          background-color: #FDFBDB;
+        }
       }
     }
 

@@ -29,8 +29,15 @@ $(document).on('page:change', function() {
     },
     height: $(window).height() - $('header').height() - 9,
     events: function(start, end, timezone, callback) {
+      var calendars = [];
+      $('input:checkbox[class=calendar-select]:checked').each(function(){
+        calendars.push($(this).val());
+      });
       $.ajax({
         url: '/api/events',
+        data: {
+          calendars: calendars
+        },
         dataType: 'json',
         success: function(doc) {
           var events = [];
@@ -43,6 +50,7 @@ $(document).on('page:change', function() {
       });
     },
     eventClick: function(event, jsEvent, view) {
+      popupOriginal();
       initDialogEventClick(event);
       dialogCordinate(jsEvent, 'popup', 'prong-popup');
       hiddenDialog('new-event-dialog');
@@ -402,4 +410,9 @@ $(document).on('page:change', function() {
       return dateTime.format('dddd DD-MM-YYYY');
     return dateTime.format('MMMM Do YYYY, h:mm:ss a');
   }
+
+  $('.calendar-select').change(function(event) {
+    $('#full-calendar').fullCalendar('removeEvents');
+    $('#full-calendar').fullCalendar('refetchEvents');
+  });
 });

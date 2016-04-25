@@ -1,23 +1,23 @@
 <div id="calcontent">
   <div id="mothertable">
     <div id="nav">
-      <div class="logo"><%= t "layout.calendar-logo" %></div>
       <div id="sidebar">
         <div class="btn-group" id="source-popup">
-          <%= link_to t("calendar.create_event"), new_user_event_path(current_user),
-            class: "btn btn-danger" %>
+          <%= link_to t("calendar.create_event"),
+            new_user_event_path(current_user), class: "btn btn-danger" %>
           <button type="button" class="btn btn-danger dropdown-toggle create"
             data-toggle="dropdown" aria-haspopup="true">
             <span class="caret"></span>
             <span class="sr-only"></span>
           </button>
+          <div id="current-user-id-popup"><%= current_user.id %></div>
           <ul class="dropdown-menu" id="event-popup">
             <li>
               <div class="qab-container gcal-popup">
                 <label><%= t "calendar.quick_add" %></label>
-                <textarea ></textarea>
-                <div class="btn-quick-add">
-                  <%= link_to t("calendar.add"), "#" %>
+                <textarea id="title-event-value"></textarea>
+                <div id="btn-quick-add">
+                  <%= link_to t("calendar.add"), "#", id: "link-to-event" %>
                 </div>
                 <p><%= t "calendar.example" %></p>
               </div>
@@ -30,22 +30,21 @@
       </div>
       <div id="my-calendar">
         <h2 id="clst_my" class="calHeader goog-zippy-collapsed">
-          <span class="h zippy-arrow" unselectable="off">&nbsp;</span>
-          <span class="calHeaderSpace"><%= t "my_calendar" %></span>
-          <span id="clst_my_menu" class="clstMenu"></span>
+          <div class="hover-my-calendar">
+            <span class="h zippy-arrow" unselectable="off">&nbsp;</span>
+            <span class="calHeaderSpace"><%= t "my_calendar" %></span>
+            <span id="clst_my_menu" class="clstMenu"></span>
+          </div>
         </h2>
         <div id="collapse1" class="panel-collapse collapse"
           aria-expanded="true">
           <ul class="list-group">
-            <li class="list-group-item">
-              <%= link_to t("calendar.create_calendar"),
-                new_user_calendar_path(current_user) %>
-            </li>
             <% @calendars.each do |calendar| %>
               <li class="list-group-item">
                 <%= calendar.name %>
-                <%= link_to t("calendar.edit"),
-                  edit_user_calendar_path(current_user, calendar) %>
+                <span id="<%= calendar.id %>"
+                  class="clstMenu clstMenu-child">
+                </span>
               </li>
             <% end %>
           </ul>
@@ -56,6 +55,26 @@
     <div class="mainbody">
       <div id="full-calendar"></div>
     </div>
+  </div>
+  <div id="sub-menu-my-calendar" class= "sub-menu sub-menu-hidden">
+    <div>
+      <%= link_to t("calendar.sub_menu.create_calendar"),
+      new_user_calendar_path(current_user) %>
+    </div>
+    <div><%= link_to t("calendar.sub_menu.setting"), "#" %></div>
+  </div>
+  <div id="menu-of-calendar" class="sub-menu menu-calendar sub-menu-hidden">
+    <div id="id-of-calendar"></div>
+    <p><%= link_to t("calendar.sub_menu.display"), "#" %></p>
+    <p>
+      <%= link_to t("calendar.sub_menu.calendar_setting"), "#",
+        id: "edit-calendar" %>
+    </p>
+    <p><%= link_to t("calendar.sub_menu.view_trash"), "#" %></p>
+    <p><%= link_to t("calendar.sub_menu.create_event_on_calendar"), "#" %></p>
+    <p><%= link_to t("calendar.sub_menu.share_calendar"), "#" %></p>
+    <p><%= link_to t("calendar.sub_menu.edit_notification"), "#" %></p>
+    <div class="divider"></div>
   </div>
   <%= render "events/dialog_form" %>
   <%= render "events/popup_event" %>

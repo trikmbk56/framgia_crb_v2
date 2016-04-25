@@ -4,10 +4,6 @@
   z-index: 1000;
   padding: 0;
 
-  div {
-    display: block;
-  }
-
   .logo {
     margin-left: 15px;
     margin-top: 15px;
@@ -360,13 +356,6 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
 /*pupup*/
 #popup {
-  padding: 16px;
-  background-color: white;
-  width: 400px;
-  visibility: hidden;
-  box-shadow: 0 3px 2px 3px rgba(0, 0, 0, 0.2);
-  position: absolute;
-  z-index: 1001;
   .time-label {
     display: block;
     font-size: 11px;
@@ -396,6 +385,7 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
   #time-event-popup {
     font-size: 13px;
+    line-height: 24px;
   }
 
   .btn {
@@ -440,8 +430,9 @@ span.ui-icon.ui-icon-circle-triangle-e {
     position: absolute;
     display: inline-block;
   }
-  #footer-popup {
-    margin-top: 40px;
+
+  #current-user-id-popup {
+    display: none;
   }
 }
 

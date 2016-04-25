@@ -14,6 +14,7 @@ class Event < ActiveRecord::Base
   validates :title, presence: true
 
   delegate :name, to: :owner, prefix: :owner, allow_nil: true
+  delegate :name , to: :calendar, prefix: true, allow_nil: true
 
   scope :my_events, ->user_id do
     where("finish_time between ? and ? and user_id = ?",
@@ -21,7 +22,7 @@ class Event < ActiveRecord::Base
   end
 
   scope :in_calendars, ->calendars do
-    where "calendar_id IN (?)", calendars 
+    where "calendar_id IN (?)", calendars
   end
 
   scope :upcoming_event, ->calendar_id do
@@ -36,6 +37,10 @@ class Event < ActiveRecord::Base
       start_date: format_datetime(start_date),
       finish_date: format_datetime(finish_date)
     }
+  end
+
+  def is_diff_between_start_and_finish_date?
+    start_date.to_date != finish_date.to_date
   end
 
   private

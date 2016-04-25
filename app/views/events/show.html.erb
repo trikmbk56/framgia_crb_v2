@@ -1,27 +1,58 @@
-<%= @event.title %><br/>
-<%= l @event.start_date, format: t("events.time.formats.date_format") %></br/>
-<%= l @event.finish_date, format: t("events.time.formats.date_format") %></br/>
-<%= @event.description %><br/>
-<%= @event.owner_name %><br/>
-
-<%= form_for @attendee, remote: true do |f| %>
-  <%= f.hidden_field :event_id, value: @event.id %>
-  <%= f.select :user_id, @users.collect{ |a| [a.name, a.id] }, {}, {id: "add_attendee"} %>
-  <%= f.submit t "events.attendee.add_attendee" %>
-<% end %>
-<div class="event" >
-  <% @event.attendees.each do |attendee| %>
-    <li>
-      <%= attendee.user_name %>
-      <%= link_to t("events.buttons.delete"),
-      user_event_attendee_path(current_user, @event, attendee),
-      method: :delete, data: {confirm: t("events.confirm.delete")},
-      remote: true, class: "delete_attendee" %>
-    </li>
-  <% end %>
+<div id="maincell">
+  <div class="contain">
+    <div class="form-action">
+      <%= link_to root_path, title: t("events.buttons.go_back"),
+        "data-no-turbolink": true, class: "btn-go-back" do %>
+        <i class="go-back"></i>
+      <% end %>
+    </div>
+    <div class="ev-title">
+      <%= label_tag "title", @event.title, class:"title" %>
+    </div>
+    <div class="lb-dt">
+      <div class="ev-dt">
+        <%= label_tag :start_date, datetime_format(@event.start_date, "s_date_f_time") %>
+        <%= label_tag :dash, " - " %>
+        <%= label_tag :finish_date, datetime_format(@event.finish_date,
+          @event.is_diff_between_start_and_finish_date? ? "s_date_f_time" : "meridiem_time") %>
+      </div>
+    </div>
+    <div class="ev-cal">
+      <div class="ev-contain">
+        <div class="ev-att">
+          <div class="contain">
+            <div class="lb-attendees">
+              <%= label_tag :lattendee, t("events.labels.attendees") %>
+            </div>
+            <ul>
+              <% @event.attendees.each do |attendee| %>
+                <li class="l-att-<%= attendee.id %>">
+                  <div id="att-<%= attendee.id %>" class="btn-del"
+                    ev-id="<%= @event.id %>" user-id="<%= current_user.id %>">
+                  </div>
+                  <div><%= attendee.user_name %></div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="lb-contain">
+          <div class="lbcal">
+            <ul>
+              <li><%= label_tag :lbcal, t("events.labels.calendar") %></li>
+              <li><%= @event.calendar_name %></li>
+            </ul>
+            <ul>
+              <li><%= label_tag :lbowner, t("events.labels.owner_name") %></li>
+              <li><%= @event.owner_name %></li>
+            </ul>
+            <ul>
+              <li><%= label_tag :lbdesc, t("events.labels.description") %></li>
+              <li><%= @event.description %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<li>
-  <%= link_to t("events.buttons.delete"),
-    user_event_path(current_user, @event), method: :delete,
-    data: {confirm: t("events.confirm.delete")} %>
-</li>

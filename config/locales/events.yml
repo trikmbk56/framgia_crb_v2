@@ -11,16 +11,14 @@ en:
       not_deleted: "Event wasn't delete."
       delete_attendee: "Attendee deleted"
     buttons:
-      cancel: "Cancel"
       delete: "Delete"
+      discard: "Discard"
       save: "Save"
       edit: "Edit event"
       go_back: "Back"
-    lables:
+    labels:
       attendees: "Attendees"
-      attachment: "Attachment"
       calendar: "Calendar"
-      color: "Event color"
       description: "Description"
       finish_time: "Finish time"
       owner_name: "Owner"
@@ -40,6 +38,8 @@ en:
         date_format: "%m/%d/%Y %H:%M"
         short_date: "%d-%m-%Y"
         short_time: "%H:%M"
+        s_date_f_time: "%Y %b %a %e, %l:%m%P"
+        meridiem_time : "%l:%m%P"
     popup:
       time_label: "Time"
     dialog:

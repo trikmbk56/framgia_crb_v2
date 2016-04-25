@@ -299,6 +299,28 @@ $(document).on('page:change', function() {
     $('#edit-calendar').attr('href', edit_link);
   });
 
+  $('#full-calendar').bind('mousewheel', function(e) {
+    var view = $('#full-calendar').fullCalendar('getView');
+    if (view.name == 'month') {
+      if(e.originalEvent.wheelDelta > 0) {
+        $('#full-calendar').fullCalendar('next');
+      } else{
+        $('#full-calendar').fullCalendar('prev');
+      };
+      var moment = $('#full-calendar').fullCalendar('getDate');
+      $('#mini-calendar').datepicker();
+      $('#mini-calendar').datepicker('setDate', new Date(moment.format('MM/DD/YYYY')));
+    };
+  });
+
+  $('#mini-calendar').bind('mousewheel', function(e) {
+    if(e.originalEvent.wheelDelta > 0) {
+      $('.ui-datepicker-next').click();
+    } else{
+      $('.ui-datepicker-prev').click();
+    };
+  });
+
   $('#bubble-close').click(function() {
     unSelectCalendar();
     hiddenDialog('new-event-dialog');

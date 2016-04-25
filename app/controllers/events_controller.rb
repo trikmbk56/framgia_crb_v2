@@ -54,7 +54,6 @@ class EventsController < ApplicationController
   end
 
   def load_attendees
-    @event.attendees.build
     @users = User.all
     @attendee = Attendee.new
   end

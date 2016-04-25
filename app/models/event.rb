@@ -20,6 +20,11 @@ class Event < ActiveRecord::Base
       Date.today.beginning_of_week, Date.today.end_of_week, user_id)
   end
 
+  scope :upcoming_event, ->calendar_id {
+    where("start_date >= ? AND calendar_id IN (?)", DateTime.now, calendar_id).
+      order start_date: :asc
+  }
+
   def json_data
     {
       id: id,

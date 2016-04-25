@@ -15,4 +15,9 @@ module ApplicationHelper
   def datetime_format object, format
     object ? l(object, format: t("events.time.formats.#{format}")) : nil
   end
+
+  def get_avatar user
+    avatar_url =  user.avatar.nil? ? image_path("user.png") : user.avatar
+    image_tag(avatar_url, alt: user.name, class: "img-circle")
+  end
 end

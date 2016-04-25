@@ -9,7 +9,7 @@
         method: :delete %>
       </li>
       <li>
-        <%= link_to t("session.link.edit"), edit_user_registration_path %>
+        <%= link_to t("layout.show"), user_path(current_user) %>
       </li>
     <% else %>
       <li><%= link_to t("layout.log_in"), new_user_session_path %></li>

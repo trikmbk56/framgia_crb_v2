@@ -9,33 +9,38 @@ namespace :db do
         Rake::Task[task].invoke
       end
 
-      puts "Creating User"
-      user = Fabricate :user
-
-      puts "Creating Calendar"
-      calendar = Fabricate :calendar, user_id: user.id
-
       puts "Create permission"
       read_permission = Fabricate :permission, permission: "read"
       edit_permission = Fabricate :permission, permission: "edit"
 
-      puts "Creating more users"
-      5.times do
-        user = Fabricate :user
-        puts "Shared calendar"
+      user_hash = {
+        "Khong Minh Tri": "khong.minh.tri",
+        "Bui Quoc Viet": "bui.quoc.viet",
+        "Hoang Thi Nhung": "hoang.thi.nhung",
+        "Nguyen Binh Dieu": "nguyen.binh.dieu",
+        "Tran Quang Trung": "tran.quang.trung",
+        "Dao Duy Dat": "dao.duy.dat",
+        "Nguyen Thai Son": "nguyen.thai.son",
+        "Lim Kimhuor": "lim.kimhour"
+      }
+
+      puts "Creating User, Calendar, Share calendar, Event"
+      user_hash.each do |key, value|
+        user = Fabricate :user, name: key, email: value+"@framgia.com"
+        calendar = Fabricate :calendar, user_id: user.id
+
         Fabricate :user_calendar, calendar_id: calendar.id, user_id: user.id,
           permission_id: read_permission.id
-      end
 
-      puts "Creating event"
-      10.times do |i|
-        date_time = DateTime.now + i.days
-        start_time_day = date_time.change({hour: 8})
-        end_time_day = date_time.change({hour: 10})
-        event = Fabricate :event, start_date: start_time_day,
-          finish_date: end_time_day, calendar_id: calendar.id, user_id: user.id
-        3.times do |j|
-          Fabricate :attendee, user_id: j + 1, event_id: event.id
+        2.times do |i|
+          date_time = DateTime.now + i.days
+          start_time_day = date_time.change({hour: 8})
+          end_time_day = date_time.change({hour: 10})
+          event = Fabricate :event, start_date: start_time_day,
+            finish_date: end_time_day, calendar_id: calendar.id, user_id: user.id
+          3.times do |j|
+            Fabricate :attendee, user_id: j + 1, event_id: event.id
+          end
         end
       end
     end

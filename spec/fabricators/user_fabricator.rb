@@ -1,5 +1,5 @@
 Fabricator :user do
-  name {Faker::Name.name}
-  email {sequence(:email) {|i| "user#{i}@crb.com"}}
+  name :name
+  email :email
   password "12345678"
 end

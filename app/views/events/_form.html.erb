@@ -46,7 +46,7 @@
     </div>
     <div class="form-group">
       <%= f.label :attendee %>
-      <%= f.select :attendee_ids, @users.collect {|user| [user.name, user.id]}, {},
+      <%= f.select :user_ids, @users.collect {|user| [user.name, user.id]}, {},
         {id: "attendee", multiple: :true} %>
     </div>
   <% end %>

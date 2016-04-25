@@ -22,6 +22,7 @@ $(document).on('page:change', function() {
     unselectAuto: false,
     nowIndicator: true,
     allDaySlot: false,
+    eventLimit: true,
     selectable: {
       month: false,
       agenda: true

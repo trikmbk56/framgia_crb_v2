@@ -12,10 +12,10 @@
           <%= get_avatar current_user %>
         </a>
         <div id="sub-menu-setting" class= "sub-menu sub-menu-hidden">
-          <div>
+          <div class="sub-setting">
             <%= link_to t("layout.show"), user_path(current_user) %>
           </div>
-          <div>
+          <div class="sub-setting">
             <%= link_to t("session.link.sign_out"), destroy_user_session_path,
               method: :delete %>
           </div>
@@ -23,6 +23,11 @@
             <div class="prong-dk"></div>
             <div class="prong-lt"></div>
           </div>
+        </div>
+      </li>
+      <li>
+        <div class="username-hearder">
+          <b><%= current_user.name %></b>
         </div>
       </li>
     <% else %>

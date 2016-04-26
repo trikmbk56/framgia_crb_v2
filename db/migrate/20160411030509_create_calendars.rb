@@ -4,6 +4,7 @@ class CreateCalendars < ActiveRecord::Migration
       t.references :user
       t.string :name
       t.string :description
+      t.references :color
 
       t.timestamps null: false
     end

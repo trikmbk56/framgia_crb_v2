@@ -1,2 +1,4 @@
 users:
   upcoming_event: 5
+colors: ["#AC725E",  "#D06B64", "#F83A22", "#FA573C", "#FF7537", "#FFAD46",
+  "#42D692", "#16A765", "#B3DC6C", "#FBE983", "#FAD165", "#92E1C0"]

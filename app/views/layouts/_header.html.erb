@@ -7,11 +7,23 @@
 
   <ul>
     <% if user_signed_in? %>
-      <li><%= link_to t("session.link.sign_out"), destroy_user_session_path,
-        method: :delete %>
-      </li>
       <li>
-        <%= link_to t("layout.show"), user_path(current_user) %>
+        <a class="avatar" id="header-avatar" href="#">
+          <%= get_avatar current_user %>
+        </a>
+        <div id="sub-menu-setting" class= "sub-menu sub-menu-hidden">
+          <div>
+            <%= link_to t("layout.show"), user_path(current_user) %>
+          </div>
+          <div>
+            <%= link_to t("session.link.sign_out"), destroy_user_session_path,
+              method: :delete %>
+          </div>
+          <div id="prong-header" class="top-prong">
+            <div class="prong-dk"></div>
+            <div class="prong-lt"></div>
+          </div>
+        </div>
       </li>
     <% else %>
       <li><%= link_to t("layout.log_in"), new_user_session_path %></li>

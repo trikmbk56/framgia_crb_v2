@@ -4,10 +4,12 @@ class CalendarsController < ApplicationController
   def index
     @calendars = current_user.calendars
     @event = Event.new
+    @colors = Color.all
   end
 
   def create
     @calendar.user_id = current_user.id
+    @calendar.color = Color.first unless params[:color_id].present?
     if @calendar.save
       flash[:success] = t "calendar.success_create"
       redirect_to root_path

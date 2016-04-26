@@ -536,3 +536,134 @@ span.ui-icon.ui-icon-circle-triangle-e {
     width: 50%;
   }
 }
+
+/* checkbox calendars */
+.divBox {
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+}
+
+.divBox label {
+  display: block;
+  width: 15px;
+  height: 15px;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -o-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  transition: all .5s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 1px;
+  z-index: 1;
+  background: white;
+  -webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+  -moz-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+  box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+.divBox input[type=checkbox]:checked + label {
+  background: green;
+}
+
+.divBox input[type=checkbox]:not(:checked) + label {
+  background: white!important;
+}
+
+.l-color {
+  display: inline-block!important;
+  margin: 5px!important;
+  padding: 0px!important;
+}
+.checkbox-color {
+  margin: 0px;
+  display: block;
+}
+
+.checkbox-color .tag {
+  color: green;
+  display: block;
+  float: left;
+  font-weight: bold;
+  position: relative;
+  width: 120px;
+}
+
+.checkbox-color label {
+  display: inline;
+}
+
+.checkbox-color .input-assumpte {
+  display: none;
+}
+
+.input-assumpte + label {
+  -webkit-appearance: none;
+  background-color: green;
+  border: 1px solid #cacece;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 9px;
+  display: inline-block;
+  position: relative;
+}
+
+.input-assumpte:checked + label:after {
+  color: white;
+  content: "\2714";
+  font-size: 13px;
+  left: 0px;
+  padding: 2px 8px 2px 2px;
+  position: absolute;
+  top: 0px;
+}
+
+.color-1 {
+  background-color: #AC725E!important
+}
+
+.color-2 {
+  background-color: #D06B64!important
+}
+
+.color-3 {
+  background-color: #F83A22!important
+}
+
+.color-4 {
+  background-color: #FA573C!important
+}
+
+.color-5 {
+  background-color: #FF7537!important
+}
+
+.color-6 {
+  background-color: #FFAD46!important
+}
+
+.color-7 {
+  background-color: #42D692!important
+}
+
+.color-8 {
+  background-color: #16A765!important
+}
+
+.color-9 {
+  background-color: #B3DC6C!important
+}
+
+.color-10 {
+  background-color: #4986E7!important
+}
+
+.color-11 {
+  background-color: #FBE983!important
+}
+
+.color-12 {
+  background-color: #FAD165!important
+}

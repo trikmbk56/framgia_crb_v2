@@ -43,7 +43,7 @@ $(document).on('page:change', function() {
           var events = [];
           events = doc.map(function(data) {
             return {title: data.title, start: data.start_date,
-              end: data.finish_date, id: data.id}
+              end: data.finish_date, id: data.id, className: 'color-' + data.color_id}
           });
           callback(events);
         }
@@ -226,8 +226,8 @@ $(document).on('page:change', function() {
   $(document).keydown(function(e) {
     if (e.keyCode == 27) {
       $('#source-popup').removeClass('open');
-      $('#sub-menu-my-calendar, #menu-of-calendar').removeClass('sub-menu-visible');
-      $('#sub-menu-my-calendar, #menu-of-calendar').addClass('sub-menu-hidden');
+      $('#sub-menu-my-calendar, #menu-of-calendar, #sub-menu-setting').removeClass('sub-menu-visible');
+      $('#sub-menu-my-calendar, #menu-of-calendar, #sub-menu-setting').addClass('sub-menu-hidden');
       $('.list-group-item').removeClass('background-hover');
     }
   });
@@ -288,6 +288,10 @@ $(document).on('page:change', function() {
       $('#menu-of-calendar').removeClass('sub-menu-hidden');
       $('#menu-of-calendar').addClass('sub-menu-visible');
       $(this).parent().addClass('background-hover');
+      $('input:checkbox[class=input-assumpte]:checked').prop('checked', false);
+      rel = $(this).attr('rel');
+      $('input:checkbox[id=input-color-' + rel+ ']').prop('checked', true);
+      $('#menu-calendar-id').attr('rel', $(this).attr('id'));
     };
   });
 
@@ -436,5 +440,25 @@ $(document).on('page:change', function() {
   $('.calendar-select').change(function(event) {
     $('#full-calendar').fullCalendar('removeEvents');
     $('#full-calendar').fullCalendar('refetchEvents');
+  });
+
+  $('.input-assumpte').change(function() {
+    $('input:checkbox[class=input-assumpte]:checked').not(this).prop("checked", false);
+    color_id = $(this).attr('rel');
+    calendar_id = $('#menu-calendar-id').attr('rel');
+    url = '/api/calendars/' + calendar_id
+    $.ajax({
+      url: url,
+      method: 'PUT',
+      data: {
+        color_id: color_id,
+      },
+      success: function(data) {
+        $('#' + calendar_id).attr('rel', color_id);
+        $('#label-calendar-select-' + calendar_id).removeClass().addClass('color-' + color_id);
+        $('#full-calendar').fullCalendar('removeEvents');
+        $('#full-calendar').fullCalendar('refetchEvents');
+      }
+    });
   });
 });

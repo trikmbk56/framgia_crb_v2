@@ -14,3 +14,10 @@ en:
       confirm_delete_event: "Are you sure delete event?"
       alert_error_delete_event: "Can not delete event."
       no_title: "No title"
+    flashs:
+      created: "Calendar was created successfully."
+      not_created: "Calendar was't create."
+      updated: "Calendar was updated successfully."
+      not_updated: "Calendar wasn't updated."
+      deleted: "Calendar deleted"
+      not_deleted: "Calendar wasn't delete."

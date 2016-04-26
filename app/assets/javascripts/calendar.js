@@ -5,7 +5,7 @@ $(document).on('page:change', function() {
     header: {
       left: 'prev,next today',
       center: 'title',
-      right: 'month,agendaWeek,agendaFourDay,agendaDay'
+      right: 'agendaDay,agendaWeek,month,agendaFourDay'
     },
     views: {
       agendaFourDay: {
@@ -14,6 +14,7 @@ $(document).on('page:change', function() {
         buttonText: '4 days'
       }
     },
+    eventColor: '#7BD148',
     defaultView: 'agendaWeek',
     businessHours: true,
     editable: true,
@@ -23,6 +24,7 @@ $(document).on('page:change', function() {
     nowIndicator: true,
     allDaySlot: false,
     eventLimit: true,
+    allDayDefault: false,
     selectable: {
       month: false,
       agenda: true
@@ -48,6 +50,16 @@ $(document).on('page:change', function() {
           callback(events);
         }
       });
+    },
+    eventRender: function(event, element) {
+      if(event.allDay === false) {
+        if(event.end && !event.end.isAfter(new Date()))
+          $(element).addClass('before-current');
+      }
+      else {
+        if(event.end && !event.end.isAfter(new Date(), 'day'))
+          $(element).addClass('before-current');
+      }
     },
     eventClick: function(event, jsEvent, view) {
       popupOriginal();
@@ -215,6 +227,7 @@ $(document).on('page:change', function() {
     if (($(event.target).closest('#new-event-dialog').length == 0)
       && ($(event.target).closest('.fc-body').length == 0)) {
       hiddenDialog('new-event-dialog');
+      unSelectCalendar();
     }
 
     if (($(event.target).closest('#popup').length == 0)
@@ -229,6 +242,8 @@ $(document).on('page:change', function() {
       $('#sub-menu-my-calendar, #menu-of-calendar, #sub-menu-setting').removeClass('sub-menu-visible');
       $('#sub-menu-my-calendar, #menu-of-calendar, #sub-menu-setting').addClass('sub-menu-hidden');
       $('.list-group-item').removeClass('background-hover');
+      hiddenDialog('new-event-dialog');
+      hiddenDialog('popup');
     }
   });
 
@@ -423,11 +438,11 @@ $(document).on('page:change', function() {
   }
 
   function eventDateTimeFormat(startDate, finishDate, dayClick) {
-    if (dayClick) {
+    if (dayClick || finishDate == null) {
       return startDate.format('dddd DD-MM-YYYY');
     } else {
       return startDate.format('dddd') + ' ' + startDate.format('H:mm A') + ' To '
-        + finishDate.format('H:mm A') + ' ' + startDate.format('DD-MM-YYYY');
+        + finishDate.format('H:mm A') + ' ' + finishDate.format('DD-MM-YYYY');
     }
   }
 

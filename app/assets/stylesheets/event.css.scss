@@ -22,6 +22,10 @@
   position: relative;
 }
 
+.tab-labels {
+  height: 30px;
+}
+
 .tile-content {
   color: #1b1b1b;
   font-family: Arial;
@@ -547,4 +551,13 @@
       }
     }
   }
+}
+
+.fc-event {
+  border-radius: 0px!important;
+}
+
+.before-current {
+  background-color: #DAF2CC!important;
+  border-color: #7BD148!important;
 }

@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160426095658) do
     t.string   "name",        limit: 255
     t.string   "description", limit: 255
     t.integer  "color_id",    limit: 4
+    t.integer  "parent_id",   limit: 4
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end

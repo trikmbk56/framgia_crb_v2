@@ -70,7 +70,7 @@ $(document).on('page:change', function() {
 
   $('#header-avatar').click(function() {
     var position = $('#header-avatar').offset();
-    $('#sub-menu-setting').css({'top': position.top + 46, 'left': position.left - 110});
+    $('#sub-menu-setting').css({'top': position.top + 44, 'left': position.left - 109});
     $('#prong-header').css({
       'top': -9,
       'left': 130,

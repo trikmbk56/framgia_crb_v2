@@ -43,6 +43,7 @@ en:
     popup:
       time_label: "Time"
       calendar_label: "Calendar"
+      calendar: "Calendar: "
     dialog:
       time: "When"
       calendar: "Calendar"

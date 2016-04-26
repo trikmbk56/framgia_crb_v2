@@ -9,6 +9,7 @@ html, body {
 }
 
 #header {
+  height: 44px;
   width: 100%;
   background-color: #EFEDED;
   ul {
@@ -23,7 +24,7 @@ html, body {
     width: 20%;
     height: 44px;
     .logo_left {
-      margin: 10px -6px;
+      margin: 5px 10px 10px 10px;
       padding-left: 20px;
       a {
         text-decoration: none;
@@ -42,7 +43,7 @@ html, body {
     a {
       display: block;
       text-align: center;
-      padding: 10px 16px;
+      padding: 7px 16px;
       text-decoration: none;
       border-right: none;
       color: #747070;
@@ -83,12 +84,21 @@ html, body {
   .sub-menu-hidden {
     display: none;
   }
+
+  .username-hearder {
+    padding: 16px 0px 10px 16px;
+  }
+
+  .sub-setting {
+    padding: 5px 10px;
+  }
 }
 
 .img-circle {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  background-color: white;
   &:active {
     box-shadow: inset 0 30px 0 rgba(123, 123, 123, 0.15);
   }

@@ -5,6 +5,7 @@ en:
     not_deleted: "Calendar wasn't deleted successfully."
     confirm_delete: "Are you sure to delete this calendar?"
     create: "Create new calendar"
+    create_sub_calendar: "Create new sub calendar"
     edit: "Edit my calendar"
     events:
       clear_all_events: "Delete all events"

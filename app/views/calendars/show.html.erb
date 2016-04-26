@@ -17,6 +17,10 @@
 
       <%= link_to t("events.buttons.cancel"), root_path, class: "btn btn-default",
         "data-no-turbolink": true %>
+
+      <%= link_to t("calendars.create_sub_calendar"),
+        new_user_calendar_path(current_user, parent_id: @calendar.id),
+        class: "btn btn-default" %>
     </div>
 
     <div class="form-group">

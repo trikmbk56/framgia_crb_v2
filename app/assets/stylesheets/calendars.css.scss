@@ -521,6 +521,14 @@ span.ui-icon.ui-icon-circle-triangle-e {
   #current-user-id-popup {
     display: none;
   }
+
+  #head-popup {
+    height: 30px;
+  }
+
+  .content-popup {
+    height: 60px;
+  }
 }
 
 #calendar-form {
@@ -621,49 +629,67 @@ span.ui-icon.ui-icon-circle-triangle-e {
 }
 
 .color-1 {
-  background-color: #AC725E!important
+  background-color: #AC725E!important;
+  border-color: #AC725E!important;
 }
 
 .color-2 {
-  background-color: #D06B64!important
+  background-color: #D06B64!important;
+  border-color: #D06B64!important;
 }
 
 .color-3 {
-  background-color: #F83A22!important
+  background-color: #F83A22!important;
+  border-color: #F83A22!important;
 }
 
 .color-4 {
-  background-color: #FA573C!important
+  background-color: #FA573C!important;
+  border-color: #FA573C!important;
 }
 
 .color-5 {
-  background-color: #FF7537!important
+  background-color: #FF7537!important;
+  border-color: #FF7537!important;
 }
 
 .color-6 {
-  background-color: #FFAD46!important
+  background-color: #FFAD46!important;
+  border-color: #FFAD46!important;
 }
 
 .color-7 {
-  background-color: #42D692!important
+  background-color: #42D692!important;
+  border-color: #42D692!important;
 }
 
 .color-8 {
-  background-color: #16A765!important
+  background-color: #16A765!important;
+  border-color: #16A765!important;
 }
 
 .color-9 {
-  background-color: #B3DC6C!important
+  background-color: #B3DC6C!important;
+  border-color: #B3DC6C!important;
 }
 
 .color-10 {
-  background-color: #4986E7!important
+  background-color: #4986E7!important;
+  border-color: #4986E7!important;
 }
 
 .color-11 {
-  background-color: #FBE983!important
+  background-color: #FBE983!important;
+  border-color: #FBE983!important;
 }
 
 .color-12 {
-  background-color: #FAD165!important
+  background-color: #FAD165!important;
+  border-color: #FAD165!important;
+}
+
+.fc-right {
+  .fc-button {
+    width: 60px;
+  }
 }

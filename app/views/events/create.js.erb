@@ -10,7 +10,8 @@
       title: '<%= @data[:title] %>',
       start: moment('<%= @data[:start_date] %>'),
       end: moment('<%= @data[:finish_date] %>'),
-      id: '<%= @data[:id].to_s %>'
+      id: '<%= @data[:id].to_s %>',
+      className: 'color-<%= @data[:color_id] %>'
     }
     $('#full-calendar').fullCalendar('renderEvent', eventData, true);
     $('#full-calendar').fullCalendar('unselect');

@@ -50,7 +50,7 @@ class EventsController < ApplicationController
   end
 
   def load_calendars
-    @calendars = Calendar.all
+    @calendars = current_user.calendars
   end
 
   def load_attendees

@@ -5,44 +5,35 @@
         "data-no-turbolink": true, class: "btn-go-back" do %>
           <i class="go-back"></i>
       <% end %>
-      <%= f.submit t("events.buttons.save"), class: "btn btn-primary" %>
-      <%= link_to t("events.buttons.cancel"), root_path, class: "btn btn-cancel",
+      <%= f.submit t("events.buttons.save"), class: "btn-save" %>
+      <%= link_to t("events.buttons.discard"), root_path, class: "btn-discard",
         "data-no-turbolink": true %>
     </div>
     <div class="form-group">
-      <%= f.label t "events.lables.title" %>
+      <%= f.label t "events.labels.title" %>
       <%= f.text_field :title, placeholder: t("events.placeholder.new_event"),
-        autofocus: true, class: "form-control" %>
+        autofocus: true, required: true, class: "form-control" %>
     </div>
     <div class="form-group" id="dateTime">
       <%= f.hidden_field :start_date %>
       <%= f.hidden_field :finish_date %>
       <%= text_field_tag :start_date, datetime_format(@event.start_date, "short_date"),
-        class: "date start form-control fix-width-date date-time" %>
+        required: true, class: "date start form-control fix-width-date date-time" %>
       <%= text_field_tag :start_time, datetime_format(@event.start_date, "short_time"),
-        class: "time start form-control fix-width-time date-time" %>
-      <%= f.label t "events.lables.to" %>
+        required: true, class: "time start form-control fix-width-time date-time" %>
+      <%= f.label t "events.labels.to" %>
       <%= text_field_tag :finish_time, datetime_format(@event.finish_date, "short_time"),
-        class: "time finish form-control fix-width-time date-time" %>
+        required: true, class: "time finish form-control fix-width-time date-time" %>
       <%= text_field_tag :finish_date, datetime_format(@event.finish_date, "short_date"),
-        class: "date finish form-control fix-width-date date-time" %>
+        required: true, class: "date finish form-control fix-width-date date-time" %>
     </div>
     <div class="form-group">
-      <%= f.label t "events.lables.calendar" %>
-      <%= f.collection_select :calendar_id, @calendars, :id, :name, {},
-        class: "form-control" %>
+      <%= f.label t "events.labels.calendar" %>
+      <%= f.collection_select :calendar_id, @calendars, :id, :name, {} %>
     </div>
     <div class="form-group">
-      <%= f.label t "events.lables.description" %>
+      <%= f.label t "events.labels.description" %>
       <%= f.text_area :description, class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.label t "events.lables.attachment" %>
-      <%= link_to t("events.links.add_attachment"), "#" %>
-    </div>
-    <div class="form-group">
-      <%= f.label t "events.lables.color" %>
-      <%= f.text_field :color, class: "form-control w45" %>
     </div>
     <div class="form-group">
       <%= f.label :attendee %>

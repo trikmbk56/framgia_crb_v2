@@ -11,14 +11,12 @@ html, body {
 #header {
   width: 100%;
   background-color: #EFEDED;
-  height: 44px;
   ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
   }
   #logo {
-    font-family: "Helvetica Neue", sans-serif;
     font-size: 28px;
     float: left;
     border-right: none;
@@ -31,7 +29,6 @@ html, body {
         text-decoration: none;
         color: #337ab7;
         font-weight: bold;
-        font-family: Book Antiqua, Palatino, sans-serif;
         &:hover {
           color: #747070;
         }

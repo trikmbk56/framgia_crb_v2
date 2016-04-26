@@ -7,7 +7,8 @@ $(document).on('page:change', function(){
   $('#attendee').select2({
     multiple: true,
     theme: 'bootstrap',
-    tokenSeparators: [',', ' ']
+    tokenSeparators: [',', ' '],
+    width: '97%'
   });
   $('#add_attendee').select2();
 
@@ -30,5 +31,27 @@ $(document).on('page:change', function(){
   $(document).on('change', '.date-time', function(event) {
     $('#event_start_date').val(start_date.val() + ' ' + start_time.val());
     $('#event_finish_date').val(finish_date.val() + ' ' + finish_time.val());
+  });
+});
+
+$(document).ready(function() {
+  $('.btn-del').click(function() {
+    attendee = $(this).attr('id');
+    var attendeeId = attendee.substr(4);
+    eventId = $(this).attr('ev-id');
+    userId = $(this).attr('user-id');
+    url = '/users/'+ userId + '/events/' + eventId + '/attendees/' + attendeeId
+    var text = confirm(I18n.t('events.confirm.delete'));
+    if (text === true){
+      $('.l-att-' + attendeeId).fadeOut();
+      $.ajax({
+        url: url,
+        type: 'DELETE',
+        dataType: 'text',
+        error: function(text) {
+          alert(text);
+        }
+      });
+    }
   });
 });

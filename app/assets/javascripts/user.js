@@ -54,10 +54,34 @@ $(document).on('page:change', function() {
     });
   });
 
-  function get_calendar_id(){
+  function get_calendar_id() {
     checkbox = [];
-    $('input:checkbox[name=checkbox-calendar]:checked').each(function(){
+    $('input:checkbox[name=checkbox-calendar]:checked').each(function() {
       checkbox.push($(this).val());
     });
   }
+
+  $(document).click(function(e) {
+    if ($(event.target).closest('#header-avatar').length == 0) {
+      $('#sub-menu-setting').removeClass('sub-menu-visible');
+      $('#sub-menu-setting').addClass('sub-menu-hidden');
+    }
+  });
+
+  $('#header-avatar').click(function() {
+    var position = $('#header-avatar').offset();
+    $('#sub-menu-setting').css({'top': position.top + 46, 'left': position.left - 110});
+    $('#prong-header').css({
+      'top': -9,
+      'left': 130,
+      'transform': 'rotateX(' + 180 + 'deg)'
+    });
+    if ($('#sub-menu-setting').hasClass('sub-menu-visible')) {
+      $('#sub-menu-setting').removeClass('sub-menu-visible');
+      $('#sub-menu-setting').addClass('sub-menu-hidden');
+    } else {
+      $('#sub-menu-setting').removeClass('sub-menu-hidden');
+      $('#sub-menu-setting').addClass('sub-menu-visible');
+    };
+  });
 });

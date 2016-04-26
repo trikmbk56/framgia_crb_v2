@@ -45,11 +45,55 @@ html, body {
     a {
       display: block;
       text-align: center;
-      padding: 18px 16px;
+      padding: 10px 16px;
       text-decoration: none;
       border-right: none;
       color: #747070;
     }
+  }
+
+  .sub-menu {
+    position: fixed;
+    left: 0;
+    float: left;
+    z-index: 1000;
+    background: #fff;
+    white-space: nowrap;
+    transition: opacity .218s;
+    border: 1px solid rgba(0,0,0,.2);
+    cursor: default;
+    font-size: 13px;
+    width: 150px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    text-align: left;
+    div {
+      cursor: pointer;
+      text-decoration: none;
+      text-align: left;
+      a {
+        color: #333;
+      }
+      &:hover {
+        background-color: #e6e6e6;
+      };
+    };
+  }
+
+  .sub-menu-visible {
+    display: block;
+  }
+
+  .sub-menu-hidden {
+    display: none;
+  }
+}
+
+.img-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  &:active {
+    box-shadow: inset 0 30px 0 rgba(123, 123, 123, 0.15);
   }
 }
 

@@ -24,10 +24,15 @@ namespace :db do
         "Lim Kimhuor": "lim.kimhour"
       }
 
-      puts "Creating User, Calendar, Share calendar, Event"
+      puts "Creating Color, User, Calendar, Share calendar, Event"
+
+      Settings.colors.each do |color|
+        Fabricate :color, color_hex: color
+      end
+
       user_hash.each do |key, value|
         user = Fabricate :user, name: key, email: value+"@framgia.com"
-        calendar = Fabricate :calendar, user_id: user.id
+        calendar = Fabricate :calendar, user_id: user.id, color_id: 1
 
         Fabricate :user_calendar, calendar_id: calendar.id, user_id: user.id,
           permission_id: read_permission.id

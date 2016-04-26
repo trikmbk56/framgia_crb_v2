@@ -16,7 +16,6 @@ $(document).on('page:change', function() {
     },
     eventColor: '#7BD148',
     defaultView: 'agendaWeek',
-    businessHours: true,
     editable: true,
     selectable: true,
     selectHelper: true,
@@ -44,8 +43,14 @@ $(document).on('page:change', function() {
         success: function(doc) {
           var events = [];
           events = doc.map(function(data) {
-            return {title: data.title, start: data.start_date,
-              end: data.finish_date, id: data.id, className: 'color-' + data.color_id}
+            return {
+              title: data.title,
+              start: data.start_date,
+              end: data.finish_date,
+              id: data.id,
+              className: 'color-' + data.color_id,
+              calendar: data.calendar
+            }
           });
           callback(events);
         }
@@ -99,6 +104,7 @@ $(document).on('page:change', function() {
     else
       $('#title-popup').html(event.title);
     $('#time-event-popup').html(eventDateTimeFormat(event.start, event.end, false));
+    $('#calendar-event-popup').html(event.calendar);
     var edit_url = '/users/' + $('#current-user-id-popup').html() +
      '/events/' + event.id + '/edit';
     $('#btn-edit-event').attr('href', edit_url);
@@ -184,8 +190,11 @@ $(document).on('page:change', function() {
 
   $('#mini-calendar').datepicker({
     dateFormat: 'DD, d MM, yy',
+    showOtherMonths: true,
+    selectOtherMonths: true,
       onSelect: function(dateText,dp) {
         $('#full-calendar').fullCalendar('gotoDate', new Date(Date.parse(dateText)));
+        $('#mini-calendar').datepicker('setDate', new Date(Date.parse(dateText)));
       }
   });
 
@@ -216,6 +225,23 @@ $(document).on('page:change', function() {
       $('#collapse1').addClass('in')
       $('.zippy-arrow').css({'background-position': '-141px -81px'});
     };
+  });
+
+  $('#title-mini-calendar').click(function() {
+    $('#mini-calendar').removeClass('out');
+    $('#title-mini-calendar').removeClass('in');
+  });
+
+  $('.ui-datepicker-title').click(function() {
+    $('#title-mini-calendar').addClass('in');
+    $('#mini-calendar').addClass('out');
+  });
+
+  $('.ui-datepicker').bind('DOMSubtreeModified', function() {
+    $('.ui-datepicker-title').click(function() {
+      $('#title-mini-calendar').addClass('in');
+      $('#mini-calendar').addClass('out');
+    });
   });
 
   $(document).click(function() {
@@ -339,6 +365,8 @@ $(document).on('page:change', function() {
       $('.ui-datepicker-prev').click();
     };
   });
+
+  $('.disable').addClass('disable-on');
 
   $('#bubble-close').click(function() {
     unSelectCalendar();

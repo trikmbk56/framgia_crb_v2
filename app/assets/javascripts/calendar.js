@@ -523,7 +523,7 @@ $(document).on('page:change', function() {
     $('#full-calendar').fullCalendar('refetchEvents');
   });
 
-  $('#calcontain.input-assumpte').change(function() {
+  $('#calcontent .input-assumpte').change(function() {
     $('input:checkbox[class=input-assumpte]:checked').not(this).prop('checked', false);
     color_id = $(this).attr('rel');
     calendar_id = $('#menu-calendar-id').attr('rel');

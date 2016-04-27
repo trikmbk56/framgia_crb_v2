@@ -17,7 +17,7 @@
                 <label><%= t "calendar.quick_add" %></label>
                 <textarea id="title-event-value"></textarea>
                 <div id="btn-quick-add">
-                  <%= link_to t("calendar.add"), "#", id: "link-to-event" %>
+                  <%= link_to t("calendar.add"), "javascript:void(0)", id: "link-to-event" %>
                 </div>
                 <p><%= t "calendar.example" %></p>
               </div>
@@ -97,7 +97,7 @@
       <%= link_to t("calendar.sub_menu.display"), "#" %>
     </div> -->
     <div>
-      <%= link_to t("calendar.sub_menu.calendar_setting"), "#",
+      <%= link_to t("calendar.sub_menu.calendar_setting"), "javascript:void(0)",
         id: "edit-calendar" %>
     </div>
     <!-- <div class="disable">

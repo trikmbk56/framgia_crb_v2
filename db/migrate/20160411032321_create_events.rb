@@ -2,7 +2,7 @@ class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
       t.string :title
-      t.string :description
+      t.text :description
       t.string :status
       t.string :color
       t.integer :repeat_type

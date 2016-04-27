@@ -54,6 +54,7 @@
     .btn {
       position: relative;
       float: left;
+      outline: none;
       &:first-child:not(:last-child):not(.dropdown-toggle) {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
@@ -108,7 +109,7 @@
     background-clip: padding-box;
     border: 1px solid #ccc;
     border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
+    border-radius: 0;
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
   }
@@ -128,11 +129,13 @@
 
     textarea {
       width: 350px;
-      height: 15px
+      height: 17px
     };
 
     p {
-      font-size: 13px;
+      color: #888;
+      font-size: 11px;
+      margin: 0;
     };
 
     label {
@@ -148,7 +151,7 @@
       display: inline-block;
       background: #f5f5f5;
       border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 2px;
+      border-radius: 0;
       cursor: pointer;
       font-size: 11px;
       font-weight: bold;
@@ -292,7 +295,6 @@
         padding: 0.6em;
         display: block;
         color: #333;
-        margin-top: 4px;
       }
       &:hover {
         background-color: #e6e6e6;
@@ -336,7 +338,7 @@
     };
     ol, ul {
       margin-top: 0;
-      margin-bottom: 10px;
+      margin-bottom: 0px;
     }
     li {
       display: list-item;
@@ -347,7 +349,7 @@
       .list-group-item {
         position: relative;
         display: block;
-        padding: 5px 15px 5px 0px;
+        padding: 5px;
         margin-bottom: -1px;
         background-color: #fff;
         overflow: hidden;
@@ -370,7 +372,7 @@
           margin:0;
           vertical-align: bottom;
           position: relative;
-          top: -1px;
+          top: -2px;
           *overflow: hidden;
         };
       }
@@ -647,12 +649,10 @@ span.ui-icon.ui-icon-circle-triangle-e {
   transition: all .5s ease;
   cursor: pointer;
   position: absolute;
-  top: 1px;
+  top: 0;
   z-index: 1;
   background: white;
-  -webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
-  -moz-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
-  box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+  border: 1px solid;
 }
 
 .divBox input[type=checkbox]:checked + label {
@@ -661,6 +661,7 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
 .divBox input[type=checkbox]:not(:checked) + label {
   background: white!important;
+  border: 1px solid #dcdcdc!important;
 }
 
 .l-color {

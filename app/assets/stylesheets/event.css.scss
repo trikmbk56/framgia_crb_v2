@@ -244,22 +244,18 @@
     border-radius: 0px;
   }
 
-  .btn {
-    padding: 6px 25px;
-  }
-
   select {
     width: 97%;
     margin-top: 5px;
   }
 
   .fix-width-date {
-    width: 78px;
+    width: 90px;
     display: inline-block;
   }
 
   .fix-width-time {
-    width: 60px;
+    width: 70px;
     display: inline-block;
   }
 
@@ -330,7 +326,7 @@
               border-spacing: 10px;
               max-width: 500px;
               li:first-child {
-                width: 80px;
+                width: 90px;
                 text-align: right;
                 font-weight: bold;
               }

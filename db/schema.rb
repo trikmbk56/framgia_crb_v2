@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20160426095658) do
 
   create_table "events", force: :cascade do |t|
     t.string   "title",        limit: 255
-    t.string   "description",  limit: 255
+    t.text     "description",  limit: 65535
     t.string   "status",       limit: 255
     t.string   "color",        limit: 255
     t.integer  "repeat_type",  limit: 4
@@ -53,8 +53,8 @@ ActiveRecord::Schema.define(version: 20160426095658) do
     t.datetime "start_date"
     t.datetime "finish_date"
     t.datetime "end_time"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "permissions", force: :cascade do |t|

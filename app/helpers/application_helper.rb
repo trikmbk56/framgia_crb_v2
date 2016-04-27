@@ -20,4 +20,8 @@ module ApplicationHelper
     avatar_url =  user.avatar.nil? ? image_path("user.png") : user.avatar
     image_tag(avatar_url, alt: user.name, class: "img-circle")
   end
+
+  def is_edit_form? param
+    param === "edit"
+  end
 end

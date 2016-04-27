@@ -50,7 +50,7 @@
                 <li class="list-group-item">
                   <label class="divBox">
                     <%= check_box_tag "calendar-select-id-#{calendar.id}",
-                      calendar.id, true, class: "calendar-select"  %>
+                      calendar.id, true, class: "calendar-select" %>
                     <label id="<%= "label-calendar-select-#{calendar.id}" %>"
                       class="<%= "color-#{calendar.color.id}" %>"
                       for="<%= "calendar-select-id-#{calendar.id}" %>">
@@ -60,16 +60,28 @@
                   <span id="<%= calendar.id %>"
                     class="clstMenu clstMenu-child" rel="<%= calendar.color.id %>">
                   </span>
-                  <div class="sub-calendars">
-                    <ul>
-                      <% calendar.sub_calendars.each do |sub_calendar| %>
-                        <li>
-                          <%= sub_calendar.name %>
-                        </li>
-                      <% end %>
-                    </ul>
-                  </div>
                 </li>
+                <div class="sub-calendars">
+                  <ul>
+                    <% calendar.sub_calendars.each do |sub_calendar| %>
+                      <li class="sub-list">
+                        <label class="divBox">
+                          <%= check_box_tag "calendar-select-id-#{sub_calendar.id}",
+                            sub_calendar.id, true, class: "calendar-select" %>
+                          <label id="<%= "label-calendar-select-#{sub_calendar.id}" %>"
+                            class="<%= "color-#{sub_calendar.color.id}" %>"
+                            for="<%= "calendar-select-id-#{sub_calendar.id}" %>">
+                          </label>
+                          <%= sub_calendar.name %>
+                        </label>
+                        <span id="<%= sub_calendar.id %>"
+                          class="clstMenu clstMenu-child" rel="<%= sub_calendar.color.id %>">
+                          <span class="sub"></span>
+                        </span>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
               <% end %>
             <% end %>
           </ul>
@@ -97,8 +109,12 @@
       <%= link_to t("calendar.sub_menu.display"), "#" %>
     </div> -->
     <div>
-      <%= link_to t("calendar.sub_menu.calendar_setting"), "javascript:void(0)",
-        id: "edit-calendar" %>
+      <%= link_to t("calendar.sub_menu.create_sub_calendar"),
+        "javascript:void(0)", id: "create-sub-calendar" %>
+    </div>
+    <div>
+      <%= link_to t("calendar.sub_menu.calendar_setting"),
+        "javascript:void(0)", id: "edit-calendar" %>
     </div>
     <!-- <div class="disable">
       <%= link_to t("calendar.sub_menu.view_trash"), "#" %>

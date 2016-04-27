@@ -314,6 +314,10 @@ $(document).on('page:change', function() {
   $('.clstMenu-child').click(function() {
     var windowH = $(window).height();
     var position = $(this).offset();
+    if ($(this).find(".sub").length > 0)
+      $('#create-sub-calendar').css('display', 'none');
+    else
+      $('#create-sub-calendar').css('display', 'block');
     $('#id-of-calendar').html($(this).attr('id'));
     var menu_height = $('#menu-of-calendar').height();
     if ((position.top + 12 + menu_height) >= windowH ) {
@@ -336,6 +340,14 @@ $(document).on('page:change', function() {
       $('input:checkbox[id=input-color-' + rel+ ']').prop('checked', true);
       $('#menu-calendar-id').attr('rel', $(this).attr('id'));
     };
+  });
+
+  $('#create-sub-calendar').click(function() {
+    var id_calendar = $('#id-of-calendar').html();
+    var user_id = $('#current-user-id-popup').html();
+    var create_sub_link = 'users/' + user_id.toString()
+      + '/calendars/' + 'new?parent_id=' + id_calendar.toString();
+    $('#create-sub-calendar').attr('href', create_sub_link);
   });
 
   $('#edit-calendar').click(function() {

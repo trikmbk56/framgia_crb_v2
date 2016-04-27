@@ -200,7 +200,7 @@ $(document).on('page:change', function() {
       dataType: 'text',
       success: function(text) {
         $('#full-calendar').fullCalendar( 'renderEvent', event, true)
-      } 
+      }
     });
   }
 
@@ -523,8 +523,8 @@ $(document).on('page:change', function() {
     $('#full-calendar').fullCalendar('refetchEvents');
   });
 
-  $('.input-assumpte').change(function() {
-    $('input:checkbox[class=input-assumpte]:checked').not(this).prop("checked", false);
+  $('#calcontain.input-assumpte').change(function() {
+    $('input:checkbox[class=input-assumpte]:checked').not(this).prop('checked', false);
     color_id = $(this).attr('rel');
     calendar_id = $('#menu-calendar-id').attr('rel');
     url = '/api/calendars/' + calendar_id
@@ -542,4 +542,18 @@ $(document).on('page:change', function() {
       }
     });
   });
+
+  $('#new_calendar .input-assumpte').change(function() {
+    checkedColor(this);
+  });
+
+  $('.edit_calendar .input-assumpte').change(function() {
+    checkedColor(this);
+  });
+
+  function checkedColor(e) {
+    $('input:checkbox[class=input-assumpte]:checked').not(e).prop('checked', false);
+    color_id = $(e).attr('rel');
+    $('#calendar_color_id').val(color_id);
+  }
 });

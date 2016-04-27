@@ -27,7 +27,7 @@
 
   #sidebar {
     width: 165px;
-    padding: 5px 9px 5px 0px;
+    padding: 5px 0px 5px 0px;
     white-space: nowrap;
   }
 
@@ -182,7 +182,7 @@
     background: #fff;
     cursor: pointer;
     font-size: 14px;
-    padding: 5px 5px 5px 10px;
+    padding: 7px 5px 5px 10px;
     zoom: 1;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -256,7 +256,7 @@
     position: absolute;
     right: 9px;
     text-indent: -100px;
-    top: 13px;
+    top: 15px;
     width: 10px;
     -moz-border-radius: 1px;
     -webkit-border-radius: 1px;
@@ -266,7 +266,7 @@
     padding-left: 2px;
     height: 10px;
     width: 8px;
-    top: 7px;
+    top: 8px;
     right: 5px;
     display: none;
     cursor: pointer;
@@ -360,6 +360,19 @@
             display: block;
           };
         };
+        label {
+          display: block;
+        };
+        input {
+          width: 13px;
+          height: 13px;
+          padding: 0;
+          margin:0;
+          vertical-align: bottom;
+          position: relative;
+          top: -1px;
+          *overflow: hidden;
+        };
       }
     }
   }
@@ -437,6 +450,9 @@ table.ui-datepicker-calendar {
     &:hover {
       background-color: #e6e6e6;
     };
+    th {
+      padding: 0px;
+    }
   }
   .ui-state-default {
     border: 1px solid #FFFFFF;
@@ -448,6 +464,10 @@ table.ui-datepicker-calendar {
   td {
     a {
       text-align: center;
+      padding: 0px;
+      &:hover {
+        background: #e6e6e6;
+      };
     }
   }
   .ui-state-active {
@@ -457,6 +477,9 @@ table.ui-datepicker-calendar {
     border: 1px solid #d3d3d3;
     background: #e6e6e6;
     font-weight: bold;
+  }
+  .ui-datepicker-header {
+    margin-top: 4px;
   }
 }
 
@@ -615,8 +638,8 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
 .divBox label {
   display: block;
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   -webkit-transition: all .5s ease;
   -moz-transition: all .5s ease;
   -o-transition: all .5s ease;

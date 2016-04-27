@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20160426095658) do
     t.datetime "updated_at",              null: false
   end
 
+  add_index "calendars", ["parent_id"], name: "index_calendars_on_parent_id", using: :btree
+
   create_table "colors", force: :cascade do |t|
     t.string   "title",      limit: 255
     t.string   "color_hex",  limit: 255

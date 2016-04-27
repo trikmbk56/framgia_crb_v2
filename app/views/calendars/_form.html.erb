@@ -1,5 +1,6 @@
 <%= form_for [current_user, @calendar] do |f| %>
-  <%= f.hidden_field :parent_id, value: params[:parent_id] %>
+  <%= f.hidden_field :parent_id,
+    value: @calendar.parent_id.nil? ? params[:parent_id] : @calendar.parent_id %>
   <div class="form-action">
     <%= link_to root_path, title: t("events.buttons.go_back"),
       "data-no-turbolink": true, class: "btn-go-back" do %>

@@ -8,6 +8,11 @@
       <%= f.submit t("events.buttons.save"), class: "btn-save" %>
       <%= link_to t("events.buttons.discard"), root_path, class: "btn-discard",
         "data-no-turbolink": true %>
+      <% if is_edit_form? action_name %>
+        <%= link_to t("events.buttons.delete"),
+          user_event_path(current_user, @event), method: :delete,
+          data: {confirm: t("events.confirm.delete")}, class: "btn-discard" %>
+      <% end %>
     </div>
     <div class="form-group">
       <%= f.label t "events.labels.title" %>

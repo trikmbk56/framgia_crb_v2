@@ -42,7 +42,6 @@ en:
         meridiem_time : "%l:%m%P"
     popup:
       time_label: "Time"
-      calendar_label: "Calendar"
       calendar: "Calendar: "
     dialog:
       time: "When"

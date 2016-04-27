@@ -1,6 +1,5 @@
 $(document).on('page:change', function() {
   var start_date, finish_date, event_title;
-
   $('#full-calendar').fullCalendar({
     header: {
       left: 'prev,next today',
@@ -30,7 +29,7 @@ $(document).on('page:change', function() {
     height: $(window).height() - $('header').height() - 9,
     events: function(start, end, timezone, callback) {
       var calendars = [];
-      $('input:checkbox[class=calendar-select]:checked').each(function(){
+      $('input:checkbox[class=calendar-select]:checked').each(function() {
         calendars.push($(this).val());
       });
       $.ajax({
@@ -97,7 +96,7 @@ $(document).on('page:change', function() {
       hiddenDialog('popup');
     },
     eventResize: function(event, delta, revertFunc) {
-      updateEvent(event);
+      updateEvent(event, 0);
       hiddenDialog('new-event-dialog');
       hiddenDialog('popup');
     },
@@ -106,7 +105,16 @@ $(document).on('page:change', function() {
       hiddenDialog('popup');
     },
     eventDrop: function(event, delta, revertFunc) {
-      updateEvent(event);
+      allDay = 0;
+      if(!event.end) {
+        event.end = event.start.clone();
+        event.end.add(2, 'hours');
+      }
+      if(event.allDay) {
+        allDay = 1;
+        event.end = event.start;
+      }
+      updateEvent(event, allDay);
     }
   });
 
@@ -142,7 +150,7 @@ $(document).on('page:change', function() {
       url = '/api/events/' + event.id;
       if(event.title == '')
         event.title = I18n.t('calendars.events.no_title');
-      updateEvent(event);
+      updateEvent(event, 0);
     });
   }
 
@@ -176,7 +184,7 @@ $(document).on('page:change', function() {
     $('.data-none-display').css('display', 'none');
   }
 
-  function updateEvent(event){
+  function updateEvent(event, allDay) {
     event.end ? setDateTime(event.start, event.end) : setDateTime(event.start, event.start);
     var id = event.id;
     url = '/api/events/' + id;
@@ -185,13 +193,14 @@ $(document).on('page:change', function() {
       data: {
         title: event.title,
         start: start_date.format(),
-        end: finish_date.format()
+        end: finish_date.format(),
+        all_day: allDay,
       },
       type: 'PUT',
       dataType: 'text',
       success: function(text) {
-        $('#full-calendar').fullCalendar('updateEvent', event);
-      }
+        $('#full-calendar').fullCalendar( 'renderEvent', event, true)
+      } 
     });
   }
 
@@ -443,7 +452,7 @@ $(document).on('page:change', function() {
     $(title).val('');
     $('#start-time').val(dateTimeFormat(start, dayClick));
     $('#finish-time').val(dateTimeFormat(end, dayClick));
-    var allDayClick = start._d.getHours() == end._d.getHours();
+    var allDayClick = !start._i;
     $('#all-day').val(dayClick || allDayClick ? '1' : '0');
     $('.event-time').text(eventDateTimeFormat(start, end, dayClick || allDayClick));
   }

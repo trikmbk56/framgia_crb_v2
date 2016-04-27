@@ -47,38 +47,11 @@
           <ul class="list-group">
             <% @calendars.each do |calendar| %>
               <% if calendar.parent_id.nil? %>
-                <li class="list-group-item">
-                  <label class="divBox">
-                    <%= check_box_tag "calendar-select-id-#{calendar.id}",
-                      calendar.id, true, class: "calendar-select" %>
-                    <label id="<%= "label-calendar-select-#{calendar.id}" %>"
-                      class="<%= "color-#{calendar.color.id}" %>"
-                      for="<%= "calendar-select-id-#{calendar.id}" %>">
-                    </label>
-                    <%= calendar.name %>
-                  </label>
-                  <span id="<%= calendar.id %>"
-                    class="clstMenu clstMenu-child" rel="<%= calendar.color.id %>">
-                  </span>
-                </li>
+                <%= render "calendar", calendar: calendar %>
                 <div class="sub-calendars">
                   <ul>
                     <% calendar.sub_calendars.each do |sub_calendar| %>
-                      <li class="sub-list">
-                        <label class="divBox">
-                          <%= check_box_tag "calendar-select-id-#{sub_calendar.id}",
-                            sub_calendar.id, true, class: "calendar-select" %>
-                          <label id="<%= "label-calendar-select-#{sub_calendar.id}" %>"
-                            class="<%= "color-#{sub_calendar.color.id}" %>"
-                            for="<%= "calendar-select-id-#{sub_calendar.id}" %>">
-                          </label>
-                          <%= sub_calendar.name %>
-                        </label>
-                        <span id="<%= sub_calendar.id %>"
-                          class="clstMenu clstMenu-child" rel="<%= sub_calendar.color.id %>">
-                          <span class="sub"></span>
-                        </span>
-                      </li>
+                      <%= render "calendar", calendar: sub_calendar %>
                     <% end %>
                   </ul>
                 </div>

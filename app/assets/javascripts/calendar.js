@@ -17,11 +17,10 @@ $(document).on('page:change', function() {
     eventColor: '#7BD148',
     defaultView: 'agendaWeek',
     editable: true,
-    selectable: true,
     selectHelper: true,
     unselectAuto: false,
     nowIndicator: true,
-    allDaySlot: false,
+    allDaySlot: true,
     eventLimit: true,
     allDayDefault: false,
     selectable: {
@@ -49,7 +48,8 @@ $(document).on('page:change', function() {
               end: data.finish_date,
               id: data.id,
               className: 'color-' + data.color_id,
-              calendar: data.calendar
+              calendar: data.calendar,
+              allDay: data.all_day
             }
           });
           callback(events);
@@ -58,11 +58,11 @@ $(document).on('page:change', function() {
     },
     eventRender: function(event, element) {
       if(event.allDay === false) {
-        if(event.end && !event.end.isAfter(new Date()))
+        if(event.end.isBefore(new Date()))
           $(element).addClass('before-current');
       }
       else {
-        if(event.end && !event.end.isAfter(new Date(), 'day'))
+        if(event.start.isBefore(new Date(), 'day'))
           $(element).addClass('before-current');
       }
     },
@@ -77,11 +77,13 @@ $(document).on('page:change', function() {
       clickEditTitle(event);
     },
     dayClick: function(date, jsEvent, view) {
-      setDateTime(date, date);
-      initDialogCreateEvent(date, date, true);
-      dialogCordinate(jsEvent, 'new-event-dialog', 'prong');
-      hiddenDialog('popup');
-      showDialog('new-event-dialog');
+      if(view.name === 'month') {
+        setDateTime(date, date);
+        initDialogCreateEvent(date, date, true);
+        dialogCordinate(jsEvent, 'new-event-dialog', 'prong');
+        hiddenDialog('popup');
+        showDialog('new-event-dialog');
+      }
     },
     select: function(start, end, jsEvent) {
       setDateTime(start, end);
@@ -164,7 +166,7 @@ $(document).on('page:change', function() {
   }
 
   function updateEvent(event){
-    setDateTime(event.start, event.end);
+    event.end ? setDateTime(event.start, event.end) : setDateTime(event.start, event.start);
     var id = event.id;
     url = '/api/events/' + id;
     $.ajax({
@@ -416,6 +418,7 @@ $(document).on('page:change', function() {
     $(title).val('');
     $('#start-time').val(dateTimeFormat(start, dayClick));
     $('#finish-time').val(dateTimeFormat(end, dayClick));
+    $('#all-day').val(dayClick || start._d.getHours() == end._d.getHours() ? '1' : '0');
     $('.event-time').text(eventDateTimeFormat(start, end, dayClick));
   }
 

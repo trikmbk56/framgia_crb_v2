@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
 
-  ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :user_id,
+  ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :all_day, :user_id,
     :calendar_id, :start_date, :finish_date, user_ids: []]
 
   has_many :attendees, dependent: :destroy
@@ -37,7 +37,8 @@ class Event < ActiveRecord::Base
       start_date: format_datetime(start_date),
       finish_date: format_datetime(finish_date),
       color_id: calendar.color.id,
-      calendar: calendar.name
+      calendar: calendar.name,
+      all_day: all_day
     }
   end
 

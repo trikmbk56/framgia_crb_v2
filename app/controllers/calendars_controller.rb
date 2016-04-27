@@ -1,15 +1,14 @@
 class CalendarsController < ApplicationController
   load_and_authorize_resource
+  before_action :load_colors, except: [:show, :destroy]
 
   def index
     @calendars = current_user.calendars
     @event = Event.new
-    @colors = Color.all
   end
 
   def create
     @calendar.user_id = current_user.id
-    @calendar.color = Color.first unless params[:color_id].present?
     if @calendar.save
       flash[:success] = t "calendar.success_create"
       redirect_to root_path
@@ -40,5 +39,9 @@ class CalendarsController < ApplicationController
   private
   def calendar_params
     params.require(:calendar).permit Calendar::ATTRIBUTES_PARAMS
+  end
+
+  def load_colors
+    @colors = Color.all
   end
 end

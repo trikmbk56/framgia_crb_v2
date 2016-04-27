@@ -5,6 +5,7 @@ class CreateEvents < ActiveRecord::Migration
       t.text :description
       t.string :status
       t.string :color
+      t.boolean :all_day, default: false
       t.integer :repeat_type
       t.integer :repeat_every
       t.references :user

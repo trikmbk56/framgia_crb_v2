@@ -58,7 +58,7 @@ $(document).on('page:change', function() {
     },
     eventRender: function(event, element) {
       if(event.allDay === false) {
-        if(event.end.isBefore(new Date()))
+        if(event.end && event.end.isBefore(new Date()))
           $(element).addClass('before-current');
       }
       else {
@@ -92,8 +92,18 @@ $(document).on('page:change', function() {
       hiddenDialog('popup');
       showDialog('new-event-dialog');
     },
+    eventResizeStart: function( event, jsEvent, ui, view ) {
+      hiddenDialog('new-event-dialog');
+      hiddenDialog('popup');
+    },
     eventResize: function(event, delta, revertFunc) {
       updateEvent(event);
+      hiddenDialog('new-event-dialog');
+      hiddenDialog('popup');
+    },
+    eventDragStart: function( event, jsEvent, ui, view ) {
+      hiddenDialog('new-event-dialog');
+      hiddenDialog('popup');
     },
     eventDrop: function(event, delta, revertFunc) {
       updateEvent(event);
@@ -105,7 +115,8 @@ $(document).on('page:change', function() {
       $('#title-popup').html(I18n.t('calendars.events.no_title'));
     else
       $('#title-popup').html(event.title);
-    $('#time-event-popup').html(eventDateTimeFormat(event.start, event.end, false));
+    var allDayEvent = event.end && event.start._d.getHours() === event.end._d.getHours();
+    $('#time-event-popup').html(eventDateTimeFormat(event.start, event.end, allDayEvent));
     $('#calendar-event-popup').html(event.calendar);
     var edit_url = '/users/' + $('#current-user-id-popup').html() +
      '/events/' + event.id + '/edit';
@@ -270,6 +281,7 @@ $(document).on('page:change', function() {
       $('#sub-menu-my-calendar, #menu-of-calendar, #sub-menu-setting').removeClass('sub-menu-visible');
       $('#sub-menu-my-calendar, #menu-of-calendar, #sub-menu-setting').addClass('sub-menu-hidden');
       $('.list-group-item').removeClass('background-hover');
+      $('.sub-list').removeClass('background-hover');
       hiddenDialog('new-event-dialog');
       hiddenDialog('popup');
     }
@@ -308,6 +320,7 @@ $(document).on('page:change', function() {
     };
     if ($('#menu-of-calendar').hasClass('sub-menu-hidden')) {
       $('.list-group-item').removeClass('background-hover');
+      $('.sub-list').removeClass('background-hover');
     };
   });
 
@@ -430,8 +443,9 @@ $(document).on('page:change', function() {
     $(title).val('');
     $('#start-time').val(dateTimeFormat(start, dayClick));
     $('#finish-time').val(dateTimeFormat(end, dayClick));
-    $('#all-day').val(dayClick || start._d.getHours() == end._d.getHours() ? '1' : '0');
-    $('.event-time').text(eventDateTimeFormat(start, end, dayClick));
+    var allDayClick = start._d.getHours() == end._d.getHours();
+    $('#all-day').val(dayClick || allDayClick ? '1' : '0');
+    $('.event-time').text(eventDateTimeFormat(start, end, dayClick || allDayClick));
   }
 
   function showDialog(dialogId) {

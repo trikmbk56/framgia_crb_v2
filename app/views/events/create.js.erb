@@ -12,6 +12,7 @@
       end: moment('<%= @data[:finish_date] %>'),
       id: '<%= @data[:id].to_s %>',
       className: 'color-<%= @data[:color_id] %>',
+      calendar: '<%= @data[:calendar] %>',
       allDay: <%= @data[:all_day] %>
     }
     $('#full-calendar').fullCalendar('renderEvent', eventData, true);

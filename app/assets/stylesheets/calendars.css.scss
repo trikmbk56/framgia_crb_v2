@@ -376,6 +376,37 @@
           *overflow: hidden;
         };
       }
+      .sub-list {
+        position: relative;
+        display: block;
+        padding: 5px 15px 5px 0px;
+        margin-bottom: -1px;
+        margin-left: -20px;
+        background-color: #fff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 13px;
+        &:hover {
+          background-color: #e6e6e6;
+          .clstMenu-child {
+            display: block;
+          };
+        };
+        label {
+          display: block;
+        };
+        input {
+          width: 13px;
+          height: 13px;
+          padding: 0;
+          margin:0;
+          vertical-align: bottom;
+          position: relative;
+          top: -1px;
+          *overflow: hidden;
+        };
+      }
     }
   }
 

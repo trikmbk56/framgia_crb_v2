@@ -8,4 +8,11 @@ class User < ActiveRecord::Base
   has_many :attendees, dependent: :destroy
   has_many :events
   has_many :invited_events, through: :attendees, source: :event
+
+  after_create :create_calendar
+
+  private
+  def create_calendar
+    self.calendars.create({name: self.name, color_id: 1})
+  end
 end

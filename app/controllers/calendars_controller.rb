@@ -3,7 +3,8 @@ class CalendarsController < ApplicationController
   before_action :load_colors, except: [:show, :destroy]
 
   def index
-    @calendars = current_user.calendars
+    @my_calendars = current_user.my_calendars
+    @other_calendars = current_user.other_calendars
     @event = Event.new
   end
 

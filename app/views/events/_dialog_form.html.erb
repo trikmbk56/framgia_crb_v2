@@ -30,8 +30,8 @@
                   <div class="calendar-container tile-content">
                     <div>
                       <%= f.select :calendar_id,
-                        options_for_select(@calendars.collect{|calendar| [calendar.name, calendar.id]}),
-                        {}, {class: "goog-flat-menu-button gcalSelect"} %>
+                        options_for_select(select_my_calendar @my_calendars),
+                        {class: "goog-flat-menu-button gcalSelect"} %>
                     </div>
                   </div>
                 </div>

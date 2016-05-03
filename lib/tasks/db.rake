@@ -10,8 +10,11 @@ namespace :db do
       end
 
       puts "Create permission"
-      read_permission = Fabricate :permission, permission: "read"
-      edit_permission = Fabricate :permission, permission: "edit"
+      Fabricate :permission, permission: I18n.t("permissions.permission_1")
+      Fabricate :permission, permission: I18n.t("permissions.permission_2")
+      Fabricate :permission, permission: I18n.t("permissions.permission_3")
+      Fabricate :permission, permission: I18n.t("permissions.permission_4")
+      Fabricate :permission, permission: I18n.t("permissions.permission_5")
 
       user_hash = {
         "Khong Minh Tri": "khong.minh.tri",
@@ -35,10 +38,7 @@ namespace :db do
 
       user_hash.each do |key, value|
         user = Fabricate :user, name: key, email: value+"@framgia.com"
-        calendar = Fabricate :calendar, user_id: user.id, color_id: 1
-
-        Fabricate :user_calendar, calendar_id: calendar.id, user_id: user.id,
-          permission_id: read_permission.id
+        calendar = user.calendars.first
 
         2.times do |i|
           date_time = DateTime.now + i.days

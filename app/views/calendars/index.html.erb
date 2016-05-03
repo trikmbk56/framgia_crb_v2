@@ -37,30 +37,29 @@
       <div id="my-calendar">
         <h2 id="clst_my" class="calHeader goog-zippy-collapsed">
           <div class="hover-my-calendar">
-            <span class="h zippy-arrow" unselectable="off">&nbsp;</span>
-            <span class="calHeaderSpace"><%= t "my_calendar" %></span>
+            <span id="my-zippy-arrow" class="h zippy-arrow" unselectable="off">&nbsp;</span>
+            <span class="calHeaderSpace"><%= t "my_calendars" %></span>
             <span id="clst_my_menu" class="clstMenu"></span>
           </div>
         </h2>
         <div id="collapse1" class="panel-collapse collapse"
           aria-expanded="true">
-          <ul class="list-group">
-            <% @calendars.each do |calendar| %>
-              <% if calendar.parent_id.nil? %>
-                <%= render "calendar", calendar: calendar %>
-                <div class="sub-calendars">
-                  <ul>
-                    <% calendar.sub_calendars.each do |sub_calendar| %>
-                      <%= render "calendar", calendar: sub_calendar %>
-                    <% end %>
-                  </ul>
-                </div>
-              <% end %>
-            <% end %>
-          </ul>
+          <%= render "calendars", calendars: @my_calendars %>
         </div>
       </div>
-      <div id="other-calendar"></div>
+      <div id="other-calendar">
+        <h2 id="clst_other" class="calHeader goog-zippy-collapsed">
+          <div class="hover-my-calendar">
+            <span id="other-zippy-arrow" class="h zippy-arrow" unselectable="off">&nbsp;</span>
+            <span class="calHeaderSpace"><%= t "other_calendars" %></span>
+            <span id="clst_other_menu" class="clstMenu"></span>
+          </div>
+        </h2>
+        <div id="collapse2" class="panel-collapse collapse"
+          aria-expanded="true">
+          <%= render "calendars", calendars: @other_calendars %>
+        </div>
+      </div>
     </div>
     <div class="mainbody">
       <div id="full-calendar"></div>

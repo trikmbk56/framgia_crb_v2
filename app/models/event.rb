@@ -30,13 +30,13 @@ class Event < ActiveRecord::Base
       order start_date: :asc
   end
 
-  def json_data
+  def json_data user_id
     {
       id: id,
       title: title,
       start_date: format_datetime(start_date),
       finish_date: format_datetime(finish_date),
-      color_id: calendar.color.id,
+      color_id: calendar.get_color(user_id),
       calendar: calendar.name,
       all_day: all_day
     }

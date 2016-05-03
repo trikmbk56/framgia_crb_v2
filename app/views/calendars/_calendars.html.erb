@@ -1,0 +1,14 @@
+<ul class="list-group">
+  <% calendars.each do |calendar| %>
+    <% if calendar.parent? %>
+      <%= render "calendar", calendar: calendar %>
+      <div class="sub-calendars">
+        <ul>
+          <% calendar.sub_calendars.each do |sub_calendar| %>
+            <%= render "calendar", calendar: sub_calendar %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+</ul>

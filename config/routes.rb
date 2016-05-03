@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :attendees
   namespace :api do
     resources :events, only: [:index, :destroy, :update]
-    resources :calendars, only: [:update]
+    resources :calendars, only: [:update, :new]
+    resources :users, only: :index
   end
 end

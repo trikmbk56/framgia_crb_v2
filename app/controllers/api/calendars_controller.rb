@@ -9,4 +9,16 @@ class Api::CalendarsController < ApplicationController
       render text: t("calendars.flashs.not_updated")
     end
   end
+
+  def new
+    if params[:user_id].present?
+      respond_to do |format|
+        format.html {
+          render partial: "calendars/user_share",
+            locals: {user_id: params[:user_id], email: params[:email],
+            permission: params[:permission], permissions: Permission.be_shown}
+        }
+      end
+    end
+  end
 end

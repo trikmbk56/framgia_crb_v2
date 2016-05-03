@@ -4,10 +4,13 @@ class Calendar < ActiveRecord::Base
   has_many :users, through: :user_calendars
   has_many :sub_calendars, class_name: Calendar.name, foreign_key: :parent_id
 
+  accepts_nested_attributes_for :user_calendars
   belongs_to :color
   belongs_to :owner, class_name: User.name
 
-  ATTRIBUTES_PARAMS = [:name, :description, :user_id, :color_id, :parent_id]
+  ATTRIBUTES_PARAMS = [:name, :description, :user_id, :color_id, :parent_id,
+    user_calendars_attributes: [:user_id, :permission_id]]
+
   after_create :create_user_calendar
 
   enum status: [:no_public, :share_public, :public_hide_detail]
@@ -20,14 +23,14 @@ class Calendar < ActiveRecord::Base
     user_calendar = user_calendars.find_by user_id: user_id
     color_id = user_calendar.color_id
   end
-  
+
   def parent?
     parent_id.nil?
   end
 
   private
   def create_user_calendar
-    self.user_calendars.create({user_id: self.user_id, permission_id: 1, 
+    self.user_calendars.create({user_id: self.user_id, permission_id: 1,
       color_id: self.color_id})
   end
 end

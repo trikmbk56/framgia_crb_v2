@@ -11,8 +11,8 @@ class Api::EventsController < ApplicationController
         }
       end
     else
-      @events = current_user.events.in_calendars params[:calendars]
-      @data = @events.map{|event| event.json_data}
+      @events = Event.in_calendars params[:calendars]
+      @data = @events.map{|event| event.json_data(current_user.id)}
       render json: @data
     end
   end

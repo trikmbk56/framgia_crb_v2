@@ -8,4 +8,26 @@ class Calendar < ActiveRecord::Base
   belongs_to :owner, class_name: User.name
 
   ATTRIBUTES_PARAMS = [:name, :description, :user_id, :color_id, :parent_id]
+  after_create :create_user_calendar
+
+  enum status: [:no_public, :share_public, :public_hide_detail]
+
+  scope :calendars_public, ->calendars_id do
+    where(id: calendars_id).where.not status: Calendar.statuses[:no_public]
+  end
+
+  def get_color user_id
+    user_calendar = user_calendars.find_by user_id: user_id
+    color_id = user_calendar.color_id
+  end
+  
+  def parent?
+    parent_id.nil?
+  end
+
+  private
+  def create_user_calendar
+    self.user_calendars.create({user_id: self.user_id, permission_id: 1, 
+      color_id: self.color_id})
+  end
 end

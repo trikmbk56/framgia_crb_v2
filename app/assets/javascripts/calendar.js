@@ -242,10 +242,20 @@ $(document).on('page:change', function() {
   $('#clst_my').click(function() {
     if ($('#collapse1').hasClass('in')) {
       $('#collapse1').removeClass('in')
-      $('.zippy-arrow').css({'background-position': '-153px -81px'});
+      $('#my-zippy-arrow').css({'background-position': '-153px -81px'});
     } else{
       $('#collapse1').addClass('in')
-      $('.zippy-arrow').css({'background-position': '-141px -81px'});
+      $('#my-zippy-arrow').css({'background-position': '-141px -81px'});
+    };
+  });
+
+  $('#clst_other').click(function() {
+    if ($('#collapse2').hasClass('in')) {
+      $('#collapse2').removeClass('in')
+      $('#other-zippy-arrow').css({'background-position': '-153px -81px'});
+    } else{
+      $('#collapse2').addClass('in')
+      $('#other-zippy-arrow').css({'background-position': '-141px -81px'});
     };
   });
 

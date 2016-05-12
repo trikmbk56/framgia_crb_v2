@@ -15,7 +15,7 @@ class EventsController < ApplicationController
         format.html do
           redirect_to user_event_path current_user, @event
         end
-        format.js {@data = @event.json_data}
+        format.js {@data = @event.json_data(current_user.id)}
       else
         flash[:error] = t "events.flashs.not_created"
         format.html do

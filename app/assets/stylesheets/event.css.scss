@@ -417,7 +417,6 @@
     }
   }
 }
-
 .fc-event {
   border-radius: 0px!important;
   font-size: 1.3em!important;
@@ -757,4 +756,134 @@
   label {
       cursor: default;
   }
+}
+.bubble {
+  width: 400px;
+  left: 0;
+  top: 0;
+  z-index: 1001;
+  position: absolute;
+  visibility: hidden;
+  font-size: 9px;
+}
+
+.bubble-table {
+  table-layout: fixed;
+  width: 100%;
+}
+.bubble-cell-side {
+  width: 25px;
+}
+.bubble-corner {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  overflow: hidden;
+}
+.bubble-tl {
+  left: 0;
+}
+.bubble-sprite {
+  width: 148px;
+  height: 96px;
+  position: absolute;
+  background-image: url(image_path("bubble_combined_v2.png"));
+}
+.bubble-cell-main {
+  background-color: #fff;
+  width: 100%;
+}
+.bubble-top {
+  border-top: 1px solid #ababab;
+}
+.bubble-top, .bubble-bottom {
+  height: 24px;
+  background: #fff;
+}
+.bubble-tr {
+  left: -25px;
+}
+.bubble-mid {
+  background: #fff;
+  border-left: 1px solid #ababab;
+  border-right: 1px solid #ababab;
+  padding: 0 20px;
+}
+.bubble .details .title {
+  font-weight: bold;
+  font-size: medium;
+}
+.bubble .detail-content {
+  padding-bottom: 0;
+}
+.detail-content {
+  padding: 1em 0;
+}
+.detail-item {
+  padding: 3px 0;
+  margin: 0;
+}
+.bubble-bl {
+  left: 0;
+  top: -25px;
+}
+.bubble-bottom {
+  border-bottom: 1px solid #ababab;
+}
+.bubble-br {
+  left: -25px;
+  top: -25px;
+}
+.event-details-label {
+  display: block;
+  clear: left;
+  float: left;
+  font-size: 100%;
+  font-weight: bold;
+  margin: 0;
+  width: 7em;
+  color: #4e4e4e;
+}
+.event-when {
+  display: block;
+  margin-left: 7em;
+}
+.bubble-closebutton {
+  right: 10px;
+  top: 10px;
+  width: 14px;
+  height: 13px;
+  cursor: pointer;
+  position: absolute;
+  background: url(image_path("combined_v22.png")) 0 -50px;
+}
+.prong {
+  width: 98px;
+  height: 72px;
+  margin-bottom: -72px;
+  position: relative;
+  top: -1px;
+  overflow: hidden;
+}
+.prong .bubble-sprite {
+  left: -52px;
+  top: -24px;
+}
+.show-popup {
+  visibility: visible;
+  left: 200px;
+  top: 30px;
+}
+.hidden-popup {
+  visibility: hidden;
+  left: 0;
+  top: 0;
+}
+.fc-content {
+  cursor: pointer;
+}
+.links {
+  color: -webkit-link;
+  text-decoration: none;
+  cursor: pointer;
 }

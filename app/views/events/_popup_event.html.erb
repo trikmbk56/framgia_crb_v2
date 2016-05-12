@@ -3,6 +3,7 @@
     <div id="bubble-close" class="bubble-close close-popup cancel-popup-event"></div>
     <div id="bubbleContent" class="bubblecontent">
       <div class="tab-container">
+        <div id="current-user-id-popup" ><%= current_user.id if user_signed_in? %></div>
         <div id="head-popup">
           <div class="title-popup-wap" >
             <div id="color-event"></div>
@@ -29,7 +30,11 @@
           </div>
         </div>
         <div id="footer-popup">
-          <%= btn_via_permission user, event %>
+          <% if params[:controller] == "api/particular_events" %>
+            <%= link_via_permission event %>
+          <% else %>
+            <%= btn_via_permission user, event %>
+          <% end %>
         </div>
       </div>
     </div>

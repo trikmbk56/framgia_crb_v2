@@ -45,6 +45,12 @@ en:
     popup:
       time_label: "Time"
       calendar: "Calendar: "
+      more_details: "more details"
+      copy_event: "copy to my calendar"
+      when: "When"
+      can_not_share: "calendar is not be shared"
+      edit: "edit"
+      fail: "fail"
     dialog:
       time: "When"
       calendar: "Calendar"

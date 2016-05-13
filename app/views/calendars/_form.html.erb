@@ -56,7 +56,7 @@
   <div class="make-public form-group" >
     <div class="divider"></div>
     <div>
-      <input type="checkbox" id="make_public">
+      <input type="checkbox" id="make_public" name="calendar[status]" value="<%= @calendar.status %>">
       <label for="make_public">
         <%= t "calendar.make_calendar_public" %><br/>
       </label>
@@ -101,6 +101,17 @@
       <div class="col3"></div>
     </div>
     <div id="list-share-calendar">
+      <% if @calendar.user_id? %>
+        <% @calendar.user_calendars.each do |user_calendar| %>
+          <% if (user_calendar.user_id != current_user.id) %>
+            <%= render partial: "user_share",
+              locals: {user_id: user_calendar.user_id, id: user_calendar.id,
+              email: "#{user_calendar.email} <#{user_calendar.name}>",
+              permission: user_calendar.permission_id,
+              permissions: @permissions} %>
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 <% end %>

@@ -565,13 +565,25 @@ $(document).on('page:change', function() {
     $('#calendar_color_id').val(color_id);
   }
 
-  function enable_cb() {
-    $('#free_busy').prop('disabled', (this.checked) ? false : true)
+  if ($('#make_public').val() == 'public_hide_detail') {
+    $('#make_public').prop('checked', true);
+    $('#free_busy').prop('checked', true);
   }
+  else if ($('#make_public').val() == 'share_public') {
+    $('#make_public').prop('checked', true);
+  }
+  else if ($('#make_public').val() == 'no_public') {
+    $('#make_public').prop('checked', false);
+    $('#free_busy').prop('disabled', true);
+  };
 
-  $(function() {
-    enable_cb();
-    $('#make_public').click(enable_cb);
+  $('#make_public').click(function() {
+    $('#make_public').val((this.checked) ? 'share_public' : 'no_public');
+    $('#free_busy').prop('disabled', (this.checked) ? false : true);
+  });
+
+  $('#free_busy').click(function() {
+    $('#make_public').val(($('#free_busy').prop('checked')) ? 'public_hide_detail' : 'share_public');
   });
 
   /* share-calendar*/
@@ -583,6 +595,13 @@ $(document).on('page:change', function() {
 
   var current_user = $('#current_user').val();
   var user_ids = [current_user];
+
+  $('.user_share_ids').each(function() {
+    user_id_temp = $(this).val();
+    if ($.inArray(user_id_temp, user_ids) == -1) {
+      user_ids.push(user_id_temp);
+    };
+  });
 
   $('#add-person').click(function() {
     var user_id = $('#textbox-email-share').val();
@@ -599,8 +618,16 @@ $(document).on('page:change', function() {
         },
         success: function(html) {
           if ($.inArray(user_id, user_ids) == -1) {
-            $('#list-share-calendar').append(html);
-            user_ids.push(user_id);
+            if($('#user-calendar-share-' + user_id).length > 0) {
+              $('#user-calendar-share-' + user_id).css('display', 'block');
+              $('#user-calendar-share-' + user_id).find('.user_calendar_destroy').val(false);
+              per_id_new = $('#permission-select').val();
+              $('#user-calendar-share-' + user_id).find('#permission-select-share').val(per_id_new);
+            }
+            else {
+              $('#list-share-calendar').append(html);
+              user_ids.push(user_id);
+            }
           };
         }
       });
@@ -610,7 +637,8 @@ $(document).on('page:change', function() {
   });
 
   $('#list-share-calendar').on('click', '.image-remove', function() {
-    $(this).parent().parent().remove();
+    $(this).parent().parent().find('.user_calendar_destroy').val('1');
+    $(this).parent().parent().hide();
     index = user_ids.indexOf($(this).prop('id'));
     if (index !== -1)
       user_ids.splice(index, 1);

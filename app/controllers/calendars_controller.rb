@@ -21,6 +21,7 @@ class CalendarsController < ApplicationController
   end
 
   def update
+    @calendar.status = "no_public" unless calendar_params[:status]
     if @calendar.update_attributes calendar_params
       flash[:success] = t "calendar.success_update"
       redirect_to root_path
@@ -52,6 +53,6 @@ class CalendarsController < ApplicationController
   end
 
   def load_permissions
-    @permissions = Permission.be_shown
+    @permissions = Permission.all
   end
 end

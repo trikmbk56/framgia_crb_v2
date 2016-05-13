@@ -85,6 +85,8 @@ ActiveRecord::Schema.define(version: 20160512024923) do
     t.datetime "updated_at",                          null: false
   end
 
+  add_index "user_calendars", ["user_id", "calendar_id"], name: "index_user_calendars_on_user_id_and_calendar_id", unique: true, using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name",                   limit: 255
     t.string   "email",                  limit: 255, default: "", null: false

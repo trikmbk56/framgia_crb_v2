@@ -2,6 +2,12 @@ class EventsController < ApplicationController
   load_and_authorize_resource
   before_action :load_calendars, only: [:new, :edit]
   before_action :load_attendees, only: [:new, :edit, :show]
+  before_action only: [:edit, :update, :destroy] do
+    validate_permission_change_of_calendar @event.calendar
+  end
+  before_action only: [:show] do
+    validate_permission_see_detail_of_calendar @event.calendar
+  end
 
   def show
     @attendees = @event.attendees
@@ -61,7 +67,7 @@ class EventsController < ApplicationController
   end
 
   def load_calendars
-    @calendars = current_user.calendars
+    @calendars = current_user.manage_calendars
   end
 
   def load_attendees

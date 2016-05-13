@@ -75,14 +75,7 @@ $(document).on('page:change', function() {
       }).length)>0;
     },
     eventClick: function(event, jsEvent, view) {
-      popupOriginal();
-      initDialogEventClick(event);
-      dialogCordinate(jsEvent, 'popup', 'prong-popup');
-      hiddenDialog('new-event-dialog');
-      showDialog('popup');
-      unSelectCalendar();
-      deleteEventPopup(event);
-      clickEditTitle(event);
+      initDialogEventClick(event, jsEvent);
     },
     dayClick: function(date, jsEvent, view) {
       if(view.name === 'month') {
@@ -127,17 +120,21 @@ $(document).on('page:change', function() {
     }
   });
 
-  function initDialogEventClick(event) {
-    if(event.title == '')
-      $('#title-popup').html(I18n.t('calendars.events.no_title'));
-    else
-      $('#title-popup').html(event.title);
-    var allDayEvent = event.end && event.start._d.getHours() === event.end._d.getHours();
-    $('#time-event-popup').html(eventDateTimeFormat(event.start, event.end, allDayEvent));
-    $('#calendar-event-popup').html(event.calendar);
-    var edit_url = '/users/' + $('#current-user-id-popup').html() +
-     '/events/' + event.id + '/edit';
-    $('#btn-edit-event').attr('href', edit_url);
+  function initDialogEventClick(event, jsEvent) {
+    if ($('#popup') !== null)
+      $('#popup').remove();
+    $.ajax({
+      url: 'api/events/' + event.id,
+      success: function(data){
+        $('#calcontent').append(data);
+        dialogCordinate(jsEvent, 'popup', 'prong-popup');
+        hiddenDialog('new-event-dialog');
+        showDialog('popup');
+        unSelectCalendar();
+        deleteEventPopup(event);
+        clickEditTitle(event);
+      }
+    });
   }
 
   function clickEditTitle(event) {
@@ -183,8 +180,8 @@ $(document).on('page:change', function() {
     });
   }
 
-  $('.cancel-popup-event').click(function() {
-    hiddenDialog('popup');
+  $('#calcontent').on('click', '.cancel-popup-event', function() {
+    hiddenDialog('popup')
   });
 
   function popupOriginal() {
@@ -201,8 +198,8 @@ $(document).on('page:change', function() {
       url: url,
       data: {
         title: event.title,
-        start: start_date.format(),
-        end: finish_date.format(),
+        start_date: start_date.format(),
+        finish_date: finish_date.format(),
         all_day: allDay,
       },
       type: 'PUT',

@@ -34,8 +34,8 @@
     </div>
     <div class="form-group">
       <%= f.label t "events.labels.calendar" %>
-      <%= f.collection_select :calendar_id, @calendars, :id, :name, {},
-        class: "form-control" %>
+      <%= f.collection_select :calendar_id, @calendars, :id, :name, {}, 
+        selected: @event.calendar.present? ? @event.calendar.id : -1 , class: "form-control" %>
     </div>
     <div class="form-group">
       <%= f.label t "events.labels.description" %>
@@ -48,4 +48,3 @@
     </div>
   <% end %>
 </div>
-

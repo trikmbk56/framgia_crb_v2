@@ -300,13 +300,6 @@
         background-color: #e6e6e6;
       };
     };
-    .divider {
-      height: 1px;
-      margin: 9px 0;
-      overflow: hidden;
-      background-color: #e5e5e5;
-      padding: 0px;
-    }
   }
 
   .menu-calendar {
@@ -331,7 +324,7 @@
 
   .collapse {
     display: none;
-    height: 140px;
+    max-height: 140px;
     overflow: hidden;
     &:hover {
       overflow: auto;
@@ -660,7 +653,7 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
   .form-group {
     padding: 0 0 10px 10px;
-    width: 50%;
+    width: 70%;
   }
 }
 
@@ -824,4 +817,110 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
 .ui-datepicker th {
   padding-left: 0px!important;
+}
+
+.divider {
+  height: 1px;
+  margin: 13px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+  padding: 0px;
+}
+
+.make-public {
+  input {
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+  };
+
+  span {
+    margin-left: 24px;
+    font-size: 11px;
+  }
+
+  div:last-child {
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+}
+
+.share-calendar {
+  text-align: left;
+  p {
+    font-weight: bold;
+  }
+  .col1, .col2, .col3 {
+    height: 33px;
+    line-height: 33px;
+    float: left;
+    display: inline;
+  }
+  .col1 {
+    width: 40%;
+  }
+  .col2 {
+    width: 40%;
+  }
+  .col3 {
+    width: 20%;
+  }
+  #share-calendar-header {
+    .col1, .col2, .col3 {
+      font-weight: bold;
+    }
+  }
+  #add-user-share {
+    .col1, .col2, .col3 {
+      background-color: #EFEDED;
+    }
+    .col1 {
+      input {
+        width: 200px;
+      }
+    }
+    .col2 {
+      button {
+        vertical-align: middle;
+        height: 24px;
+        margin-top: 0px;
+        cursor: pointer;
+      }
+      div {
+        float: left;
+        display: inline;
+      }
+    }
+  }
+
+  .permission-select {
+    margin-top: 6px;
+    padding: 2px;
+    cursor: pointer;
+  }
+  .image-remove {
+    zoom: reset;
+    &:hover {
+      cursor: pointer;
+    };
+  }
+  .select2-container .select2-selection--single {
+    height: 22px;
+    line-height: 22px;
+    border-radius: 0px;
+    margin-left: 5px;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 21px;
+  }
+  #list-share-calendar {
+    .permission-select {
+      width: 57%;
+    }
+  }
+}
+
+.select2-container--open .select2-dropdown {
+  left: 5px!important;
 }

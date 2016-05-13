@@ -1,6 +1,7 @@
 class CalendarsController < ApplicationController
   load_and_authorize_resource
   before_action :load_colors, except: [:show, :destroy]
+  before_action :load_users, :load_permissions,  only: [:new, :edit]
 
   def index
     @my_calendars = current_user.my_calendars
@@ -44,5 +45,13 @@ class CalendarsController < ApplicationController
 
   def load_colors
     @colors = Color.all
+  end
+
+  def load_users
+    @users = User.all
+  end
+
+  def load_permissions
+    @permissions = Permission.be_shown
   end
 end

@@ -269,11 +269,9 @@ $(document).on('page:change', function() {
     $('#mini-calendar').addClass('out');
   });
 
-  $('.ui-datepicker').bind('DOMSubtreeModified', function() {
-    $('.ui-datepicker-title').click(function() {
-      $('#title-mini-calendar').addClass('in');
-      $('#mini-calendar').addClass('out');
-    });
+  $('.ui-datepicker').on('click', '.ui-datepicker-title', function() {
+    $('#title-mini-calendar').addClass('in');
+    $('#mini-calendar').addClass('out');
   });
 
   $(document).click(function() {
@@ -566,4 +564,55 @@ $(document).on('page:change', function() {
     color_id = $(e).attr('rel');
     $('#calendar_color_id').val(color_id);
   }
+
+  function enable_cb() {
+    $('#free_busy').prop('disabled', (this.checked) ? false : true)
+  }
+
+  $(function() {
+    enable_cb();
+    $('#make_public').click(enable_cb);
+  });
+
+  /* share-calendar*/
+
+  $('#textbox-email-share').select2({
+    tokenSeparators: [',', ' '],
+    width: '90%'
+  });
+
+  var current_user = $('#current_user').val();
+  var user_ids = [current_user];
+
+  $('#add-person').click(function() {
+    var user_id = $('#textbox-email-share').val();
+    var email = $('#textbox-email-share').find('option:selected').text();
+    var permission = $('#permission-select').val();
+    if (user_id) {
+      $.ajax({
+        url: '/api/calendars/new',
+        method: 'get',
+        data: {
+          user_id: user_id,
+          email: email,
+          permission: permission,
+        },
+        success: function(html) {
+          if ($.inArray(user_id, user_ids) == -1) {
+            $('#list-share-calendar').append(html);
+            user_ids.push(user_id);
+          };
+        }
+      });
+    }
+    $('#textbox-email-share').val('');
+    $('#select2-textbox-email-share-container').html('');
+  });
+
+  $('#list-share-calendar').on('click', '.image-remove', function() {
+    $(this).parent().parent().remove();
+    index = user_ids.indexOf($(this).prop('id'));
+    if (index !== -1)
+      user_ids.splice(index, 1);
+  });
 });

@@ -52,4 +52,55 @@
     <%= f.label :description %>
     <%= f.text_area :description, class: "form-control" %>
   </div>
+
+  <div class="make-public form-group" >
+    <div class="divider"></div>
+    <div>
+      <input type="checkbox" id="make_public">
+      <label for="make_public">
+        <%= t "calendar.make_calendar_public" %><br/>
+      </label>
+      <span><%= t "calendar.make_public_description" %></span>
+    </div>
+    <div>
+      <input type="checkbox" id="free_busy">
+      <label for="free_busy"><%= t "calendar.share_only_free_busy" %></label>
+    </div>
+  </div>
+
+  <div class="share-calendar form-group" >
+    <%= hidden_field_tag "current_user", current_user.id, {id: "current_user"} %>
+    <div class="divider"></div>
+    <p><%= t "calendar.title_share_calendar" %></p>
+    <div id="share-calendar-header">
+      <div class="col1"><%= t "calendar.person" %></div>
+      <div class="col2"><%= t "calendar.permission" %></div>
+      <div class="col3"><%= t "calendar.remove" %></div>
+    </div>
+    <div id="add-user-share">
+      <div class="col1">
+        <%= select :user, :id,
+        @users.collect{|user| [user.email + " <#{user.name}>", user.id]},
+          {include_blank: true}, {id: "textbox-email-share"} %>
+      </div>
+      <div class="col2">
+        <div>
+          <%= collection_select :permission, :id, @permissions,
+            :id, :permission, {selected: 3},
+            class: "form-control permission-select", id: "permission-select" %>
+        </div>
+        <div>
+          <button type="button" id="add-person"><%= t "calendar.add_person" %></button>
+        </div>
+      </div>
+      <div class="col3"></div>
+    </div>
+    <div id="user-default">
+      <div class="col1"><%= current_user.email %></div>
+      <div class="col2"><%= t "permissions.permission_1" %></div>
+      <div class="col3"></div>
+    </div>
+    <div id="list-share-calendar">
+    </div>
+  </div>
 <% end %>

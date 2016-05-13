@@ -19,8 +19,21 @@ class Api::EventsController < ApplicationController
 
   def update
     @event = Event.find_by id: params[:id]
+    if params[:start_repeat].nil?
+      @start_repeat = params[:start]
+    else
+      @start_repeat = params[:start_repeat]
+    end
+    if params[:end_repeat].nil?
+      difference = (params[:start].to_date - @event.start_date.to_date).to_i
+      @end_repeat = @event.end_repeat + difference.days
+    else
+      @end_repeat = params[:end_repeat].to_date + 1.days
+    end
+
     render text: @event.update_attributes(title: params[:title], 
-      start_date: params[:start], finish_date: params[:end], 
+      start_date: params[:start], finish_date: params[:end],
+      start_repeat: @start_repeat, end_repeat: @end_repeat, 
       all_day: params[:all_day]) ? 
       t("events.flashs.updated") : t("events.flashs.not_updated")
   end

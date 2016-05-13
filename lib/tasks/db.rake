@@ -40,12 +40,15 @@ namespace :db do
         user = Fabricate :user, name: key, email: value+"@framgia.com"
         calendar = user.calendars.first
 
-        2.times do |i|
+        4.times do |i|
           date_time = DateTime.now + i.days
           start_time_day = date_time.change({hour: 8})
           end_time_day = date_time.change({hour: 10})
+          range = Random.rand(2...10)
+          end_repeat = date_time + range.days
           event = Fabricate :event, start_date: start_time_day,
-            finish_date: end_time_day, calendar_id: calendar.id, user_id: user.id
+            finish_date: end_time_day, start_repeat: date_time,
+            end_repeat: end_repeat, calendar_id: calendar.id, user_id: user.id
           3.times do |j|
             Fabricate :attendee, user_id: j + 1, event_id: event.id
           end

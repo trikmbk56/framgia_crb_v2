@@ -9,6 +9,17 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.new event_params
+    if event_params[:start_repeat].nil?
+      @event.start_repeat = event_params[:start_date]
+    else
+      @event.start_repeat = event_params[:start_repeat]
+    end
+    if event_params[:end_repeat].nil?
+      @event.end_repeat = event_params[:finish_date].to_date + 1.days
+    else
+      @event.end_repeat = event_params[:end_repeat].to_date + 1.days
+    end
+  
     respond_to do |format|
       if @event.save
         flash[:success] = t "events.flashs.created"

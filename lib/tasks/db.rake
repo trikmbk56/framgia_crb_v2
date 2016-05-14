@@ -14,7 +14,6 @@ namespace :db do
       Fabricate :permission, permission: I18n.t("permissions.permission_2")
       Fabricate :permission, permission: I18n.t("permissions.permission_3")
       Fabricate :permission, permission: I18n.t("permissions.permission_4")
-      Fabricate :permission, permission: I18n.t("permissions.permission_5")
 
       user_hash = {
         "Khong Minh Tri": "khong.minh.tri",

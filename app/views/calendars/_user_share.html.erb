@@ -1,5 +1,10 @@
-<div>
-  <%= hidden_field_tag "calendar[user_calendars_attributes][][user_id]", user_id %>
+<div id="user-calendar-share-<%= user_id %>">
+  <%= hidden_field_tag "calendar[user_calendars_attributes][][user_id]",
+   user_id, {class: "user_share_ids"} %>
+  <%= hidden_field_tag "calendar[user_calendars_attributes][][id]", id,
+    {class: "user_calendar_ids"} %>
+  <%= hidden_field_tag "calendar[user_calendars_attributes][][_destroy]",
+    false, {class: "user_calendar_destroy"} %>
   <div class="col1"><%= email %></div>
   <div class="col2">
     <%= select_tag "calendar[user_calendars_attributes][][permission_id]",

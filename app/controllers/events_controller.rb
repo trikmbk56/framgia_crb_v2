@@ -21,12 +21,12 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.new event_params
-    if event_params[:start_repeat].nil?
+    if event_params[:start_repeat].blank?
       @event.start_repeat = event_params[:start_date]
     else
       @event.start_repeat = event_params[:start_repeat]
     end
-    if event_params[:end_repeat].nil?
+    if event_params[:end_repeat].blank?
       @event.end_repeat = event_params[:finish_date].to_date + 1.days
     else
       @event.end_repeat = event_params[:end_repeat].to_date + 1.days
@@ -34,6 +34,12 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
+        if valid_params? params[:repeat_ons], event_params[:repeat_type]
+          @repeat_ons = params[:repeat_ons]
+          @repeat_ons.each do |repeat_on|
+            RepeatOn.create! repeat_on: repeat_on, event_id: @event.id
+          end
+        end
         flash[:success] = t "events.flashs.created"
         format.html do
           redirect_to user_event_path current_user, @event
@@ -79,5 +85,9 @@ class EventsController < ApplicationController
   def load_attendees
     @users = User.all
     @attendee = Attendee.new
+  end
+
+  def valid_params? repeat_on, repeat_type
+    repeat_on.present? && repeat_type == Settings.repeat.repeat_type.weekly
   end
 end

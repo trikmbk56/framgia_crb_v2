@@ -8,4 +8,11 @@ event:
   format_date: "%Y-%m-%d"
   format_time: "%H:%M"
   format_datetime: "%Y-%m-%d %H:%M"
-  repeat_data: [0, 1, 2,  3, 4, 5, 6]
+  repeat_data: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+repeat:
+  repeat_type:
+    daily: "daily"
+    weekly: "weekly"
+    monthly: "monthly"
+    yearly: "yearly"
+  repeat_every: 30

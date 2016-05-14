@@ -1,0 +1,11 @@
+<th><%= t ".repeat_on" %></th>
+<td>
+  <div>
+    <span class="ep-rec-dow">
+      <% Settings.event.repeat_data.each do |r| %>
+        <%= check_box_tag "repeat_ons[]", r %>
+        <%= label_tag r %>
+      <% end %>
+    </span>
+  </div>
+</td>

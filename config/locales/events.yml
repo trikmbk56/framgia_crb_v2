@@ -63,7 +63,7 @@ en:
         following:
           btn: "All the following"
           explanation: "This and all the following events will be deleted."
-        all: 
+        all:
           btn: "All events in the series"
           explanation: "All events in the series will be deleted."
         cancel: "Cancel this change"
@@ -76,7 +76,16 @@ en:
         following:
           btn: "Followings events"
           explanation: "This and all the following events will be changed.<br>Any changes to future events will be lost."
-        all: 
+        all:
           btn: "All events"
           explanation: "All events in the series will be changed.<br>Any changes made to other events will be kept."
         cancel: "Cancel this change"
+    repeat:
+      repeat: "Repeat"
+      repeats: "Repeats"
+      repeat_every: "Repeat every"
+      days: "days"
+      start_on: "Starts on:"
+      ends: "Ends:"
+      summary: "Summary:"
+      repeat_on: "Repeat on:"

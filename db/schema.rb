@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426095658) do
+ActiveRecord::Schema.define(version: 20160512024923) do
 
   create_table "attendees", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -28,8 +28,10 @@ ActiveRecord::Schema.define(version: 20160426095658) do
     t.string   "description", limit: 255
     t.integer  "color_id",    limit: 4
     t.integer  "parent_id",   limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "status",      limit: 4,   default: 0
+    t.boolean  "is_default",              default: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   add_index "calendars", ["parent_id"], name: "index_calendars_on_parent_id", using: :btree
@@ -42,19 +44,23 @@ ActiveRecord::Schema.define(version: 20160426095658) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.string   "title",        limit: 255
-    t.text     "description",  limit: 65535
-    t.string   "status",       limit: 255
-    t.string   "color",        limit: 255
-    t.integer  "repeat_type",  limit: 4
-    t.integer  "repeat_every", limit: 4
-    t.integer  "user_id",      limit: 4
-    t.integer  "calendar_id",  limit: 4
+    t.string   "title",          limit: 255
+    t.text     "description",    limit: 65535
+    t.string   "status",         limit: 255
+    t.string   "color",          limit: 255
+    t.boolean  "all_day",                      default: false
+    t.integer  "repeat_type",    limit: 4
+    t.integer  "repeat_every",   limit: 4
+    t.integer  "user_id",        limit: 4
+    t.integer  "calendar_id",    limit: 4
     t.datetime "start_date"
     t.datetime "finish_date"
-    t.datetime "end_time"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "start_repeat"
+    t.datetime "end_repeat"
+    t.datetime "exception_time"
+    t.integer  "parent_id",      limit: 4
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -63,12 +69,20 @@ ActiveRecord::Schema.define(version: 20160426095658) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "repeat_ons", force: :cascade do |t|
+    t.integer  "repeat_on",  limit: 4
+    t.integer  "event_id",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "user_calendars", force: :cascade do |t|
     t.integer  "user_id",       limit: 4
     t.integer  "calendar_id",   limit: 4
     t.integer  "permission_id", limit: 4
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "color_id",      limit: 4, default: 1
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   create_table "users", force: :cascade do |t|

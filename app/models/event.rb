@@ -1,10 +1,11 @@
 class Event < ActiveRecord::Base
 
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :all_day, :user_id,
-    :calendar_id, :start_date, :finish_date, user_ids: []]
+    :calendar_id, :start_date, :finish_date, :start_repeat, :end_repeat, user_ids: []]
 
   has_many :attendees, dependent: :destroy
   has_many :users, through: :attendees
+  has_many :repeat_ons
 
   belongs_to :calendar
   belongs_to :owner, class_name: User.name, foreign_key: :user_id
@@ -34,8 +35,10 @@ class Event < ActiveRecord::Base
     {
       id: id,
       title: title,
-      start_date: format_datetime(start_date),
-      finish_date: format_datetime(finish_date),
+      start_date: format_time(start_date),
+      finish_date: format_time(finish_date),
+      start_repeat: format_date(start_date),
+      end_repeat: format_date(end_repeat),
       color_id: calendar.get_color(user_id),
       calendar: calendar.name,
       all_day: all_day
@@ -47,7 +50,11 @@ class Event < ActiveRecord::Base
   end
 
   private
-  def format_datetime datetime
-    datetime.try :strftime, "%Y-%m-%d %H:%M"
+  def format_date datetime
+    datetime.try :strftime, "%Y-%m-%d"
+  end
+
+  def format_time datetime
+    datetime.try :strftime, "%H:%M"
   end
 end

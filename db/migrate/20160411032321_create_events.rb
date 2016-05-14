@@ -12,7 +12,10 @@ class CreateEvents < ActiveRecord::Migration
       t.references :calendar
       t.datetime :start_date
       t.datetime :finish_date
-      t.datetime :end_time
+      t.datetime :start_repeat
+      t.datetime :end_repeat
+      t.datetime :exception_time
+      t.integer :parent_id
 
       t.timestamps null: false
     end

@@ -48,7 +48,11 @@ $(document).on('page:change', function() {
               id: data.id,
               className: 'color-' + data.color_id,
               calendar: data.calendar,
-              allDay: data.all_day
+              allDay: data.all_day,
+              ranges: [{
+                start: moment(data.start_repeat,'YYYY-MM-DD'),
+                end: moment(data.end_repeat,'YYYY-MM-DD'),
+              }],
             }
           });
           callback(events);
@@ -64,6 +68,11 @@ $(document).on('page:change', function() {
         if(event.start.isBefore(new Date(), 'day'))
           $(element).addClass('before-current');
       }
+      return (event.ranges.filter(function(range){
+        return (event.start.isBefore(range.end) &&
+          event.end.isAfter(range.start)
+        );
+      }).length)>0;
     },
     eventClick: function(event, jsEvent, view) {
       popupOriginal();

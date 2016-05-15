@@ -15,6 +15,7 @@ class CreateEvents < ActiveRecord::Migration
       t.datetime :start_repeat
       t.datetime :end_repeat
       t.datetime :exception_time
+      t.integer :exception_type
       t.integer :parent_id
 
       t.timestamps null: false

@@ -41,7 +41,9 @@ class Event < ActiveRecord::Base
       end_repeat: format_date(end_repeat),
       color_id: calendar.get_color(user_id),
       calendar: calendar.name,
-      all_day: all_day
+      all_day: all_day,
+      repeat_type: repeat_type,
+      repeat: load_repeat_data
     }
   end
 
@@ -51,10 +53,24 @@ class Event < ActiveRecord::Base
 
   private
   def format_date datetime
-    datetime.try :strftime, "%Y-%m-%d"
+    datetime.try :strftime, Settings.event.format_date
   end
 
   def format_time datetime
-    datetime.try :strftime, "%H:%M"
+    datetime.try :strftime, Settings.event.format_time
+  end
+
+  def format_datetime datetime
+    datetime.try :strftime, Settings.event.format_datetime
+  end
+
+  def load_repeat_data
+    if repeat_type == 1
+      repeat = Settings.event.repeat_daily
+    elsif repeat_type == 2
+      repeat = (repeat_ons.pluck :repeat_on).compact
+    else
+      nil
+    end 
   end
 end

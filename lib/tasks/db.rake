@@ -43,11 +43,21 @@ namespace :db do
           date_time = DateTime.now + i.days
           start_time_day = date_time.change({hour: 8})
           end_time_day = date_time.change({hour: 10})
-          range = Random.rand(2...10)
+          range = Random.rand(2...30)
           end_repeat = date_time + range.days
+          repeat_type = Random.rand(1...4)
           event = Fabricate :event, start_date: start_time_day,
             finish_date: end_time_day, start_repeat: date_time,
-            end_repeat: end_repeat, calendar_id: calendar.id, user_id: user.id
+            end_repeat: end_repeat, calendar_id: calendar.id,
+            user_id: user.id, repeat_type: repeat_type
+
+          if event.repeat_type == 2
+            3.times do
+              on = Random.rand(0...6)
+              Fabricate :repeat_on, event_id: event.id, repeat_on: on
+            end
+          end
+
           3.times do |j|
             Fabricate :attendee, user_id: j + 1, event_id: event.id
           end

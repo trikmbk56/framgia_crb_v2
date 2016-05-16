@@ -12,8 +12,8 @@ Rails.application.routes.draw do
   end
   resources :attendees
   namespace :api do
-    resources :events, only: [:index, :destroy, :update]
     resources :calendars, only: [:update, :new]
     resources :users, only: :index
+    resources :events, except: [:edit, :new]
   end
 end

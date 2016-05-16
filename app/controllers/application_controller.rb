@@ -22,4 +22,18 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << :name
     devise_parameter_sanitizer.for(:account_update) << :name
   end
+
+  def validate_permission_change_of_calendar calendar
+    unless current_user.permission_make_change?(calendar) || 
+      current_user.permission_manage?(calendar)
+      redirect_to root_path
+    end
+  end
+
+  def validate_permission_see_detail_of_calendar calendar
+    if !current_user.has_permission?(calendar) ||
+      (current_user.permission_hide_details?(calendar) && !calendar.share_public?)
+      redirect_to root_path
+    end
+  end
 end

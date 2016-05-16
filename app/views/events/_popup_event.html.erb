@@ -3,12 +3,13 @@
     <div id="bubble-close" class="bubble-close close-popup cancel-popup-event"></div>
     <div id="bubbleContent" class="bubblecontent">
       <div class="tab-container">
-        <div id="current-user-id-popup"><%= current_user.id %></div>
         <div id="head-popup">
           <div class="title-popup-wap" >
             <div id="color-event"></div>
             <input id="title-input-popup" class="title-popup data-none-display">
-            <div id="title-popup" class="title-popup data-display"></div>
+            <div id="title-popup" class="title-popup data-display">
+              <%= event.title %>
+            </div>
           </div>
         </div>
         <div id="data-popup" class="content-popup">
@@ -16,26 +17,20 @@
             <label class="time-label tile-label">
               <%= t "events.popup.time_label" %>
             </label>
-            <span id="time-event-popup" class="tile-content"></span>
+            <span id="time-event-popup" class="tile-content">
+              <%= "#{event.start_date.strftime("%I.%m %p %d-%m-%Y")} 
+                To #{event.finish_date.strftime("%I.%m %p %d-%m-%Y")}" %>
+            </span>
           </div>
           <div id="calendar-data">
             <label class="calendar-event-label"><%= t "events.popup.calendar" %></label>
-            <span id="calendar-event-popup" class="tile-content"></span>
+            <span id="calendar-event-popup" class="tile-content">
+              <%= event.calendar.name %>
+            </span>
           </div>
         </div>
         <div id="footer-popup">
-          <button id="btn-delete-event" class="btn data-display">
-            <%= t "events.buttons.delete" %>
-          </button>
-          <button class="btn data-none-display cancel-popup-event">
-            <%= t "events.buttons.cancel" %>
-          </button>
-          <a id="btn-edit-event" class="btn data-display btn-right ">
-            <%= t "events.buttons.edit" %>
-          </a>
-          <button id="btn-save-event" class="btn data-none-display btn-right ">
-            <%= t "events.buttons.save" %>
-          </button>
+          <%= btn_via_permission user, event %>
         </div>
       </div>
     </div>

@@ -2,10 +2,16 @@ class CalendarsController < ApplicationController
   load_and_authorize_resource
   before_action :load_colors, except: [:show, :destroy]
   before_action :load_users, :load_permissions,  only: [:new, :edit]
+  before_action only: [:edit, :update] do
+    unless current_user.permission_manage? @calendar
+      redirect_to root_path
+    end
+  end
 
   def index
     @my_calendars = current_user.my_calendars
     @other_calendars = current_user.other_calendars
+    @manage_calendars = current_user.manage_calendars
     @event = Event.new
   end
 

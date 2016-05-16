@@ -15,6 +15,7 @@ en:
       discard: "Discard"
       save: "Save"
       edit: "Edit event"
+      show: "Show detail"
       go_back: "Back"
     labels:
       attendees: "Attendees"

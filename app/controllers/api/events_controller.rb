@@ -1,5 +1,9 @@
 class Api::EventsController < ApplicationController
   respond_to :json
+  before_action only: [:edit, :update, :destroy] do
+    load_event
+    validate_permission_change_of_calendar @event.calendar
+  end
 
   def index
     if params[:page].present? || params[:calendar_id]
@@ -20,27 +24,46 @@ class Api::EventsController < ApplicationController
   def update
     @event = Event.find_by id: params[:id]
     if params[:start_repeat].nil?
-      @start_repeat = params[:start]
+      params[:start_repeat] = params[:start_date]
     else
-      @start_repeat = params[:start_repeat]
+      params[:start_repeat] = params[:start_repeat]
     end
     if params[:end_repeat].nil?
-      difference = (params[:start].to_date - @event.start_date.to_date).to_i
-      @end_repeat = @event.end_repeat + difference.days
+      difference = (params[:start_date].to_date - @event.start_date.to_date).to_i
+      params[:end_repeat] = @event.end_repeat + difference.days
     else
-      @end_repeat = params[:end_repeat].to_date + 1.days
+      params[:end_repeat] = params[:end_repeat].to_date + 1.days
     end
-
-    render text: @event.update_attributes(title: params[:title], 
-      start_date: params[:start], finish_date: params[:end],
-      start_repeat: @start_repeat, end_repeat: @end_repeat, 
-      all_day: params[:all_day]) ? 
+    render text: @event.update_attributes(event_params) ? 
       t("events.flashs.updated") : t("events.flashs.not_updated")
+  end
+
+  def show
+    @event = Event.find_by id: params[:id]
+    respond_to do |format|
+      format.html {
+        render partial: "events/popup_event",
+          locals: {user: current_user, event: @event}
+      }
+    end
   end
 
   def destroy
     @event = Event.find_by id: params[:id]
-    render text: @event.destroy ? 
-      t("events.flashs.deleted") : t("events.flashs.not_deleted")
+    if @event.destroy
+      render text: t("events.flashs.deleted") 
+    else
+      render text: t("events.flashs.not_deleted")
+    end
+  end
+
+  private
+  def event_params
+    params.permit :id, :title, :all_day, :start_repeat, :end_repeat,
+      :start_date, :finish_date
+  end
+
+  def load_event
+    @event = Event.find_by id: params[:id]
   end
 end

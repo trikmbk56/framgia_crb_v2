@@ -1,5 +1,6 @@
 $(document).on('page:change', function() {
   var start_date, finish_date, event_title;
+  var GMT_0 = -420;
   $('#full-calendar').fullCalendar({
     header: {
       left: 'prev,next today',
@@ -80,8 +81,14 @@ $(document).on('page:change', function() {
     },
     dayClick: function(date, jsEvent, view) {
       if(view.name === 'month') {
-        setDateTime(date, date);
-        initDialogCreateEvent(date, date, true);
+        date_start = $.extend(true, {}, date);
+        date_end = $.extend(true, {}, date);
+
+        date_start = moment(date_start._d).startOf('day');
+        date_end = moment(date_end._d).endOf('day');
+
+        setDateTime(date_start, date_end);
+        initDialogCreateEvent(date_start, date_end, true);
         dialogCordinate(jsEvent, 'new-event-dialog', 'prong');
         hiddenDialog('popup');
         showDialog('new-event-dialog');
@@ -520,7 +527,7 @@ $(document).on('page:change', function() {
 
   function eventDateTimeFormat(startDate, finishDate, dayClick) {
     if (dayClick || finishDate == null) {
-      return startDate.format('dddd DD-MM-YYYY');
+      return startDate.zone(GMT_0).format('MMMM Do YYYY, HH:mm:ss');
     } else {
       return startDate.format('dddd') + ' ' + startDate.format('H:mm A') + ' To '
         + finishDate.format('H:mm A') + ' ' + finishDate.format('DD-MM-YYYY');
@@ -529,7 +536,7 @@ $(document).on('page:change', function() {
 
   function dateTimeFormat(dateTime, dayClick) {
     if(dayClick)
-      return dateTime.format('dddd DD-MM-YYYY');
+      return dateTime.zone(GMT_0).format('MMMM Do YYYY, HH:mm:ss');
     return dateTime.format('MMMM Do YYYY, h:mm:ss a');
   }
 

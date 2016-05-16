@@ -25,7 +25,7 @@ class EventsController < ApplicationController
     else
       @event.end_repeat = event_params[:end_repeat].to_date + 1.days
     end
-  
+
     respond_to do |format|
       if @event.save
         flash[:success] = t "events.flashs.created"

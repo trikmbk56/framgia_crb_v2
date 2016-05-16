@@ -7,4 +7,5 @@ Fabricator :event do
   start_repeat {DateTime.new(2016,2,3,8,0,0,"+7")}
   end_repeat {DateTime.new(2016,2,3,8,0,0,"+7")}
   calendar_id
+  repeat_type
 end

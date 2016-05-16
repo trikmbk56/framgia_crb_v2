@@ -4,3 +4,8 @@ colors: ["#AC725E",  "#D06B64", "#F83A22", "#FA573C", "#FF7537", "#FFAD46",
   "#42D692", "#16A765", "#B3DC6C", "#FBE983", "#FAD165", "#92E1C0"]
 permissions: ["manage", "make_change", "see_detail", "hide_details"]
 permissions_can_make_change: [1, 2]
+event:
+  format_date: "%Y-%m-%d"
+  format_time: "%H:%M"
+  format_datetime: "%Y-%m-%d %H:%M"
+  repeat_data: [0, 1, 2,  3, 4, 5, 6]

@@ -49,6 +49,7 @@ $(document).on('page:change', function() {
               className: 'color-' + data.color_id,
               calendar: data.calendar,
               allDay: data.all_day,
+              dow: data.repeat,
               ranges: [{
                 start: moment(data.start_repeat,'YYYY-MM-DD'),
                 end: moment(data.end_repeat,'YYYY-MM-DD'),

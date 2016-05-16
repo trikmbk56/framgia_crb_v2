@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20160512024923) do
     t.datetime "start_repeat"
     t.datetime "end_repeat"
     t.datetime "exception_time"
+    t.integer  "exception_type", limit: 4
     t.integer  "parent_id",      limit: 4
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false

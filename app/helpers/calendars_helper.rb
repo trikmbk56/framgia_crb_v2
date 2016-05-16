@@ -15,4 +15,8 @@ module CalendarsHelper
     end
     btn.html_safe
   end
+
+  def confirm_popup_repeat_events action
+    render "events/confirm_popup_repeat", action: action
+  end
 end

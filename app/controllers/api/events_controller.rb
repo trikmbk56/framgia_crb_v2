@@ -50,10 +50,15 @@ class Api::EventsController < ApplicationController
 
   def destroy
     @event = Event.find_by id: params[:id]
-    if @event.destroy
-      render text: t("events.flashs.deleted")
+    if @event.repeat_type.nil? || (@event.repeat_type && 
+      params[:exception_type] == "delete_all" && @event.parent_id.nil?)
+      destroy_event @event
+    elsif params[:exception_type] == "delete_all"
+      destroy_event @event.event_parent
+      render text: t("events.flashs.deleted") 
     else
-      render text: t("events.flashs.not_deleted")
+      destroy_event_repeat @event, params[:exception_type]
+      render text: t("events.flashs.deleted") 
     end
   end
 
@@ -65,5 +70,19 @@ class Api::EventsController < ApplicationController
 
   def load_event
     @event = Event.find_by id: params[:id]
+  end
+
+  def destroy_event event
+    if event.destroy
+      render text: t("events.flashs.deleted") 
+    else
+      render text: t("events.flashs.not_deleted")
+    end
+  end
+
+  def destroy_event_repeat event, exception_type
+    event_exception = event.dup
+    event_exception.update_attributes(exception_type: exception_type, 
+      exception_time: event.start_date, parent_id: event.id)
   end
 end

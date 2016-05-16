@@ -1,0 +1,46 @@
+<div id="dialog-repeat-popup" class="modal-dialog dialog-hidden">
+  <div class="modal-title">
+    <%= action[:title] %>
+  <div id="bubble-close" class="bubble-close close-popup cancel-popup-event"></div>
+  </div>
+  <div class="modal-content">
+    <p><%= action[:content] %></p>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <div rel="delete_only" class="btn btn-confirm btn-default">
+              <%= action[:only][:btn] %>
+            </div>
+          </td>
+          <td class="explanation-cell">
+            <p><%= action[:only][:explanation] %></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="btn btn-confirm btn-default" rel="delete_all_follow">
+              <%= action[:following][:btn] %>
+            </div>
+          </td>
+          <td class="explanation-cell">
+            <p><%= action[:following][:explanation] %></p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div rel="delete_all" class="btn btn-confirm btn-default">
+              <%= action[:all][:btn] %>
+            </div>
+          </td>
+          <td class="explanation-cell">
+            <p><%= action[:all][:explanation] %></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div tabindex="0">
+      <div class="btn-right btn btn-default"><%= action[:cancel] %></div>
+    </div>
+   </div>
+</div>

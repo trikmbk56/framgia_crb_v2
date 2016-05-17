@@ -63,6 +63,30 @@ namespace :db do
           end
         end
       end
+
+      User.all.each do |user|
+        Calendar.all.each do |calendar|
+          permission_id = Random.rand(1..4)
+          if user.id != calendar.id
+            Fabricate :user_calendar, user_id: user.id, calendar_id: calendar.id,
+              permission_id: permission_id
+          end
+        end
+
+        first_event_of_user = user.calendars.first.events.first
+
+        Fabricate :event, title: first_event_of_user.title,
+          user_id: first_event_of_user.user_id,
+          description: first_event_of_user.description,
+          start_date: first_event_of_user.start_date + 1.days,
+          finish_date: first_event_of_user.finish_date + 1.days,
+          start_repeat: first_event_of_user.start_repeat + 1.days,
+          end_repeat: first_event_of_user.end_repeat + 1.days,
+          calendar_id: first_event_of_user.calendar_id,
+          exception_time: (first_event_of_user.finish_date + 1.days),
+          exception_type: 0, parent_id: first_event_of_user.id,
+          repeat_type: first_event_of_user.repeat_type
+      end
     end
   end
 end

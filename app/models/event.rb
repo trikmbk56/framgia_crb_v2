@@ -6,9 +6,12 @@ class Event < ActiveRecord::Base
   has_many :attendees, dependent: :destroy
   has_many :users, through: :attendees
   has_many :repeat_ons
+  has_many :event_exceptions, class_name: Event.name, foreign_key: :parent_id,
+    dependent: :destroy
 
   belongs_to :calendar
   belongs_to :owner, class_name: User.name, foreign_key: :user_id
+  belongs_to :event_parent, class_name: Event.name, foreign_key: :parent_id
 
   validates :start_date, presence: true
   validates :finish_date, presence: true
@@ -16,6 +19,9 @@ class Event < ActiveRecord::Base
 
   delegate :name, to: :owner, prefix: :owner, allow_nil: true
   delegate :name , to: :calendar, prefix: true, allow_nil: true
+
+  enum exception_type: [:delete_only, :delete_all_follow, :edit_only,
+    :edit_all_follow]
 
   scope :my_events, ->user_id do
     where("finish_time between ? and ? and user_id = ?",
@@ -43,7 +49,10 @@ class Event < ActiveRecord::Base
       calendar: calendar.name,
       all_day: all_day,
       repeat_type: repeat_type,
-      repeat: load_repeat_data
+      repeat: load_repeat_data,
+      exception_type: exception_type,
+      parent_id: parent_id,
+      exception_time: exception_time
     }
   end
 
@@ -71,6 +80,6 @@ class Event < ActiveRecord::Base
       repeat = (repeat_ons.pluck :repeat_on).compact
     else
       nil
-    end 
+    end
   end
 end

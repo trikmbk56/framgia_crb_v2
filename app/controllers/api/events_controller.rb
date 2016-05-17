@@ -34,7 +34,7 @@ class Api::EventsController < ApplicationController
     else
       params[:end_repeat] = params[:end_repeat].to_date + 1.days
     end
-    render text: @event.update_attributes(event_params) ? 
+    render text: @event.update_attributes(event_params) ?
       t("events.flashs.updated") : t("events.flashs.not_updated")
   end
 
@@ -51,7 +51,7 @@ class Api::EventsController < ApplicationController
   def destroy
     @event = Event.find_by id: params[:id]
     if @event.destroy
-      render text: t("events.flashs.deleted") 
+      render text: t("events.flashs.deleted")
     else
       render text: t("events.flashs.not_deleted")
     end

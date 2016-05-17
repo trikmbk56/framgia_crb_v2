@@ -55,6 +55,7 @@ $(document).on('page:change', function() {
                 start: moment(data.start_repeat,'YYYY-MM-DD'),
                 end: moment(data.end_repeat,'YYYY-MM-DD'),
               }],
+              repeat_type: data.repeat_type,
             }
           });
           callback(events);
@@ -161,9 +162,6 @@ $(document).on('page:change', function() {
   function updateEventPopup(event) {
     $('#btn-save-event').click(function() {
       hiddenDialog('popup');
-      url = '/api/events/' + event.id;
-      if(event.title == '')
-        event.title = I18n.t('calendars.events.no_title');
       updateEvent(event, 0);
     });
   }
@@ -171,25 +169,54 @@ $(document).on('page:change', function() {
   function deleteEventPopup(event) {
     $('#btn-delete-event').unbind('click');
     $('#btn-delete-event').click(function() {
+      var exception_type;
       hiddenDialog('popup');
-      var temp = confirm(I18n.t('calendars.events.confirm_delete_event'));
-      if (temp === true) {
-          $('#full-calendar').fullCalendar('removeEvents', event.id);
-          url = '/api/events/' + event.id
-          $.ajax({
-            url: url,
-            type: 'DELETE',
-            dataType: 'text',
-            error: function(text) {
-              alert(text);
-            }
-          });
-        }
+      if (event.repeat_type == null) {
+        deleteEvent(event, exception_type);
+      }else{
+        confirm_repeat_popup(event);
+      }
     });
   }
 
+  function deleteEvent(event, exception_type) {
+    url = '/api/events/' + event.id;
+    $.ajax({
+      url: url,
+      type: 'DELETE',
+      data: {
+        exception_type: exception_type,
+      },
+      dataType: 'text',
+      success: function(text){
+        $('#full-calendar').fullCalendar('removeEvents', event.id);
+      },
+      error: function(text) {
+        alert(text);
+      }
+    });
+  }
+
+  function confirm_repeat_popup(event){
+    var dialog = $('#dialog-repeat-popup');
+    var dialogW = $(dialog).width();
+    var dialogH = $(dialog).height();
+    var windowW = $(window).width();
+    var windowH = $(window).height();
+    var xCordinate, yCordinate;
+    xCordinate = (windowW - dialogW) / 2;
+    yCordinate = (windowH - dialogH) / 2;
+    dialog.css({'top': yCordinate, 'left': xCordinate});
+    showDialog('dialog-repeat-popup');
+    $('.btn-confirm').click(function() {
+      deleteEvent(event, $(this).attr('rel'));
+      hiddenDialog('dialog-repeat-popup');
+    });    
+  }
+
   $('#calcontent').on('click', '.cancel-popup-event', function() {
-    hiddenDialog('popup')
+    hiddenDialog('popup');
+    hiddenDialog('dialog-repeat-popup');
   });
 
   function popupOriginal() {
@@ -200,8 +227,9 @@ $(document).on('page:change', function() {
 
   function updateEvent(event, allDay) {
     event.end ? setDateTime(event.start, event.end) : setDateTime(event.start, event.start);
-    var id = event.id;
-    url = '/api/events/' + id;
+    if(event.title == '')
+      event.title = I18n.t('calendars.events.no_title');
+    url = '/api/events/' + event.id;
     $.ajax({
       url: url,
       data: {
@@ -303,6 +331,10 @@ $(document).on('page:change', function() {
     if (($(event.target).closest('#popup').length == 0)
       && ($(event.target).closest('.fc-body').length == 0)) {
       hiddenDialog('popup');
+    }
+    if (($(event.target).closest('#dialog-repeat-popup').length == 0) && 
+      ($(event.target).closest('#btn-delete-event').length ==0)) {
+      hiddenDialog('dialog-repeat-popup');
     }
   });
 

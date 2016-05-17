@@ -427,3 +427,57 @@
   background-color: #9FA59C!important;
   border-color: #9FA59C!important;
 }
+
+.modal-dialog {
+  -webkit-box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  -ms-box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  position: absolute;
+  background-color: #fff;
+  padding: 5px 5px 15px 5px;
+  border: 1px solid #acacac;
+  z-index: 1011;
+  color: #222;
+  outline: 0;
+
+  .btn {
+    font-size: 11px;
+    font-weight: bold;
+  }
+
+  .btn-confirm {
+    width: 160px;
+    margin-right: 10px;
+  }
+
+  .btn-right {
+    float: right;
+  }
+
+  .modal-content {
+    padding: 15px;
+    background-color: #fff;
+    color: #222;
+  }
+
+  .modal-title {
+    position: relative;
+    background-color: #fff;
+    padding: 10px 15px;
+    color: #222;
+    font-size: 16px;
+    font-weight: bold;
+    vertical-align: middle;
+    cursor: default;
+  }
+
+  p {
+    margin: 0 0 10px;
+  }
+
+  .explanation-cell {
+    padding-top: 10px;
+    font-size: 12px;
+  }
+}

@@ -18,8 +18,7 @@
               <%= t "events.popup.time_label" %>
             </label>
             <span id="time-event-popup" class="tile-content">
-              <%= "#{event.start_date.strftime("%I.%m %p %d-%m-%Y")} 
-                To #{event.finish_date.strftime("%I.%m %p %d-%m-%Y")}" %>
+              <%= "#{start_date} To #{finish_date}" %>
             </span>
           </div>
           <div id="calendar-data">

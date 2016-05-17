@@ -50,12 +50,8 @@ $(document).on('page:change', function() {
               className: 'color-' + data.color_id,
               calendar: data.calendar,
               allDay: data.all_day,
-              dow: data.repeat,
-              ranges: [{
-                start: moment(data.start_repeat,'YYYY-MM-DD'),
-                end: moment(data.end_repeat,'YYYY-MM-DD'),
-              }],
               repeat_type: data.repeat_type,
+              event_id: data.event_id
             }
           });
           callback(events);
@@ -71,11 +67,6 @@ $(document).on('page:change', function() {
         if(event.start.isBefore(new Date(), 'day'))
           $(element).addClass('before-current');
       }
-      return (event.ranges.filter(function(range){
-        return (event.start.isBefore(range.end) &&
-          event.end.isAfter(range.start)
-        );
-      }).length)>0;
     },
     eventClick: function(event, jsEvent, view) {
       initDialogEventClick(event, jsEvent);
@@ -133,7 +124,11 @@ $(document).on('page:change', function() {
     if ($('#popup') !== null)
       $('#popup').remove();
     $.ajax({
-      url: 'api/events/' + event.id,
+      url: 'api/events/' + event.event_id,
+      data: {
+        start: event.start.format('MM-DD-YYYY H:mm A'),
+        end: event.end.format('MM-DD-YYYY H:mm A')
+      },
       success: function(data){
         $('#calcontent').append(data);
         dialogCordinate(jsEvent, 'popup', 'prong-popup');
@@ -211,7 +206,7 @@ $(document).on('page:change', function() {
     $('.btn-confirm').click(function() {
       deleteEvent(event, $(this).attr('rel'));
       hiddenDialog('dialog-repeat-popup');
-    });    
+    });
   }
 
   $('#calcontent').on('click', '.cancel-popup-event', function() {
@@ -332,7 +327,7 @@ $(document).on('page:change', function() {
       && ($(event.target).closest('.fc-body').length == 0)) {
       hiddenDialog('popup');
     }
-    if (($(event.target).closest('#dialog-repeat-popup').length == 0) && 
+    if (($(event.target).closest('#dialog-repeat-popup').length == 0) &&
       ($(event.target).closest('#btn-delete-event').length ==0)) {
       hiddenDialog('dialog-repeat-popup');
     }

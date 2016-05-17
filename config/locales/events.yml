@@ -17,6 +17,7 @@ en:
       edit: "Edit event"
       show: "Show detail"
       go_back: "Back"
+      copy: "Copy to my calendar"
     labels:
       attendees: "Attendees"
       calendar: "Calendar"

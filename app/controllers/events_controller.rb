@@ -9,6 +9,12 @@ class EventsController < ApplicationController
     validate_permission_see_detail_of_calendar @event.calendar
   end
 
+  def new
+    if params[:event_id]
+      @event = Event.find(params[:event_id]).dup
+    end
+  end
+
   def show
     @attendees = @event.attendees
   end

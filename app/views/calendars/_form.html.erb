@@ -80,8 +80,9 @@
     <div id="add-user-share">
       <div class="col1">
         <%= select :user, :id,
-        @users.collect{|user| [user.email + " <#{user.name}>", user.id]},
-          {include_blank: true}, {id: "textbox-email-share"} %>
+          @users.collect{|user| [user.email + " <#{user.name}>", user.id]}, 
+          {include_blank: true, selected: @user_selected ? @user_selected.id : -1},
+          {id: "textbox-email-share"} %>
       </div>
       <div class="col2">
         <div>

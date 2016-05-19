@@ -2,7 +2,8 @@ module CalendarsHelper
   def btn_via_permission user, event
     user_calendar = user.user_calendars.find_by calendar: event.calendar
     btn = render "events/buttons/btn_copy", user_id: user.id, event_id: event.id
-    btn = "" if event.calendar.is_default 
+    btn = "" if (event.calendar.is_default ||
+      UserCalendar.find_by(user_id: user.id, calendar_id: event.calendar.id).permission_id == 4)
     if Settings.permissions_can_make_change.include? user_calendar.permission_id 
       btn += render "events/buttons/btn_cancel"
       btn += render "events/buttons/btn_edit", 

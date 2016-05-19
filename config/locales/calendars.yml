@@ -6,6 +6,8 @@ en:
     confirm_delete: "Are you sure to delete this calendar?"
     create: "Create new calendar"
     edit: "Edit my calendar"
+    request_email_input: "Email"
+    add: "+"
     events:
       clear_all_events: "Delete all events"
       not_cleared_event: "Events weren't cleared successfully."
@@ -21,3 +23,11 @@ en:
       not_updated: "Calendar wasn't updated."
       deleted: "Calendar deleted"
       not_deleted: "Calendar wasn't delete."
+      email_not_exsist: "Email isn't exsist."
+      email_sent: "Success: Email sent."
+      request_to_share_calendar: "Request to share calendar"
+    mailer:
+      hi: "Hi, "
+      you_have_request: "You have a request to share calendar from "
+      please_check: "Please check:"
+      

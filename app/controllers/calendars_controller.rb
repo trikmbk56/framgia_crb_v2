@@ -13,6 +13,7 @@ class CalendarsController < ApplicationController
     @other_calendars = current_user.other_calendars
     @manage_calendars = current_user.manage_calendars
     @event = Event.new
+    @users = User.all_other_users current_user.id
   end
 
   def create
@@ -23,6 +24,12 @@ class CalendarsController < ApplicationController
     else
       flash[:danger] = t "calendar.danger_create"
       render :new
+    end
+  end
+
+  def edit
+    if params[:email]
+      @user_selected = User.find_by email: params[:email]
     end
   end
 

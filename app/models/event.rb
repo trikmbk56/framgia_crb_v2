@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  include SharedMethods
 
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :all_day, :user_id,
     :calendar_id, :start_date, :finish_date, :start_repeat, :end_repeat, user_ids: []]
@@ -23,6 +24,8 @@ class Event < ActiveRecord::Base
   enum exception_type: [:delete_only, :delete_all_follow, :edit_only,
     :edit_all_follow]
 
+  enum repeat_type: [:daily, :weekly, :monthly, :yearly]
+
   scope :my_events, ->user_id do
     where("finish_time between ? and ? and user_id = ?",
       Date.today.beginning_of_week, Date.today.end_of_week, user_id)
@@ -37,12 +40,14 @@ class Event < ActiveRecord::Base
       order start_date: :asc
   end
 
+  scope :no_repeats, ->{where repeat_type: nil}
+
   def json_data user_id
     {
-      id: id,
+      id: SecureRandom.urlsafe_base64,
       title: title,
-      start_date: format_time(start_date),
-      finish_date: format_time(finish_date),
+      start_date: format_datetime(start_date),
+      finish_date: format_datetime(finish_date),
       start_repeat: format_date(start_date),
       end_repeat: format_date(end_repeat),
       color_id: calendar.get_color(user_id),
@@ -52,7 +57,8 @@ class Event < ActiveRecord::Base
       repeat: load_repeat_data,
       exception_type: exception_type,
       parent_id: parent_id,
-      exception_time: exception_time
+      exception_time: exception_time,
+      event_id: id
     }
   end
 
@@ -61,16 +67,8 @@ class Event < ActiveRecord::Base
   end
 
   private
-  def format_date datetime
-    datetime.try :strftime, Settings.event.format_date
-  end
-
   def format_time datetime
     datetime.try :strftime, Settings.event.format_time
-  end
-
-  def format_datetime datetime
-    datetime.try :strftime, Settings.event.format_datetime
   end
 
   def load_repeat_data

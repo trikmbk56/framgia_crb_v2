@@ -3,16 +3,17 @@
 <% else %>
   hiddenDialog('new-event-dialog');
   addEventToCalendar();
-
   function addEventToCalendar() {
     var eventData;
     eventData = {
+      id: '<%= SecureRandom.urlsafe_base64 %>',
       title: '<%= @data[:title] %>',
       start: moment('<%= @data[:start_date] %>'),
       end: moment('<%= @data[:finish_date] %>'),
-      id: '<%= @data[:id].to_s %>',
+      event_id: '<%= @data[:event_id].to_s %>',
       className: 'color-<%= @data[:color_id] %>',
       calendar: '<%= @data[:calendar] %>',
+      repeat_type: '<%= @data[:repeat_type] %>',
       allDay: <%= @data[:all_day] %>
     }
     $('#full-calendar').fullCalendar('renderEvent', eventData, true);

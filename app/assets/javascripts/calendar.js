@@ -127,7 +127,7 @@ $(document).on('page:change', function() {
       url: 'api/events/' + event.event_id,
       data: {
         start: event.start.format('MM-DD-YYYY H:mm A'),
-        end: event.end.format('MM-DD-YYYY H:mm A')
+        end: (event.end !== null) ? event.end.format('MM-DD-YYYY H:mm A') : ''
       },
       success: function(data){
         $('#calcontent').append(data);
@@ -166,7 +166,7 @@ $(document).on('page:change', function() {
     $('#btn-delete-event').click(function() {
       var exception_type;
       hiddenDialog('popup');
-      if (event.repeat_type == null) {
+      if (event.repeat_type == null || event.repeat_type.length == 0) {
         deleteEvent(event, exception_type);
       }else{
         confirm_repeat_popup(event);
@@ -175,9 +175,8 @@ $(document).on('page:change', function() {
   }
 
   function deleteEvent(event, exception_type) {
-    url = '/api/events/' + event.id;
     $.ajax({
-      url: url,
+      url: '/api/events/' + event.event_id,
       type: 'DELETE',
       data: {
         exception_type: exception_type,
@@ -214,19 +213,12 @@ $(document).on('page:change', function() {
     hiddenDialog('dialog-repeat-popup');
   });
 
-  function popupOriginal() {
-    $('#title-input-popup').val('');
-    $('.data-display').css('display', 'inline-block');
-    $('.data-none-display').css('display', 'none');
-  }
-
   function updateEvent(event, allDay) {
     event.end ? setDateTime(event.start, event.end) : setDateTime(event.start, event.start);
     if(event.title == '')
       event.title = I18n.t('calendars.events.no_title');
-    url = '/api/events/' + event.id;
     $.ajax({
-      url: url,
+      url: '/api/events/' + event.event_id,
       data: {
         title: event.title,
         start_date: start_date.format(),
@@ -554,7 +546,7 @@ $(document).on('page:change', function() {
 
   function eventDateTimeFormat(startDate, finishDate, dayClick) {
     if (dayClick || finishDate == null) {
-      return startDate.zone(GMT_0).format('MMMM Do YYYY, HH:mm:ss');
+      return startDate.zone(GMT_0).format('MMMM Do YYYY');
     } else {
       return startDate.format('dddd') + ' ' + startDate.format('H:mm A') + ' To '
         + finishDate.format('H:mm A') + ' ' + finishDate.format('DD-MM-YYYY');

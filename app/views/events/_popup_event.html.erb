@@ -18,7 +18,7 @@
               <%= t "events.popup.time_label" %>
             </label>
             <span id="time-event-popup" class="tile-content">
-              <%= "#{start_date} To #{finish_date}" %>
+              <%= event.all_day ? "#{start_date}" : "#{start_date} To #{finish_date}" %>
             </span>
           </div>
           <div id="calendar-data">

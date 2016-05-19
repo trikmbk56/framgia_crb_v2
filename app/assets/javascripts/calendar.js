@@ -684,4 +684,18 @@ $(document).on('page:change', function() {
     if (index !== -1)
       user_ids.splice(index, 1);
   });
+
+  $('#request-email-button').click(function() {
+    $.ajax({
+      url: '/api/request_emails/new',
+      data: {
+        request_email: $('#request-email-input').val()
+      },
+      type: 'GET',
+      dataType: 'text',
+      success: function(text) {
+        alert(text);
+      }
+    });
+  });
 });

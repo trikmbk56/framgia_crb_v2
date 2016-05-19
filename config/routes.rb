@@ -15,5 +15,6 @@ Rails.application.routes.draw do
     resources :calendars, only: [:update, :new]
     resources :users, only: :index
     resources :events, except: [:edit, :new]
+    resources :request_emails, only: :new
   end
 end

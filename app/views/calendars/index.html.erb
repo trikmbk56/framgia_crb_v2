@@ -57,6 +57,16 @@
         </h2>
         <div id="collapse2" class="panel-collapse collapse"
           aria-expanded="true">
+          <span>
+            <input id="request-email-input" type="text"
+              placeholder="<%= t "calendars.request_email_input" %>" list="email-list">
+            <datalist id="email-list">
+              <% @users.each do |user| %>
+                <option value="<%= user.email %>">
+              <% end %>
+            </datalist>
+            <button id="request-email-button"><%= t "calendars.add" %></button>
+          </span>
           <%= render "calendars", calendars: @other_calendars %>
         </div>
       </div>

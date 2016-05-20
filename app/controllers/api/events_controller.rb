@@ -45,8 +45,8 @@ class Api::EventsController < ApplicationController
     respond_to do |format|
       format.html {
         render partial: "events/popup_event",
-          locals: {user: current_user,
-          event: @event, start_date: params[:start], finish_date: params[:end]}
+          locals: {user: current_user, event: @event, title: params[:title],
+            start_date: params[:start], finish_date: params[:end]}
       }
     end
   end

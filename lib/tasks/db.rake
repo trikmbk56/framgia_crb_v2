@@ -50,9 +50,9 @@ namespace :db do
           event = Fabricate :event, start_date: start_time_day,
             finish_date: end_time_day, start_repeat: date_time,
             end_repeat: end_repeat, calendar_id: calendar.id,
-            user_id: user.id, repeat_type: repeat_type, repeat_every: 2
+            user_id: user.id, repeat_type: i, repeat_every: 1
 
-          if event.repeat_type == 1
+          if event.weekly?
             3.times do |on|
               Fabricate :repeat_on, event_id: event.id, repeat_on: on
             end

@@ -33,8 +33,14 @@
         required: true, class: "date finish form-control fix-width-date date-time" %>
     </div>
     <div class="form-group">
+      <div class="dialog-repeat-event">
+        <%= check_box_tag :repeat %>
+        <%= label_tag :repeat %>
+      </div>
+    </div>
+    <div class="form-group">
       <%= f.label t "events.labels.calendar" %>
-      <%= f.collection_select :calendar_id, @calendars, :id, :name, {}, 
+      <%= f.collection_select :calendar_id, @calendars, :id, :name, {},
         selected: @event.calendar.present? ? @event.calendar.id : -1 , class: "form-control" %>
     </div>
     <div class="form-group">
@@ -46,5 +52,6 @@
       <%= f.select :user_ids, @users.collect {|user| [user.name, user.id]}, {},
         {id: "attendee", multiple: :true} %>
     </div>
+    <%= render "events/dialog_repeat_form", f: f %>
   <% end %>
 </div>

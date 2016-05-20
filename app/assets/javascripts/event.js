@@ -3,6 +3,8 @@ $(document).on('page:change', function(){
   var start_date = $('#start_date');
   var finish_time = $('#finish_time');
   var finish_date = $('#finish_date');
+  var start_repeat = $('#start-date-repeat');
+  var end_repeat =  $('#end-date-repeat');
 
   $('#attendee').select2({
     multiple: true,
@@ -31,6 +33,8 @@ $(document).on('page:change', function(){
   $(document).on('change', '.date-time', function(event) {
     $('#event_start_date').val(start_date.val() + ' ' + start_time.val());
     $('#event_finish_date').val(finish_date.val() + ' ' + finish_time.val());
+    $('#event_start_repeat').val(start_repeat.val());
+    $('#event_end_repeat').val(end_repeat.val());
   });
 });
 
@@ -53,5 +57,44 @@ $(document).ready(function() {
         }
       });
     }
+  });
+});
+
+$(document).on('page:change', function(){
+  $('.dialog-repeat-event').click(function() {
+    showDialog('dialog-repeat-event-form');
+  });
+
+  $('#event_repeat_type').on('change', function() {
+    var repeat_type = $('#event_repeat_type').val();
+    var repeat_weekly = "weekly";
+    if(repeat_type == repeat_weekly){
+      showDialog('repeat-on');
+    }
+    else{
+      hiddenDialog('repeat-on');
+    }
+  });
+
+  function showDialog(dialogId) {
+    var dialog = $('#' + dialogId);
+    $(dialog).removeClass('dialog-hidden');
+    $(dialog).addClass('dialog-visible');
+  }
+
+  hiddenDialog = function(dialogId) {
+    var dialog = $('#' + dialogId);
+    $(dialog).addClass('dialog-hidden');
+    $(dialog).removeClass('dialog-visible');
+  }
+
+  $('#close, #done, #cancel').click(function() {
+    hiddenDialog('dialog-repeat-event-form');
+    hiddenDialog('repeat-on');
+  });
+
+  $('#start-date-repeat, #end-date-repeat').datepicker({
+    dateFormat: 'dd-mm-yy',
+    autoclose: true
   });
 });

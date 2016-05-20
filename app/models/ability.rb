@@ -7,5 +7,6 @@ class Ability
     can :manage, Calendar
     can :manage, Event
     can :manage, Attendee
+    can :show, Event
   end
 end

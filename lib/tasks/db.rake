@@ -26,7 +26,8 @@ namespace :db do
         "Lim Kimhuor": "lim.kimhuor",
         "Chu Anh Tuan": "chu.anh.tuan",
         "Ngo Thai Minh": "ngo.thai.minh",
-        "Mai Dinh Phu": "mai.dinh.phus"
+        "Mai Dinh Phu": "mai.dinh.phu",
+        "Nguyen Quang Duy": "nguyen.quang.duy"
       }
 
       puts "Creating Color, User, Calendar, Share calendar, Event"

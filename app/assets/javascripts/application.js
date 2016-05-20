@@ -26,3 +26,4 @@
 //= require datepair
 //= require jquery.datepair
 //= require event
+//= require particular_calendar

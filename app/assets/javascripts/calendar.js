@@ -180,6 +180,8 @@ $(document).on('page:change', function() {
       type: 'DELETE',
       data: {
         exception_type: exception_type,
+        exception_time: event.start.format(),
+        finish_date: event.end.format()
       },
       dataType: 'text',
       success: function(text){

@@ -42,6 +42,7 @@ class Event < ActiveRecord::Base
   end
 
   scope :no_repeats, ->{where repeat_type: nil}
+  scope :has_exceptions, ->{where.not exception_type: nil}
 
   def json_data user_id
     {

@@ -16,7 +16,9 @@ class Api::EventsController < ApplicationController
       end
     else
       @events = Event.eager_load(:calendar).in_calendars params[:calendars]
-      @data = GenerateEventFullcalendarServices.new(@events, current_user).repeat_data
+      @event_exceptions = @events.has_exceptions
+      @data = GenerateEventFullcalendarServices.new(@events, current_user,
+        @event_exceptions).repeat_data
       render json: @data
     end
   end
@@ -58,7 +60,8 @@ class Api::EventsController < ApplicationController
       destroy_event @event.event_parent
       render text: t("events.flashs.deleted")
     else
-      destroy_event_repeat @event, params[:exception_type]
+      destroy_event_repeat @event, params[:exception_type],
+        params[:exception_time], params[:finish_date]
       render text: t("events.flashs.deleted")
     end
   end
@@ -81,9 +84,10 @@ class Api::EventsController < ApplicationController
     end
   end
 
-  def destroy_event_repeat event, exception_type
+  def destroy_event_repeat event, exception_type, exception_time, finish_date
     event_exception = event.dup
     event_exception.update_attributes(exception_type: exception_type,
-      exception_time: event.start_date, parent_id: event.id)
+      exception_time: exception_time, parent_id: event.id,
+      start_date: exception_time, finish_date: finish_date)
   end
 end

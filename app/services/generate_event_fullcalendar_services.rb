@@ -1,7 +1,8 @@
 class GenerateEventFullcalendarServices
-  def initialize events, current_user
+  def initialize events, current_user, event_exceptions
     @events = events
     @current_user = current_user
+    @event_exceptions = event_exceptions
   end
 
   def repeat_data
@@ -48,6 +49,18 @@ class GenerateEventFullcalendarServices
         repeat_yearly event
       end
     end
+
+    @event_exceptions.each do |event_exception|
+      case event_exception.exception_type
+      when "delete_only"
+        @event_shows = @event_shows.select do |event|
+          event.user_id == event_exception.user_id &&
+          event.start_date != event_exception.exception_time &&
+          event.exception_type != "delete_only"
+        end
+      end
+    end
+
     @event_shows.map{|event| event.json_data(@current_user.id)}
   end
 

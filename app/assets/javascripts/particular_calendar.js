@@ -111,7 +111,7 @@ $(document).on('page:change', function() {
     $(dialog).addClass('show-popup');
   }
 
-  hiddenDialog = function(dialogId) {
+  hiddenPopup = function(dialogId) {
     var dialog = $('#' + dialogId);
     $(dialog).addClass('hidden-popup');
     $(dialog).removeClass('show-popup');
@@ -126,6 +126,6 @@ $(document).on('page:change', function() {
     }
   }
   $('#particular-calendar').on('click', '.bubble-close',function() {
-    hiddenDialog('popup');
+    hiddenPopup('popup');
   })
 });

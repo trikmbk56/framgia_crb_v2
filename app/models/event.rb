@@ -32,8 +32,8 @@ class Event < ActiveRecord::Base
       Date.today.beginning_of_week, Date.today.end_of_week, user_id)
   end
 
-  scope :on_calendar, ->calendar_id do
-    where "calendar_id = ?", calendar_id
+  scope :in_calendars, ->calendars do
+    where "calendar_id IN (?)", calendars
   end
 
   scope :upcoming_event, ->calendar_id do

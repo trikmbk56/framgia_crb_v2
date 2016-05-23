@@ -1,4 +1,4 @@
-<div id="dialog-repeat-popup" class="modal-dialog dialog-hidden">
+<div id="<%= action[:id] %>" class="modal-dialog dialog-hidden">
   <div class="modal-title">
     <%= action[:title] %>
   <div id="bubble-close" class="bubble-close close-popup cancel-popup-event"></div>
@@ -9,7 +9,7 @@
       <tbody>
         <tr>
           <td>
-            <div rel="delete_only" class="btn btn-confirm btn-default">
+            <div rel="<%= action[:only][:rel] %>" class="btn btn-confirm btn-default">
               <%= action[:only][:btn] %>
             </div>
           </td>
@@ -19,7 +19,7 @@
         </tr>
         <tr>
           <td>
-            <div class="btn btn-confirm btn-default" rel="delete_all_follow">
+            <div class="btn btn-confirm btn-default" rel="<%= action[:following][:rel] %>">
               <%= action[:following][:btn] %>
             </div>
           </td>
@@ -29,7 +29,7 @@
         </tr>
         <tr>
           <td>
-            <div rel="delete_all" class="btn btn-confirm btn-default">
+            <div rel="<%= action[:all][:rel] %>" class="btn btn-confirm btn-default">
               <%= action[:all][:btn] %>
             </div>
           </td>

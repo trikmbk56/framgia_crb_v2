@@ -15,7 +15,7 @@ class Api::EventsController < ApplicationController
         }
       end
     else
-      @events = Event.eager_load(:calendar).in_calendars params[:calendars]
+      @events = Event.in_calendars params[:calendars]
       @event_exceptions = @events.has_exceptions
       @data = GenerateEventFullcalendarServices.new(@events, current_user,
         @event_exceptions).repeat_data
@@ -36,8 +36,9 @@ class Api::EventsController < ApplicationController
     else
       params[:end_repeat] = params[:end_repeat].to_date + 1.days
     end
-    render text: @event.update_attributes(event_params) ?
-      t("events.flashs.updated") : t("events.flashs.not_updated")
+    UpdateEventExceptionServices.new(params[:exception_type],
+      @event, event_params).update_event_exception
+    render text: t("events.flashs.updated")
   end
 
   def show

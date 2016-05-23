@@ -1,5 +1,9 @@
 en:
   events:
+    new:
+      url: "/events/new?"
+      am: "12:00am"
+      pm: "11:59pm"
     confirm:
       delete: "Are you sure?"
     flashs:

@@ -693,4 +693,10 @@ $(document).on('page:change', function() {
       }
     });
   });
+  $('.calendar-address').on('click', function() {
+    $('.cal-dialog').css("display", "block");
+  })
+  $('.cal-dialog-title-close, .goog-buttonset-default').on('click', function() {
+    $('.cal-dialog').css("display", "none");
+  })
 });

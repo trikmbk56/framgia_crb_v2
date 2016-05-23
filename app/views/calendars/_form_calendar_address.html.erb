@@ -1,0 +1,20 @@
+<div class="cal-dialog">
+  <div class="cal-dialog-title cal-dialog-title-draggable" >
+    <span class="cal-dialog-title-text" role="heading"><%= t "calendars.address" %></span>
+    <span class="cal-dialog-title-close" role="button" tabindex="0"
+      aria-label="Close">
+    </span>
+  </div>
+  <div class="cal-dialog-content">
+    <b><%= t "calendars.description" %></b>
+    <br/>
+    <br/>
+    <a href="particular_calendars/<%= @calendar.id %>" id="link-calendar" target="_blank">
+      <%= Settings.url + "#{@calendar.id}" %>
+    </a>
+  </div>
+  <div class="cal-dialog-buttons">
+    <span name="ok" class="goog-buttonset-default btn-discard" ><%= t "calendars.ok" %>
+    </span>
+  </div>
+</div>

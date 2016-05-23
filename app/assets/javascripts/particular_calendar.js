@@ -78,7 +78,7 @@ $(document).on('page:change', function() {
     var prongRotateX, prongXCordinate, prongYCordinate;
 
     if(jsEvent.clientX - dialogW/2 < 0) {
-      xCordinate = jsEvent.clientX - dialogW/2;
+      xCordinate = jsEvent.clientX - dialogW/2 + 185;
     } else if(windowW - jsEvent.clientX < dialogW/2) {
       xCordinate = windowW - 2 * dialogW/2 - 10;
     } else {

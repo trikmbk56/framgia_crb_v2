@@ -48,12 +48,19 @@
     </div>
   </div>
 
-  <div class="form-group" >
+  <div class="form-group">
     <%= f.label :description %>
     <%= f.text_area :description, class: "form-control" %>
   </div>
-
-  <div class="make-public form-group" >
+  <% if params[:action] == "edit" %>
+    <div class="form-group">
+      <div class="divider"></div>
+      <label><%= t "calendars.address" %></label>
+      <%= image_tag "html.gif", class: "calendar-address" %>
+      <%= render "form_calendar_address" %>
+    </div>
+  <% end %>
+  <div class="make-public form-group">
     <div class="divider"></div>
     <div>
       <input type="checkbox" id="make_public" name="calendar[status]" value="<%= @calendar.status %>">
@@ -80,7 +87,7 @@
     <div id="add-user-share">
       <div class="col1">
         <%= select :user, :id,
-          @users.collect{|user| [user.email + " <#{user.name}>", user.id]}, 
+          @users.collect{|user| [user.email + " <#{user.name}>", user.id]},
           {include_blank: true, selected: @user_selected ? @user_selected.id : -1},
           {id: "textbox-email-share"} %>
       </div>

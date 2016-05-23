@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users, only: :show do
     resources :calendars do
       resource :destroy_events, only: :destroy
+      resources :particular_calendars, only: :show
     end
     resources :events, except: :index do
       resources :attendees, only: :destroy

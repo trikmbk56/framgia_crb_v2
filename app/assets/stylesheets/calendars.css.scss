@@ -934,3 +934,46 @@ span.ui-icon.ui-icon-circle-triangle-e {
 .select2-container--open .select2-dropdown {
   left: 5px!important;
 }
+.calendar-address {
+  margin-left: 255px;
+  cursor: pointer;
+}
+.cal-dialog {
+  display: none;
+  left: 150px;
+  top: 250px;
+  z-index: 1001;
+  width: 600px;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.cal-dialog-title {
+  position: relative;
+  background-color: #fff;
+  padding: 10px 15px;
+  color: #222;
+  font-size: 16px;
+  font-weight: bold;
+  vertical-align: middle;
+  cursor: default;
+}
+.cal-dialog-title-close {
+  background: url(image_path("combined_v46_vr.png")) -215px -51px;
+  cursor: pointer;
+  height: 10px;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  width: 10px;
+}
+.cal-dialog-content {
+  padding: 15px;
+  background-color: #fff;
+  color: #222
+}
+.cal-dialog-buttons {
+  padding: 0 15px 15px;
+  background-color: #fff;
+}

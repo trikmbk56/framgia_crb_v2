@@ -27,9 +27,9 @@ class EventsController < ApplicationController
       @event.start_repeat = event_params[:start_repeat]
     end
     if event_params[:end_repeat].blank?
-      @event.end_repeat = event_params[:finish_date].to_date + 1.days
+      @event.end_repeat = event_params[:finish_date].to_date
     else
-      @event.end_repeat = event_params[:end_repeat].to_date + 1.days
+      @event.end_repeat = event_params[:end_repeat].to_date
     end
 
     respond_to do |format|

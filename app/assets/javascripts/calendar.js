@@ -126,6 +126,7 @@ $(document).on('page:change', function() {
     $.ajax({
       url: 'api/events/' + event.event_id,
       data: {
+        title: event.title,
         start: event.start.format('MM-DD-YYYY H:mm A'),
         end: (event.end !== null) ? event.end.format('MM-DD-YYYY H:mm A') : ''
       },

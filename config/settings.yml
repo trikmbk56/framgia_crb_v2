@@ -16,3 +16,9 @@ repeat:
     monthly: "monthly"
     yearly: "yearly"
   repeat_every: 30
+second_in_day: 86400
+days: "days"
+weeks: "weeks"
+months: "months"
+years:  "years"
+seven: 7

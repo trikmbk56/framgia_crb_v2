@@ -218,6 +218,19 @@
     overflow: hidden;
 }
 
+.overlay-bg {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:100%;
+    width: 100%;
+    cursor: pointer;
+    z-index: 1000;
+    background: #000;
+    background: rgba(0,0,0,0.75);
+}
+
 /* Create event new page */
 #event {
   .form-action {
@@ -265,6 +278,10 @@
 
   label {
     font-weight: bold;
+  }
+
+  .dialog-repeat-event:hover {
+    text-decoration: underline;
   }
 }
 

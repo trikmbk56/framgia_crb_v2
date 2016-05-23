@@ -61,10 +61,6 @@ $(document).ready(function() {
 });
 
 $(document).on('page:change', function(){
-  $('.dialog-repeat-event').click(function() {
-    showDialog('dialog-repeat-event-form');
-  });
-
   $('#event_repeat_type').on('change', function() {
     var repeat_type = $('#event_repeat_type').val();
     var repeat_weekly = "weekly";
@@ -80,6 +76,7 @@ $(document).on('page:change', function(){
     var dialog = $('#' + dialogId);
     $(dialog).removeClass('dialog-hidden');
     $(dialog).addClass('dialog-visible');
+    $('.overlay-bg').show().css({'height' : docHeight});
   }
 
   hiddenDialog = function(dialogId) {
@@ -91,6 +88,59 @@ $(document).on('page:change', function(){
   $('#close, #done, #cancel').click(function() {
     hiddenDialog('dialog-repeat-event-form');
     hiddenDialog('repeat-on');
+  });
+
+  function hideOverlay() {
+    $('.overlay-bg').hide();
+  }
+
+  function uncheckRepeat() {
+    $('input[type="checkbox"]#repeat').prop('checked', false);
+  }
+
+  var docHeight = $(document).height();
+
+  $('.dialog-repeat-event').hide();
+
+  $('input[type="checkbox"]#repeat').change(function() {
+    if(this.checked && $('.cb-repeat').hasClass('first')) {
+      showDialog('dialog-repeat-event-form');
+    }
+    if(!$('.cb-repeat').hasClass('first')) {
+      if(this.checked)
+        $('.dialog-repeat-event').show();
+      else
+        $('.dialog-repeat-event').hide();
+    }
+  });
+
+  $('.dialog-repeat-event').click(function() {
+    showDialog('dialog-repeat-event-form');
+  });
+
+  $('#done').click(function() {
+    $('.cb-repeat').removeClass('first');
+    $('.dialog-repeat-event').show();
+    hideOverlay();
+  });
+
+  $('#close, #cancel').click(function() {
+    if($('.cb-repeat').hasClass('first'))
+      uncheckRepeat();
+    hideOverlay();
+  });
+
+  $('.overlay-bg').click(function(events) {
+      events.preventDefault();
+  });
+
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27) {
+      hiddenDialog('dialog-repeat-event-form');
+      hiddenDialog('repeat-on');
+      hideOverlay();
+      uncheckRepeat();
+    }
   });
 
   $('#start-date-repeat, #end-date-repeat').datepicker({

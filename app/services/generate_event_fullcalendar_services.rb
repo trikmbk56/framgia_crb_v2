@@ -111,7 +111,7 @@ class GenerateEventFullcalendarServices
         end
 
       elsif exception_event.edit_only?
-        if start.wday == exception_event.exception_time.wday
+        unless event.weekly? && start.wday != exception_event.exception_time.wday
           ex_update_events << exception_event.exception_time.to_date
           @event_edit = EventFullcalendar.new exception_event
           @event_shows << @event_edit.dup

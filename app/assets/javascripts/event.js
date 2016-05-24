@@ -66,6 +66,7 @@ $(document).on('page:change', function(){
     var repeat_weekly = "weekly";
     if(repeat_type == repeat_weekly){
       showDialog('repeat-on');
+      checkedWeekly();
     }
     else{
       hiddenDialog('repeat-on');
@@ -85,10 +86,15 @@ $(document).on('page:change', function(){
     $(dialog).removeClass('dialog-visible');
   }
 
-  $('#close, #done, #cancel').click(function() {
+  $('#close, #cancel').click(function() {
+    clearDialog();
+  });
+
+  function clearDialog() {
     hiddenDialog('dialog-repeat-event-form');
     hiddenDialog('repeat-on');
-  });
+    hideOverlay();
+  }
 
   function hideOverlay() {
     $('.overlay-bg').hide();
@@ -119,9 +125,15 @@ $(document).on('page:change', function(){
   });
 
   $('#done').click(function() {
-    $('.cb-repeat').removeClass('first');
-    $('.dialog-repeat-event').show();
-    hideOverlay();
+    if($('#start-date-repeat').val() == '') {
+      $('#start-date-repeat').focus();
+    } else if($('#end-date-repeat').val() == '') {
+      $('#end-date-repeat').focus();
+    } else {
+      clearDialog();
+      $('.cb-repeat').removeClass('first');
+      $('.dialog-repeat-event').show();
+    }
   });
 
   $('#close, #cancel').click(function() {
@@ -136,9 +148,7 @@ $(document).on('page:change', function(){
 
   $(document).keyup(function(e) {
     if (e.keyCode == 27) {
-      hiddenDialog('dialog-repeat-event-form');
-      hiddenDialog('repeat-on');
-      hideOverlay();
+      clearDialog();
       uncheckRepeat();
     }
   });
@@ -147,4 +157,15 @@ $(document).on('page:change', function(){
     dateFormat: 'dd-mm-yy',
     autoclose: true
   });
+
+  $('#start-date-repeat').on('change', function(){
+    checkedWeekly();
+  });
+
+  function checkedWeekly() {
+    var repeatOn = $('#start-date-repeat').val().split('-');
+    var splitRepeatOn = new Date(repeatOn[2], repeatOn[1] - 1, repeatOn[0]);
+    var cb = $('#repeat-' + splitRepeatOn.getDay());
+    cb.prop('checked', true);
+  }
 });

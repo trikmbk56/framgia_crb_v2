@@ -2,8 +2,8 @@
 <td>
   <div>
     <span class="ep-rec-dow">
-      <% Settings.event.repeat_data.each do |r| %>
-        <%= check_box_tag "repeat_ons[]", r %>
+      <% Settings.event.repeat_data.each_with_index do |r, i| %>
+        <%= check_box_tag "repeat_ons[]", r, false, id: "repeat-#{i}" %>
         <%= label_tag r %>
       <% end %>
     </span>

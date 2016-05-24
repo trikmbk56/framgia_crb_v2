@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   QUERRY_OTHER_CALENDAR = "id in (select calendars.id from
     calendars join user_calendars on user_calendars.calendar_id = calendars.id
     where user_calendars.user_id = ? and calendars.user_id <> ?)"
-  
+
   QUERRY_MANAGE_CALENDAR = "id in (select calendars.id from
     calendars join user_calendars on user_calendars.calendar_id = calendars.id
     where user_calendars.user_id = ? and user_calendars.permission_id IN (?))"
@@ -51,6 +51,10 @@ class User < ActiveRecord::Base
 
   def default_calendar
     calendars.find_by is_default: true
+  end
+
+  def is_user? user
+    self ==  user
   end
 
   private

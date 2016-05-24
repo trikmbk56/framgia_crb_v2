@@ -32,8 +32,11 @@ class Event < ActiveRecord::Base
       Date.today.beginning_of_week, Date.today.end_of_week, user_id)
   end
 
-  scope :in_calendars, ->calendars do
-    where "calendar_id IN (?)", calendars
+  scope :in_calendars, ->calendars, start_time_view, end_time_view do
+    where "calendar_id IN (?) and ((end_repeat >= ? and end_repeat <= ?) or 
+      (start_repeat >= ? and start_repeat <= ?) or (start_repeat <= ? and end_repeat >= ?))",
+      calendars, start_time_view, end_time_view, start_time_view, end_time_view,
+      end_time_view, end_time_view
   end
 
   scope :upcoming_event, ->calendar_id do
@@ -44,7 +47,7 @@ class Event < ActiveRecord::Base
   scope :no_repeats, ->{where repeat_type: nil}
   scope :has_exceptions, ->{where.not exception_type: nil}
   scope :exception_edits, ->id do
-    where "id = ? AND exception_type IN (?)", id, [2, 3]
+    where "parent_id = ? AND exception_type IN (?)", id, [2, 3]
   end
 
   def json_data user_id

@@ -33,10 +33,14 @@ $(document).on('page:change', function() {
       $('input:checkbox[class=calendar-select]:checked').each(function() {
         calendars.push($(this).val());
       });
+      var start_time_view = $('#full-calendar').fullCalendar('getView').start;
+      var end_time_view = $('#full-calendar').fullCalendar('getView').end;
       $.ajax({
         url: '/api/events',
         data: {
-          calendars: calendars
+          calendars: calendars,
+          start_time_view: start_time_view.format(),
+          end_time_view: end_time_view.format(),
         },
         dataType: 'json',
         success: function(doc) {
@@ -51,7 +55,7 @@ $(document).on('page:change', function() {
               calendar: data.calendar,
               allDay: data.all_day,
               repeat_type: data.repeat_type,
-              event_id: data.event_id
+              event_id: data.event_id,
             }
           });
           callback(events);
@@ -96,9 +100,19 @@ $(document).on('page:change', function() {
     eventResizeStart: function( event, jsEvent, ui, view ) {
       hiddenDialog('new-event-dialog');
       hiddenDialog('popup');
+      setDateTime(event.start, event.end);
     },
     eventResize: function(event, delta, revertFunc) {
-      updateEvent(event, 0);
+      if (event.repeat_type == null || event.repeat_type.length == 0) {
+        updateEvent(event, 0, null, 0);
+      } else {
+        if(event.end.format('DD') == event.start.format('DD')) {
+          confirm_update_popup(event, 0);
+        }else {
+          event.end = finish_date;
+          alert(I18n.t('events.flashs.not_updated'));
+        }
+      }
       hiddenDialog('new-event-dialog');
       hiddenDialog('popup');
     },
@@ -116,7 +130,7 @@ $(document).on('page:change', function() {
         allDay = 1;
         event.end = event.start;
       }
-      updateEvent(event, allDay);
+      updateEvent(event, allDay, null, 1);
     }
   });
 
@@ -158,7 +172,14 @@ $(document).on('page:change', function() {
   function updateEventPopup(event) {
     $('#btn-save-event').click(function() {
       hiddenDialog('popup');
-      updateEvent(event, 0);
+      allDay = 0;
+      if(event.allDay)
+        allDay = 1;
+      if (event.repeat_type == null || event.repeat_type.length == 0) {
+        updateEvent(event, allDay, null, 0);
+      }else {
+        confirm_update_popup(event, allDay);
+      }
     });
   }
 
@@ -169,7 +190,7 @@ $(document).on('page:change', function() {
       hiddenDialog('popup');
       if (event.repeat_type == null || event.repeat_type.length == 0) {
         deleteEvent(event, exception_type);
-      }else{
+      }else {
         confirm_repeat_popup(event);
       }
     });
@@ -182,14 +203,27 @@ $(document).on('page:change', function() {
       data: {
         exception_type: exception_type,
         exception_time: event.start.format(),
-        finish_date: event.end.format()
+        finish_date: (event.end !== null) ? event.end.format('MM-DD-YYYY H:mm A') : ''
       },
       dataType: 'text',
       success: function(text){
-        $('#full-calendar').fullCalendar('removeEvents', event.id);
+        var _event = event;
+        var count = 0;
+        if(exception_type == 'delete_all_follow')
+          $('#full-calendar').fullCalendar('removeEvents', function(e){
+            if(e.event_id == event.event_id && e.start.format() >= event.start.format())
+              return true;
+          });
+        else
+          if(exception_type == 'delete_all')
+            $('#full-calendar').fullCalendar('removeEvents', function(e){
+              if(e.event_id == event.event_id)
+                return true;
+            });
+          else
+            $('#full-calendar').fullCalendar('removeEvents', event.id);
       },
       error: function(text) {
-        alert(text);
       }
     });
   }
@@ -214,9 +248,10 @@ $(document).on('page:change', function() {
   $('#calcontent').on('click', '.cancel-popup-event', function() {
     hiddenDialog('popup');
     hiddenDialog('dialog-repeat-popup');
+    hiddenDialog('dialog-update-popup');
   });
 
-  function updateEvent(event, allDay) {
+  function updateEvent(event, allDay, exception_type, is_drop) {
     event.end ? setDateTime(event.start, event.end) : setDateTime(event.start, event.start);
     if(event.title == '')
       event.title = I18n.t('calendars.events.no_title');
@@ -227,13 +262,34 @@ $(document).on('page:change', function() {
         start_date: start_date.format(),
         finish_date: finish_date.format(),
         all_day: allDay,
-        exception_type: 'edit_all'
+        exception_type: exception_type,
+        is_drop: is_drop
       },
       type: 'PUT',
       dataType: 'text',
       success: function(text) {
-        $('#full-calendar').fullCalendar('refetchEvents');
+        if(exception_type == 'edit_all_follow' || exception_type == 'edit_all')
+          $('#full-calendar').fullCalendar('refetchEvents');
+        else
+          $('#full-calendar').fullCalendar( 'renderEvent', event, true)
       }
+    });
+  }
+
+  function confirm_update_popup(event, allDay){
+    var dialog = $('#dialog-update-popup');
+    var dialogW = $(dialog).width();
+    var dialogH = $(dialog).height();
+    var windowW = $(window).width();
+    var windowH = $(window).height();
+    var xCordinate, yCordinate;
+    xCordinate = (windowW - dialogW) / 2;
+    yCordinate = (windowH - dialogH) / 2;
+    dialog.css({'top': yCordinate, 'left': xCordinate});
+    showDialog('dialog-update-popup');
+    $('.btn-confirm').click(function() {
+      updateEvent(event, allDay, $(this).attr('rel'), 0);
+      hiddenDialog('dialog-update-popup');
     });
   }
 

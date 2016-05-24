@@ -15,7 +15,8 @@ class Api::EventsController < ApplicationController
         }
       end
     else
-      @events = Event.in_calendars params[:calendars]
+      @events = Event.in_calendars params[:calendars], params[:start_time_view],
+        params[:end_time_view]
       @event_exceptions = @events.has_exceptions
       @data = GenerateEventFullcalendarServices.new(@events, current_user,
         @event_exceptions).repeat_data
@@ -25,6 +26,12 @@ class Api::EventsController < ApplicationController
 
   def update
     @event = Event.find_by id: params[:id]
+    if @event.parent_id.nil?
+      parent = @event
+    else
+      parent = @event.event_parent
+    end
+    params[:exception_time] = params[:start_date]
     if params[:start_repeat].nil?
       params[:start_repeat] = params[:start_date]
     else
@@ -36,8 +43,7 @@ class Api::EventsController < ApplicationController
     else
       params[:end_repeat] = params[:end_repeat].to_date + 1.days
     end
-    UpdateEventExceptionServices.new(params[:exception_type],
-      @event, event_params).update_event_exception
+    UpdateEventExceptionServices.new(parent, params).update_event_exception
     render text: t("events.flashs.updated")
   end
 
@@ -62,7 +68,7 @@ class Api::EventsController < ApplicationController
       render text: t("events.flashs.deleted")
     else
       destroy_event_repeat @event, params[:exception_type],
-        params[:exception_time], params[:finish_date]
+        params[:exception_time]
       render text: t("events.flashs.deleted")
     end
   end
@@ -70,7 +76,12 @@ class Api::EventsController < ApplicationController
   private
   def event_params
     params.permit :id, :title, :all_day, :start_repeat, :end_repeat,
-      :start_date, :finish_date
+      :start_date, :finish_date, :exception_type, :exception_time
+  end
+
+  def exception_params
+    params.permit :title, :all_day, :start_repeat, :end_repeat,
+      :start_date, :finish_date, :exception_type, :exception_time, :parent_id
   end
 
   def load_event
@@ -85,10 +96,21 @@ class Api::EventsController < ApplicationController
     end
   end
 
-  def destroy_event_repeat event, exception_type, exception_time, finish_date
-    event_exception = event.dup
-    event_exception.update_attributes(exception_type: exception_type,
-      exception_time: exception_time, parent_id: event.id,
-      start_date: exception_time, finish_date: finish_date)
+  def destroy_event_repeat event, exception_type, exception_time
+    if @event.parent_id.nil?
+      parent = @event
+    else
+      parent = @event.event_parent
+    end
+    event_exception = parent.event_exceptions.find_by  "exception_time >= ? and 
+      exception_time <= ?", exception_time.to_datetime.beginning_of_day, 
+      exception_time.to_datetime.end_of_day
+    if event_exception
+      event_exception.update_attributes exception_type: exception_type
+    else
+      event.dup.update_attributes(exception_type: exception_type,
+        exception_time: exception_time, parent_id: event.id,
+        start_date: exception_time)
+    end
   end
 end

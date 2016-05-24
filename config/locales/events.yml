@@ -61,28 +61,36 @@ en:
       create_event: "Create event"
     repeat_dialog:
       delete:
+        id: "dialog-repeat-popup"
         title: "Delete recurring event"
         content: "Would you like to delete only this event, all events in the series or this and all future events in the series?"
         only:
+          rel: "delete_only"
           btn: "Only this instance"
           explanation: "All other events in the series will be retained."
         following:
+          rel: "delete_all_follow"
           btn: "All the following"
           explanation: "This and all the following events will be deleted."
         all:
+          rel: "delete_all"
           btn: "All events in the series"
           explanation: "All events in the series will be deleted."
         cancel: "Cancel this change"
       edit:
+        id: "dialog-update-popup"
         title: "Edit recurring event"
         content: "Would you like to change this event only, all events in the series or this and all following events in the series?"
         only:
+          rel: "edit_only" 
           btn: "Only this event"
           explanation: "All other events in the series will remain the same."
         following:
+          rel: "edit_all_follow"
           btn: "Followings events"
           explanation: "This and all the following events will be changed.<br>Any changes to future events will be lost."
         all:
+          rel: "edit_all"
           btn: "All events"
           explanation: "All events in the series will be changed.<br>Any changes made to other events will be kept."
         cancel: "Cancel this change"

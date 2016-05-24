@@ -43,6 +43,9 @@ class Event < ActiveRecord::Base
 
   scope :no_repeats, ->{where repeat_type: nil}
   scope :has_exceptions, ->{where.not exception_type: nil}
+  scope :exception_edits, ->id do
+    where "id = ? AND exception_type IN (?)", id, [2, 3]
+  end
 
   def json_data user_id
     {

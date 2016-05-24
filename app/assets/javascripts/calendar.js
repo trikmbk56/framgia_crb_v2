@@ -227,11 +227,12 @@ $(document).on('page:change', function() {
         start_date: start_date.format(),
         finish_date: finish_date.format(),
         all_day: allDay,
+        exception_type: 'edit_all'
       },
       type: 'PUT',
       dataType: 'text',
       success: function(text) {
-        $('#full-calendar').fullCalendar( 'renderEvent', event, true)
+        $('#full-calendar').fullCalendar('refetchEvents');
       }
     });
   }

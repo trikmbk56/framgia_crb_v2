@@ -279,9 +279,20 @@
   label {
     font-weight: bold;
   }
-
   .dialog-repeat-event:hover {
     text-decoration: underline;
+  }
+  .checkox-new-event{
+    width: 300px;
+    overflow: hidden;
+    border: 1px solid black;
+  }
+  .all-day {
+    width: 100px;
+    float:left;
+  }
+  .cb-repeat {
+    overflow: hidden;
   }
 }
 

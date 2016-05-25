@@ -29,7 +29,6 @@ $(document).on('page:change', function(){
   if($('.edit_event').length > 0){
     $('#start_date').datepicker('setDate', $('#start_date').val());
   }
-
   $(document).on('change', '.date-time', function(event) {
     $('#event_start_date').val(start_date.val() + ' ' + start_time.val());
     $('#event_finish_date').val(finish_date.val() + ' ' + finish_time.val());
@@ -37,7 +36,6 @@ $(document).on('page:change', function(){
     $('#event_end_repeat').val(end_repeat.val());
   });
 });
-
 $(document).ready(function() {
   $('.btn-del').click(function() {
     attendee = $(this).attr('id');
@@ -61,6 +59,25 @@ $(document).ready(function() {
 });
 
 $(document).on('page:change', function(){
+  $('.dialog-repeat-event').click(function() {
+    showDialog('dialog-repeat-event-form');
+  });
+  var start_time = $('#start_time');
+  var start_date = $('#start_date');
+  var finish_time = $('#finish_time');
+  var finish_date = $('#finish_date');
+  var url = window.location.href;
+  var new_event = I18n.t("events.new.url");
+  if (url.indexOf(new_event) > 0
+      && $('#start_time').val() == I18n.t("events.new.am")
+      && $('#finish_time').val() == I18n.t("events.new.pm")){
+    $('#all_day').prop('checked', true);
+    checkAllday();
+  }
+  $('#all_day').on('click', function() {
+    checkAllday();
+  });
+
   $('#event_repeat_type').on('change', function() {
     var repeat_type = $('#event_repeat_type').val();
     var repeat_weekly = "weekly";
@@ -73,6 +90,35 @@ $(document).on('page:change', function(){
     }
   });
 
+  function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ampm;
+    return strTime;
+  }
+  function checkAllday(){
+    if ($('#all_day')[0].checked){
+      start_time.hide();
+      finish_time.hide();
+      $('#event_all_day').val(true);
+      var start = new Date();
+      start.setHours(0,0,0,0);
+      var end = new Date();
+      end.setHours(23,59,59,999);
+      start_time.val(formatAMPM(start));
+      finish_time.val(formatAMPM(end));
+      $('#event_start_date').val(start_date.val() + ' ' + start_time.val());
+      $('#event_finish_date').val(finish_date.val() + ' ' + finish_time.val());
+    }else{
+      start_time.show();
+      finish_time.show();
+      $('#event_all_day').val(false);
+    }
+  }
   function showDialog(dialogId) {
     var dialog = $('#' + dialogId);
     $(dialog).removeClass('dialog-hidden');

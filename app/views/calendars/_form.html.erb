@@ -111,12 +111,18 @@
     <div id="list-share-calendar">
       <% if @calendar.user_id? %>
         <% @calendar.user_calendars.each do |user_calendar| %>
-          <% if (user_calendar.user_id != current_user.id) %>
-            <%= render partial: "user_share",
-              locals: {user_id: user_calendar.user_id, id: user_calendar.id,
-              email: "#{user_calendar.email} <#{user_calendar.name}>",
-              permission: user_calendar.permission_id,
-              permissions: @permissions} %>
+          <% unless user_calendar.user.is_user? current_user %>
+            <% if user_calendar.user.is_user? @calendar.owner %>
+              <div class="col1"><%= user_calendar.user_email %></div>
+              <div class="col2"><%= t "permissions.permission_1" %></div>
+              <div class="col3"></div>
+            <% else %>
+              <%= render partial: "user_share",
+                locals: {user_id: user_calendar.user_id, id: user_calendar.id,
+                email: "#{user_calendar.user_email} <#{user_calendar.user_name}>",
+                permission: user_calendar.permission_id,
+                permissions: @permissions} %>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>

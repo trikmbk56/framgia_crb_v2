@@ -9,6 +9,7 @@
 
 .dialog-visible {
   visibility: visible;
+  z-index: 1011;
 }
 
 .dialog-hidden {
@@ -522,8 +523,6 @@
     z-index: 1011;
     color: #222;
     outline: 0;
-    left: 453.5px;
-    top: 181.5px;
   }
 
   div {

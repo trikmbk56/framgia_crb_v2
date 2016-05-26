@@ -1,84 +1,82 @@
-<div id = "dialog-repeat-event-form" class="dialog-hidden">
+<div id = "dialog-repeat-event-form" class="dialog-hidden ep-recl-dialog" tabindex="0" role="dialog">
   <div id="repeat">
-    <div class="ep-recl-dialog" tabindex="0" role="dialog">
-      <div class="ep-recl-dialog-title">
-        <span class="ep-recl-dialog-title"><%= t ".repeat" %></span>
-        <span class="ep-recl-dialog-title-close" id="close"></span>
-      </div>
-      <div class="ep-recl-dialog-content">
-        <table class="ep-rec" role="presentation">
-          <tbody>
-            <tr>
-              <th><%= t ".repeats" %></th>
-              <td class="repeat_type"><%= f.select(:repeat_type,
-                Settings.repeat.repeat_type) %></td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <th><%= t ".repeat_every" %></th>
-              <td><div id = "select-repeat-every"><%= f.select(:repeat_every,
-                1..Settings.repeat.repeat_every) %></div></td>
-            </tr>
-            <tr>
-              <th><%= t ".start_on" %></th>
-              <td>
-                <%= f.hidden_field :start_repeat %>
-                <%= text_field_tag :start_repeat,
-                  datetime_format(@event.start_date, "short_date"),
-                  required: true, class: "date start fix-width-date date-time", id: "start-date-repeat" %>
-              </td>
-            </tr>
-            <tr>
-              <th class="ep-rec-ends-th"><%= t ".ends" %></th>
-              <td>
-                <span class="ep-rec-ends-opt">
-                  <%= f.hidden_field :end_repeat %>
-                  <%= text_field_tag :end_repeat, datetime_format(@event.finish_date, "short_date"), required: true, class: "date finish date-time",
-                    id: "end-date-repeat" %>
-                </span>
-              </td>
-            </tr>
-            <tr class="dialog-hidden" id="repeat-on">
-              <%= render "events/repeat_on" %>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <th></th>
-              <td class="ep-rec-buttons-padding">
-                <div>
-                  <div class="goog-inline-block goog-imageless-button" role="button">
-                    <div class="goog-inline-block goog-imageless-button-outer-box">
-                      <div class="goog-inline-block goog-imageless-button-inner-box">
-                        <div class="goog-imageless-button-pos">
-                          <div class="goog-imageless-button-top-shadow">&nbsp;
-                          </div>
-                          <div class="goog-imageless-button-content" id="done">
-                            <%= t :Done %>
-                          </div>
+    <div class="ep-recl-dialog-title">
+      <span class="ep-recl-dialog-title"><%= t ".repeat" %></span>
+      <span class="ep-recl-dialog-title-close" id="close"></span>
+    </div>
+    <div class="ep-recl-dialog-content">
+      <table class="ep-rec" role="presentation">
+        <tbody>
+          <tr>
+            <th><%= t ".repeats" %></th>
+            <td class="repeat_type"><%= f.select(:repeat_type,
+              Settings.repeat.repeat_type) %></td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <th><%= t ".repeat_every" %></th>
+            <td><div id = "select-repeat-every"><%= f.select(:repeat_every,
+              1..Settings.repeat.repeat_every) %></div></td>
+          </tr>
+          <tr>
+            <th><%= t ".start_on" %></th>
+            <td>
+              <%= f.hidden_field :start_repeat %>
+              <%= text_field_tag :start_repeat,
+                datetime_format(@event.start_date, "short_date"),
+                required: true, class: "date start fix-width-date date-time", id: "start-date-repeat" %>
+            </td>
+          </tr>
+          <tr>
+            <th class="ep-rec-ends-th"><%= t ".ends" %></th>
+            <td>
+              <span class="ep-rec-ends-opt">
+                <%= f.hidden_field :end_repeat %>
+                <%= text_field_tag :end_repeat, datetime_format(@event.finish_date, "short_date"), required: true, class: "date finish date-time",
+                  id: "end-date-repeat" %>
+              </span>
+            </td>
+          </tr>
+          <tr class="dialog-hidden" id="repeat-on">
+            <%= render "events/repeat_on" %>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <th></th>
+            <td class="ep-rec-buttons-padding">
+              <div>
+                <div class="goog-inline-block goog-imageless-button" role="button">
+                  <div class="goog-inline-block goog-imageless-button-outer-box">
+                    <div class="goog-inline-block goog-imageless-button-inner-box">
+                      <div class="goog-imageless-button-pos">
+                        <div class="goog-imageless-button-top-shadow">&nbsp;
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="goog-inline-block goog-imageless-button" role="button">
-                    <div class="goog-inline-block goog-imageless-button-outer-box">
-                      <div class="goog-inline-block goog-imageless-button-inner-box">
-                        <div class="goog-imageless-button-pos">
-                          <div class="goog-imageless-button-top-shadow">&nbsp;</div>
-                        </div>
-                        <div class="goog-imageless-button-content" id="cancel">
-                          <%= t :Cancel %>
+                        <div class="goog-imageless-button-content" id="done">
+                          <%= t :Done %>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                <div class="goog-inline-block goog-imageless-button" role="button">
+                  <div class="goog-inline-block goog-imageless-button-outer-box">
+                    <div class="goog-inline-block goog-imageless-button-inner-box">
+                      <div class="goog-imageless-button-pos">
+                        <div class="goog-imageless-button-top-shadow">&nbsp;</div>
+                      </div>
+                      <div class="goog-imageless-button-content" id="cancel">
+                        <%= t :Cancel %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

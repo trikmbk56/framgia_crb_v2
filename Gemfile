@@ -25,6 +25,7 @@ gem "i18n-js", ">= 3.0.0.rc11"
 gem "select2-rails"
 
 group :development, :test do
+  gem "letter_opener"
   gem "pry"
   gem "web-console", "~> 2.0"
   gem "spring"

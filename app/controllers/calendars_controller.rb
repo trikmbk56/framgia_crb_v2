@@ -13,7 +13,6 @@ class CalendarsController < ApplicationController
     @other_calendars = current_user.other_calendars
     @manage_calendars = current_user.manage_calendars
     @event = Event.new
-    @users = User.all_other_users current_user.id
   end
 
   def create

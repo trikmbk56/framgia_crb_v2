@@ -11,10 +11,6 @@ class User < ActiveRecord::Base
 
   after_create :create_calendar
 
-  scope :all_other_users, ->user_id do
-    where.not id: user_id
-  end
-
   QUERRY_MY_CALENDAR = "id in (select calendars.id from
     calendars join user_calendars on user_calendars.calendar_id = calendars.id
     where calendars.user_id = ?)"

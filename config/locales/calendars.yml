@@ -6,7 +6,7 @@ en:
     confirm_delete: "Are you sure to delete this calendar?"
     create: "Create new calendar"
     edit: "Edit my calendar"
-    request_email_input: "Email"
+    request_email_input: "Request Email..."
     address: "Calendar Address:"
     description: "Please use the following address to access your calendar in any web browser."
     ok: "Ok"

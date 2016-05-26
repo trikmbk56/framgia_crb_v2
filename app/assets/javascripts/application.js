@@ -27,3 +27,4 @@
 //= require jquery.datepair
 //= require event
 //= require particular_calendar
+//= require clipboard.min

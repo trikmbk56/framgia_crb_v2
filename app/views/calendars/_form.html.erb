@@ -56,8 +56,14 @@
     <div class="form-group">
       <div class="divider"></div>
       <label><%= t "calendars.address" %></label>
-      <%= image_tag "html.gif", class: "calendar-address" %>
-      <%= render "form_calendar_address" %>
+        <a href="particular_calendars/<%= @calendar.id %>"
+          id="link-calendar" target="_blank">
+          <%= Settings.url + "#{@calendar.id}" %>
+        </a>
+        <span class="copy-link btn-discard"
+          data-clipboard-target="#link-calendar">
+          <%= t "calendars.copy_link" %>
+        </span>
     </div>
   <% end %>
   <div class="make-public form-group">

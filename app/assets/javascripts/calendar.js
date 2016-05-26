@@ -2,7 +2,7 @@ $(document).on('page:change', function() {
   var start_date, finish_date, event_title;
   var GMT_0 = -420;
   var lastestView;
-  if (localStorage.getItem('lastestView') != null)
+  if (localStorage.getItem('lastestView') != "undefined")
     lastestView = localStorage.getItem('lastestView');
   else
     lastestView = 'agendaWeek';

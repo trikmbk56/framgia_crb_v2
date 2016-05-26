@@ -56,6 +56,7 @@ $(document).on('page:change', function() {
               allDay: data.all_day,
               repeat_type: data.repeat_type,
               event_id: data.event_id,
+              editable: data.editable
             }
           });
           callback(events);
@@ -151,7 +152,9 @@ $(document).on('page:change', function() {
         showDialog('popup');
         unSelectCalendar();
         deleteEventPopup(event);
-        clickEditTitle(event);
+        if (event.editable){
+          clickEditTitle(event);
+        }
       }
     });
   }

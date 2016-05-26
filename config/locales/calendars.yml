@@ -11,6 +11,7 @@ en:
     description: "Please use the following address to access your calendar in any web browser."
     ok: "Ok"
     add: "+"
+    copy_link: "Copy link"
     events:
       clear_all_events: "Delete all events"
       not_cleared_event: "Events weren't cleared successfully."

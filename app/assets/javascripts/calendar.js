@@ -140,7 +140,13 @@ $(document).on('page:change', function() {
       updateEvent(event, allDay, null, 1);
     }
   });
-
+  var clipboard = new Clipboard('.copy-link');
+  clipboard.on('success', function(e) {
+    e.clearSelection();
+  });
+  $('.copy-link').on('click', function() {
+    alert('copied');
+  })
   function initDialogEventClick(event, jsEvent) {
     if ($('#popup') !== null)
       $('#popup').remove();

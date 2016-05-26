@@ -1,6 +1,12 @@
 $(document).on('page:change', function() {
   var start_date, finish_date, event_title;
   var GMT_0 = -420;
+  var lastestView;
+  if (localStorage.getItem('lastestView') != null)
+    lastestView = localStorage.getItem('lastestView');
+  else
+    lastestView = 'agendaWeek';
+
   $('#full-calendar').fullCalendar({
     header: {
       left: 'prev,next today',
@@ -15,7 +21,7 @@ $(document).on('page:change', function() {
       }
     },
     eventColor: '#7BD148',
-    defaultView: 'agendaWeek',
+    defaultView: lastestView,
     editable: true,
     selectHelper: true,
     unselectAuto: false,
@@ -309,6 +315,10 @@ $(document).on('page:change', function() {
     });
   }
 
+  function saveLastestView() {
+    localStorage.setItem('lastestView', $('#full-calendar').fullCalendar('getView').type);
+  }
+
   $('.fc-prev-button, .fc-next-button, .fc-today-button').click(function() {
     var moment = $('#full-calendar').fullCalendar('getDate');
     $('#mini-calendar').datepicker();
@@ -380,6 +390,7 @@ $(document).on('page:change', function() {
   });
 
   $(document).click(function() {
+    saveLastestView();
     if (!$(event.target).hasClass('create')
       && !$(event.target).closest('#event-popup').hasClass('dropdown-menu')){
       $('#source-popup').removeClass('open');

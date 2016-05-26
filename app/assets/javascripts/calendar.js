@@ -56,7 +56,8 @@ $(document).on('page:change', function() {
               allDay: data.all_day,
               repeat_type: data.repeat_type,
               event_id: data.event_id,
-              editable: data.editable
+              exception_type: data.exception_type,
+              editable: data.editable,
             }
           });
           callback(events);
@@ -104,8 +105,13 @@ $(document).on('page:change', function() {
       setDateTime(event.start, event.end);
     },
     eventResize: function(event, delta, revertFunc) {
-      if (event.repeat_type == null || event.repeat_type.length == 0) {
-        updateEvent(event, 0, null, 0);
+      if (event.repeat_type == null || event.repeat_type.length == 0 ||
+        event.exception_type == 'edit_only') {
+        if (event.exception_type != null)
+          exception_type = event.exception_type;
+        else
+          exception_type = null;
+        updateEvent(event, 0, exception_type, 0);
       } else {
         if(event.end.format('DD') == event.start.format('DD')) {
           confirm_update_popup(event, 0);
@@ -178,8 +184,13 @@ $(document).on('page:change', function() {
       allDay = 0;
       if(event.allDay)
         allDay = 1;
-      if (event.repeat_type == null || event.repeat_type.length == 0) {
-        updateEvent(event, allDay, null, 0);
+      if (event.repeat_type == null || event.repeat_type.length == 0 ||
+        event.exception_type == 'edit_only') {
+        if (event.exception_type != null)
+          exception_type = event.exception_type;
+        else
+          exception_type = null;
+        updateEvent(event, 0, exception_type, 0);
       }else {
         confirm_update_popup(event, allDay);
       }
@@ -224,6 +235,7 @@ $(document).on('page:change', function() {
                 return true;
             });
           else
+            event.exception_type = exception_type;
             $('#full-calendar').fullCalendar('removeEvents', event.id);
       },
       error: function(text) {
@@ -271,6 +283,7 @@ $(document).on('page:change', function() {
       type: 'PUT',
       dataType: 'text',
       success: function(text) {
+        event.exception_type = exception_type;
         if(exception_type == 'edit_all_follow' || exception_type == 'edit_all')
           $('#full-calendar').fullCalendar('refetchEvents');
         else

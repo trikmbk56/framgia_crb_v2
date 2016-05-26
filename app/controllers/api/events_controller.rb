@@ -109,7 +109,7 @@ class Api::EventsController < ApplicationController
       event_exception.update_attributes exception_type: exception_type
     else
       event.dup.update_attributes(exception_type: exception_type,
-        exception_time: exception_time, parent_id: event.id,
+        exception_time: exception_time, parent_id: parent.id,
         start_date: exception_time)
     end
   end

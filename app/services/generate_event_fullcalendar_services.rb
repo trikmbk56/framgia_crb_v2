@@ -93,6 +93,7 @@ class GenerateEventFullcalendarServices
     ex_destroy_events = Array.new
     ex_update_events = Array.new
     ex_edit_follow =  Array.new
+    ex_update_follow = Array.new
     repeat_event = [start]
 
     event.event_exceptions.each do |exception_event|
@@ -106,37 +107,54 @@ class GenerateEventFullcalendarServices
           ex_destroy_events << exception_event.exception_time.to_date
         end
 
-        while ex_destroy_events.last <= event.end_repeat.to_date - step
+        while ex_destroy_events.last <= exception_event.end_repeat.to_date - step
           ex_destroy_events << ex_destroy_events.last + step
         end
-
       elsif exception_event.edit_only?
         unless event.weekly? && start.wday != exception_event.exception_time.wday
           ex_update_events << exception_event.exception_time.to_date
           @event_edit = EventFullcalendar.new exception_event
           @event_shows << @event_edit.dup
         end
-
       elsif exception_event.edit_all_follow?
-        if event.weekly?
-          weekly_start_exception exception_event
-          ex_edit_follow << @start_exception
-        else
-          ex_edit_follow << exception_event.exception_time.to_date
-        end
-
-        while ex_edit_follow.last <= event.end_repeat.to_date - step
-          ex_edit_follow << ex_edit_follow.last + step
-        end
-        @event_edit_follow = EventFullcalendar.new exception_event
+        ex_edit_follow << exception_event
       end
     end
+
+    ex_edit_follow.each do |exception_event|
+      times_occurs = []
+      if event.weekly?
+        weekly_start_exception exception_event
+        ex_update_follow << @start_exception
+        times_occurs << @start_exception
+      else
+        ex_update_follow << exception_event.exception_time.to_date
+        times_occurs << exception_event.exception_time.to_date
+      end
+
+      while ex_update_follow.last <= exception_event.end_repeat.to_date - step
+        ex_update_follow << ex_update_follow.last + step
+        times_occurs << times_occurs.last + step
+      end
+
+      @event_edit_follow = EventFullcalendar.new exception_event
+      (times_occurs - ex_destroy_events - ex_update_events).each do |follow_time|
+        start_time = @event_edit_follow.start_date.seconds_since_midnight.seconds
+        end_time = @event_edit_follow.finish_date.seconds_since_midnight.seconds
+
+        @event_edit_follow.start_date = follow_time.to_datetime + start_time
+        @event_edit_follow.finish_date = follow_time.to_datetime + end_time
+        @event_edit_follow.id = SecureRandom.urlsafe_base64
+        @event_shows << @event_edit_follow.dup
+      end
+    end
+
     while repeat_event.last <= event.end_repeat.to_date - step
       repeat_event << repeat_event.last + step
     end
 
     range_repeat_time = repeat_event - ex_destroy_events -
-      ex_update_events - ex_edit_follow
+      ex_update_events - ex_update_follow
 
     range_repeat_time.each do |repeat_time|
       start_time = @event_temp.start_date.seconds_since_midnight.seconds
@@ -146,16 +164,6 @@ class GenerateEventFullcalendarServices
       @event_temp.finish_date = repeat_time.to_datetime + end_time
       @event_temp.id = SecureRandom.urlsafe_base64
       @event_shows << @event_temp.dup
-    end
-
-    (ex_edit_follow - ex_destroy_events - ex_update_events).each do |follow_time|
-      start_time = @event_edit_follow.start_date.seconds_since_midnight.seconds
-      end_time = @event_edit_follow.finish_date.seconds_since_midnight.seconds
-
-      @event_edit_follow.start_date = follow_time.to_datetime + start_time
-      @event_edit_follow.finish_date = follow_time.to_datetime + end_time
-      @event_edit_follow.id = SecureRandom.urlsafe_base64
-      @event_shows << @event_edit_follow.dup
     end
   end
 

@@ -55,6 +55,10 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+    @repeat_ons = @event.repeat_ons
+  end
+
   def update
     if @event.update_attributes event_params
       flash[:success] = t "events.flashs.updated"

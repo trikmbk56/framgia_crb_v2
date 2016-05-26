@@ -38,7 +38,7 @@
         <%= check_box_tag :all_day %>
         <%= label_tag :all_day %>
       </div>
-      <div class="cb-repeat first">
+      <div class="cb-repeat first<%= @repeat_ons.present? ? " repeat-on": "" %> ">
         <%= check_box_tag :repeat %>
         <%= label_tag :repeat %>
         <span>

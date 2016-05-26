@@ -33,7 +33,7 @@ class Event < ActiveRecord::Base
   end
 
   scope :in_calendars, ->calendars, start_time_view, end_time_view do
-    where "calendar_id IN (?) and ((end_repeat >= ? and end_repeat <= ?) or 
+    where "calendar_id IN (?) and ((end_repeat >= ? and end_repeat <= ?) or
       (start_repeat >= ? and start_repeat <= ?) or (start_repeat <= ? and end_repeat >= ?))",
       calendars, start_time_view, end_time_view, start_time_view, end_time_view,
       end_time_view, end_time_view
@@ -48,6 +48,18 @@ class Event < ActiveRecord::Base
   scope :has_exceptions, ->{where.not exception_type: nil}
   scope :exception_edits, ->id do
     where "parent_id = ? AND exception_type IN (?)", id, [2, 3]
+  end
+  scope :event_follow_after_date, ->start_date do
+    where "start_date > ? AND exception_type = ?", start_date, 3
+  end
+  scope :all_event_after_date, ->start_date{where "start_date > ?", start_date}
+  scope :event_pre_nearest, ->start_date do
+    where "start_date < ?", start_date
+  end
+
+  def self.event_exception_at_time exception_type, start_time, end_time
+    find_by "exception_type IN (?) and exception_time >= ? and exception_time <= ?",
+      exception_type, start_time, end_time
   end
 
   def json_data user_id

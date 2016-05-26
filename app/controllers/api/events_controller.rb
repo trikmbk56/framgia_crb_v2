@@ -102,8 +102,8 @@ class Api::EventsController < ApplicationController
     else
       parent = @event.event_parent
     end
-    event_exception = parent.event_exceptions.find_by  "exception_time >= ? and 
-      exception_time <= ?", exception_time.to_datetime.beginning_of_day, 
+    event_exception = parent.event_exceptions.find_by "exception_time >= ? and
+      exception_time <= ?", exception_time.to_datetime.beginning_of_day,
       exception_time.to_datetime.end_of_day
     if event_exception
       event_exception.update_attributes exception_type: exception_type

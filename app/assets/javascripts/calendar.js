@@ -120,7 +120,9 @@ $(document).on('page:change', function() {
         updateEvent(event, 0, exception_type, 0);
       } else {
         if(event.end.format('DD') == event.start.format('DD')) {
-          confirm_update_popup(event, 0);
+          end_date = event.end;
+          event.end = finish_date;
+          confirm_update_popup(event, 0, end_date);
         }else {
           event.end = finish_date;
           alert(I18n.t('events.flashs.not_updated'));
@@ -191,6 +193,7 @@ $(document).on('page:change', function() {
   }
 
   function updateEventPopup(event) {
+    $('#btn-save-event').unbind('click');
     $('#btn-save-event').click(function() {
       hiddenDialog('popup');
       allDay = 0;
@@ -204,7 +207,7 @@ $(document).on('page:change', function() {
           exception_type = null;
         updateEvent(event, 0, exception_type, 0);
       }else {
-        confirm_update_popup(event, allDay);
+        confirm_update_popup(event, allDay, event.end);
       }
     });
   }
@@ -304,7 +307,7 @@ $(document).on('page:change', function() {
     });
   }
 
-  function confirm_update_popup(event, allDay){
+  function confirm_update_popup(event, allDay, end_date){
     var dialog = $('#dialog-update-popup');
     var dialogW = $(dialog).width();
     var dialogH = $(dialog).height();
@@ -315,7 +318,9 @@ $(document).on('page:change', function() {
     yCordinate = (windowH - dialogH) / 2;
     dialog.css({'top': yCordinate, 'left': xCordinate});
     showDialog('dialog-update-popup');
+    $('.btn-confirm').unbind('click');
     $('.btn-confirm').click(function() {
+      event.end = end_date;
       updateEvent(event, allDay, $(this).attr('rel'), 0);
       hiddenDialog('dialog-update-popup');
     });

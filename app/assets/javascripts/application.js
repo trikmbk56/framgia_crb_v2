@@ -28,3 +28,10 @@
 //= require event
 //= require particular_calendar
 //= require clipboard.min
+//= require notification
+
+$(document).ready(function() {
+  if(Notification.permission !== 'granted') {
+    Notification.requestPermission();
+  }
+});

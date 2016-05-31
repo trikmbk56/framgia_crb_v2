@@ -39,6 +39,16 @@
         </div>
       </div>
 
+      <div class="field">
+        <div class="field-name">
+          <%= f.label :chatwork_id %><br/>
+        </div>
+        <div class="form">
+          <%= f.text_field :chatwork_id, autocomplete: "off",
+            class: "form-control" %>
+        </div>
+      </div>
+
       <div class="button update-button">
         <%= f.submit t("devise.registrations.update"),
           class: "rc-button rc-button-submit",

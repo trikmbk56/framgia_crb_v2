@@ -33,6 +33,12 @@
             class: "form-control" %>
         </div>
 
+        <div class="field">
+          <%= f.label :chatwork_id %><br />
+          <%= f.text_field :chatwork_id, autocomplete: "off",
+            class: "form-control" %>
+        </div>
+
         <div class="signup-button">
           <%= f.submit t("devise.registrations.sign_up"),
             class: "rc-button rc-button-submit" %>

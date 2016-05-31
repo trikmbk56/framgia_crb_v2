@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   include SharedMethods
+  require "chatwork"
 
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :all_day,
     :repeat_type, :repeat_every, :user_id, :calendar_id, :start_date,

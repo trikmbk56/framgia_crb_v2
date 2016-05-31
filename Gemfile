@@ -25,6 +25,7 @@ gem "i18n-js", ">= 3.0.0.rc11"
 gem "select2-rails"
 gem "sidekiq"
 gem "chatwork"
+gem "delayed_job_active_record"
 
 group :development, :test do
   gem "letter_opener"

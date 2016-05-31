@@ -293,7 +293,9 @@ $(document).on('page:change', function() {
         finish_date: finish_date.format(),
         all_day: allDay,
         exception_type: exception_type,
-        is_drop: is_drop
+        is_drop: is_drop,
+        start_time_before_drag: event.start._i,
+        finish_time_before_drag: event.end._i,
       },
       type: 'PUT',
       dataType: 'text',

@@ -8,6 +8,8 @@ class UpdateEventExceptionServices
     @event_update_params = params.permit :title, :all_day, :start_repeat,
       :end_repeat, :start_date, :finish_date, :exception_type, :exception_time
     @is_drop = params[:is_drop]
+    @start_time_before_drag = params[:start_time_before_drag]
+    @finish_time_before_drag = params[:finish_time_before_drag]
   end
 
   def update_event_exception
@@ -52,6 +54,15 @@ class UpdateEventExceptionServices
         event_allfollow_exceptions.destroy_all
       end
     else
+      create_event_when_drop
+      event_exception = @event.event_exceptions.event_exception_at_time [2, 3],
+        @event_params[:start_date].to_datetime.beginning_of_day,
+        @event_params[:start_date].to_datetime.end_of_day
+      if event_exception
+        event_exception.update_attributes exception_type: 0
+      else
+        create_event_with_exception_delete_only
+      end
     end
   end
 
@@ -92,5 +103,25 @@ class UpdateEventExceptionServices
   def event_exception_pre_nearest
     @event.event_exceptions.event_pre_nearest(@event_params[:start_date]).
       order(start_date: :desc).first
+  end
+
+  def create_event_when_drop
+    @event_params[:parent_id] = nil
+    @event_params[:id] = nil
+    @event_params[:exception_type] = nil
+    @event_params[:exception_time] = nil
+    @event_params[:start_repeat] = @event_params[:start_date]
+    @event_params[:end_repeat] = @event_params[:finish_date]
+    @event.dup.update_attributes @event_params
+  end
+
+  def create_event_with_exception_delete_only
+    @event_params[:parent_id] = @event.id
+    @event_params[:id] = nil
+    @event_params[:exception_type] = 0
+    @event_params[:start_date] = @start_time_before_drag.to_datetime
+    @event_params[:finish_date] = @finish_time_before_drag.to_datetime
+    @event_params[:exception_time] = @start_time_before_drag.to_datetime
+    @event.dup.update_attributes @event_params
   end
 end

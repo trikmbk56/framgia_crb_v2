@@ -121,11 +121,40 @@
   }
 
   #other-calendar {
-    #request-email-input {
-      width: 115px;
+    .send-request-email {
+      #request-email-input {
+        width: 135px;
+        height: 25px;
+        box-sizing: border-box;
+        padding: 7px 5px 5px;
+        border: 1px solid #bababa;
+        border-right: 0;
+        color: gray;
+        outline: none;
+        min-width: 0;
+        margin-right: -5px;
+      }
+      #request-email-button {
+        width: 25px;
+        height: 25px;
+        padding: 5px 0px;
+        background-color: #fff;
+        color: #999;
+        border: 1px solid #bababa;
+        border-left: none;
+        font-size: 14px;
+        transition: background-color 0.2s;
+        background-image: url(image_path("icon_add.png"));
+        background-repeat: no-repeat;
+        background-size: 22px 22px;
+        background-position: center;
+        &:hover {
+          background-color: #bababa;
+        }
+      }
     }
-    #request-email-button {
-      width: 25px;
+    .border-light {
+      border-color: #dedede;
     }
   }
 

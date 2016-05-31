@@ -57,11 +57,11 @@
         </h2>
         <div id="collapse2" class="panel-collapse collapse"
           aria-expanded="true">
-          <span>
+          <div class="send-request-email border-light">
             <input id="request-email-input" type="text"
               placeholder="<%= t "calendars.request_email_input" %>">
-            <button id="request-email-button"><%= t "calendars.add" %></button>
-          </span>
+            <button id="request-email-button"></button>
+          </div>
           <%= render "calendars", calendars: @other_calendars %>
         </div>
       </div>

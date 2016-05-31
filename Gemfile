@@ -23,6 +23,7 @@ gem "kaminari"
 gem "jquery-ui-rails"
 gem "i18n-js", ">= 3.0.0.rc11"
 gem "select2-rails"
+gem "sidekiq"
 
 group :development, :test do
   gem "letter_opener"

@@ -86,7 +86,7 @@ en:
         title: "Edit recurring event"
         content: "Would you like to change this event only, all events in the series or this and all following events in the series?"
         only:
-          rel: "edit_only" 
+          rel: "edit_only"
           btn: "Only this event"
           explanation: "All other events in the series will remain the same."
         following:
@@ -107,3 +107,5 @@ en:
       ends: "Ends:"
       summary: "Summary:"
       repeat_on: "Repeat on:"
+    message:
+      chatwork_create: "You has been attend to a event"

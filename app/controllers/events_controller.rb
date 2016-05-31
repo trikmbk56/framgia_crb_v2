@@ -34,6 +34,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
+        ChatworkServices.new(@event).send_messages
         if valid_params? params[:repeat_ons], event_params[:repeat_type]
           @repeat_ons = params[:repeat_ons]
           @repeat_ons.each do |repeat_on|

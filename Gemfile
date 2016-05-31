@@ -26,6 +26,7 @@ gem "select2-rails"
 gem "sidekiq"
 gem "chatwork"
 gem "delayed_job_active_record"
+gem "figaro"
 
 group :development, :test do
   gem "letter_opener"

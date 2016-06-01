@@ -60,24 +60,27 @@ ActiveRecord::Schema.define(version: 20160602013833) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.string   "title",          limit: 255
-    t.text     "description",    limit: 65535
-    t.string   "status",         limit: 255
-    t.string   "color",          limit: 255
-    t.boolean  "all_day",                      default: false
-    t.integer  "repeat_type",    limit: 4
-    t.integer  "repeat_every",   limit: 4
-    t.integer  "user_id",        limit: 4
-    t.integer  "calendar_id",    limit: 4
+    t.string   "title",           limit: 255
+    t.text     "description",     limit: 65535
+    t.string   "status",          limit: 255
+    t.string   "color",           limit: 255
+    t.boolean  "all_day",                       default: false
+    t.integer  "repeat_type",     limit: 4
+    t.integer  "repeat_every",    limit: 4
+    t.integer  "user_id",         limit: 4
+    t.integer  "calendar_id",     limit: 4
     t.datetime "start_date"
     t.datetime "finish_date"
     t.datetime "start_repeat"
     t.datetime "end_repeat"
     t.datetime "exception_time"
-    t.integer  "exception_type", limit: 4
-    t.integer  "parent_id",      limit: 4
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.integer  "exception_type",  limit: 4
+    t.integer  "parent_id",       limit: 4
+    t.string   "room_id",         limit: 255
+    t.text     "task_content",    limit: 65535
+    t.text     "message_content", limit: 65535
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
 
   create_table "permissions", force: :cascade do |t|

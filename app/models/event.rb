@@ -2,6 +2,8 @@ class Event < ActiveRecord::Base
   include SharedMethods
   require "chatwork"
 
+  after_create :send_notify
+
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :all_day,
     :repeat_type, :repeat_every, :user_id, :calendar_id, :start_date,
     :finish_date, :start_repeat, :end_repeat, user_ids: []]
@@ -99,6 +101,12 @@ class Event < ActiveRecord::Base
       repeat = (repeat_ons.pluck :repeat_on).compact
     else
       nil
+    end
+  end
+
+  def send_notify
+    attendees.each do |attendee|
+      SendEmailWorker.perform_async id, attendee.user_id, user_id
     end
   end
 end

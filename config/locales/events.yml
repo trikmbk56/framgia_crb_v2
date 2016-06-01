@@ -109,3 +109,9 @@ en:
       repeat_on: "Repeat on:"
     message:
       chatwork_create: "You has been attend to a event"
+    mailer:
+      invite: "invite you to join"
+      time: "Time"
+      from: "from"
+      to: "to"
+      join_event: "Join event"

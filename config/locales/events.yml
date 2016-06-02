@@ -108,7 +108,8 @@ en:
       summary: "Summary:"
       repeat_on: "Repeat on:"
     message:
-      chatwork_create: "You has been attend to a event"
+      chatwork_create: "You have been attended to event %{event} at %{time}"
+      event_start: "Event %{event} will start in next 30 minutes"
     mailer:
       invite: "invite you to join"
       time: "Time"

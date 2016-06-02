@@ -9,4 +9,7 @@ Fabricator :event do
   calendar_id
   repeat_type
   repeat_every
+  room_id Settings.room_id
+  message_content {Faker::Lorem.sentence}
+  task_content {Faker::Lorem.sentence}
 end

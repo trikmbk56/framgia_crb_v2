@@ -5,4 +5,5 @@ class Attendee < ActiveRecord::Base
   belongs_to :event
 
   delegate :name, to: :user, prefix: :user, allow_nil: :true
+  delegate :id, to: :user, prefix: :attendee
 end

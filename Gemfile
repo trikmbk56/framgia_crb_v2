@@ -27,6 +27,9 @@ gem "sidekiq"
 gem "chatwork"
 gem "delayed_job_active_record"
 gem "figaro"
+gem "google-api-client", require: "google/api_client"
+gem "omniauth"
+gem "omniauth-google-oauth2"
 
 group :development, :test do
   gem "letter_opener"

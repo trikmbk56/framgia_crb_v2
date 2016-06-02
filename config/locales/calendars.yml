@@ -33,6 +33,19 @@ en:
       request_to_share_calendar: "Request to share calendar"
     mailer:
       hi: "Hi, "
-      you_have_request: "You have a request to share calendar from "
+      thanks: "Thanks,"
+      team: "Team CRB"
       please_check: "Please check:"
-
+      request_email:
+        you_have_request: "You have a request to share calendar from "
+        please_edit: "Please edit your calendar if you want to share calendar for "
+        with: "with email "
+        edit_link: "Link to edit your calendar"
+      event_update:
+        subject: "You have updated event"
+        you_have_event_change: "Your have a change of time in event "
+        before: "Before:"
+        after: "After:"
+        to: "to "
+        repeat_type: "Repeat type: "
+        exception_type: "Exception type: "

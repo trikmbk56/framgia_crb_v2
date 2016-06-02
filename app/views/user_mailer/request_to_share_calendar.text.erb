@@ -1,2 +1,7 @@
-<%= t "calendars.mailer.hi" %><%= @user.name %>
-<%= t "calendars.mailer.you_have_request" %><%= @current_user.name %>
+<%= t "calendars.mailer.request_email.hi" %><%= @user.name %>
+<%= t "calendars.mailer.request_email.you_have_request" %><%= @current_user.name %>,
+<%= t "calendars.mailer.request_email.please_edit" %><%= @current_user.name %>,
+<%= t "calendars.mailer.request_email.with" %>"<%= @current_user.email %>":
+<%= edit_user_calendar_url(@user, @user.default_calendar, email: @current_user.email)%>
+<%= t "calendars.mailer.request_email.thanks" %>
+<%= t "calendars.mailer.request_email.team" %>

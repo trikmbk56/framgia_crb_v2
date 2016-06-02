@@ -3,6 +3,7 @@ class UpdateEventExceptionServices
   def initialize event, params
     @exception_type = params[:exception_type]
     @event = event
+    @event_before_update_id = @event.id
     @event_params = params.permit :id, :title, :all_day, :start_repeat,
       :end_repeat, :start_date, :finish_date, :exception_type, :exception_time
     @event_update_params = params.permit :title, :all_day, :start_repeat,
@@ -17,10 +18,12 @@ class UpdateEventExceptionServices
       case @event_params[:exception_type]
       when ""
         @event.update_attributes @event_params
+        @event_after_update = @event
       when "edit_all"
         initial_value @event_params[:start_date], @event_params[:finish_date], @event
         @event_exception_edits = Event.exception_edits @event.id
         update_attributes_event @event
+        @event_after_update = @event
         @event_exception_edits.each do |event|
           update_attributes_event event
         end
@@ -64,6 +67,8 @@ class UpdateEventExceptionServices
         create_event_with_exception_delete_only
       end
     end
+    SendEmailAfterEventUpdateWorker.perform_async(@event_before_update_id,
+      @event_after_update.id, @start_time_before_drag, @finish_time_before_drag)
   end
 
   private
@@ -93,10 +98,12 @@ class UpdateEventExceptionServices
   def save_this_event_exception event_exception
     if event_exception
       event_exception.update_attributes @event_update_params
+      @event_after_update = event_exception
     else
       @event_params[:parent_id] = @event.id
       @event_params[:id] = nil
-      @event.dup.update_attributes @event_params
+      @event_after_update = @event.dup
+      @event_after_update.update_attributes @event_params
     end
   end
 
@@ -112,7 +119,8 @@ class UpdateEventExceptionServices
     @event_params[:exception_time] = nil
     @event_params[:start_repeat] = @event_params[:start_date]
     @event_params[:end_repeat] = @event_params[:finish_date]
-    @event.dup.update_attributes @event_params
+    @event_after_update = @event.dup
+    @event_after_update.update_attributes @event_params
   end
 
   def create_event_with_exception_delete_only

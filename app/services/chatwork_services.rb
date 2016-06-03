@@ -13,7 +13,7 @@ class ChatworkServices
     if @event.attendees
       @event.attendees.each do |attendee|
         attendee_user = attendee.user
-        ChatWork::Message.create(room_id: Settings.room_id,
+        ChatWork::Message.create(room_id: "51184775",
           body: "[To:#{attendee_user.chatwork_id}] #{attendee_user.name}
           #{I18n.t("events.message.chatwork_create")}")
       end

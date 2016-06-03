@@ -8,6 +8,7 @@
   <ul>
     <% if user_signed_in? %>
       <li>
+        <%= link_to t("calendars.sync"), "/auth/google_oauth2" %>
         <a class="avatar" id="header-avatar" href="#">
           <%= get_avatar current_user %>
         </a>

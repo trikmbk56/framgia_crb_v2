@@ -12,6 +12,7 @@ en:
     ok: "Ok"
     add: "+"
     copy_link: "Copy link"
+    sync: "Sync"
     events:
       clear_all_events: "Delete all events"
       not_cleared_event: "Events weren't cleared successfully."

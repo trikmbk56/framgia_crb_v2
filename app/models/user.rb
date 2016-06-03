@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :rememberable, :trackable, :validatable,
-    :registerable, :omniauthable, omniauth_providers: [:google_oauth2]
+    :registerable
 
   has_many :user_calendars, dependent: :destroy
   has_many :calendars, dependent: :destroy
@@ -51,16 +51,6 @@ class User < ActiveRecord::Base
 
   def is_user? user
     self ==  user
-  end
-
-  def self.find_for_google_oauth2 access_token, user
-    if user
-      user.provider = access_token.provider
-      user.uid = access_token.uid
-      user.token = access_token.credentials.token
-      user.save
-      user
-    end
   end
 
   private

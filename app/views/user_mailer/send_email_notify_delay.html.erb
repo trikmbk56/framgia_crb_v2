@@ -1,0 +1,14 @@
+<h3><%= t "calendars.mailer.hi" %><%= @user.name %></h3>
+<p>
+  <%= t "events.mailer.your_event" %>: <%= @event.title %>
+  <%= t "events.mailer.is_comming" %> <br />
+
+  <strong><%= t "events.mailer.time" %>:</strong>
+  <em>
+    <%= t "events.mailer.from" %> <%= @event.start_date.strftime("%I:%M:%p") %>
+    <%= t "events.mailer.to" %> <%= @event.finish_date.strftime("%I:%M:%p") %>
+  </em>
+  <br />
+  <%= t "calendars.mailer.please_check" %>
+  <%= link_to @event.title, user_event_path(@current_user, @event) %>
+</p>

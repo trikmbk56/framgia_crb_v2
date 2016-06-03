@@ -22,6 +22,5 @@ Rails.application.routes.draw do
   end
   resources :particular_calendars, only: :show
   resources :show_events, only: :show
-  resources :sessions
   get "auth/:provider/callback", to: "google_calendars#create"
 end

@@ -22,6 +22,7 @@ weeks: "weeks"
 months: "months"
 years:  "years"
 seven: 7
+thirty: 30
 url: "localhost:3000/particular_calendars/"
 minutes_in_day: 1440
 room_id: "51184775"

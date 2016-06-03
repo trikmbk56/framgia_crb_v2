@@ -115,3 +115,5 @@ en:
       from: "from"
       to: "to"
       join_event: "Join event"
+      your_event: "Your event"
+      is_comming:  "is comming"

@@ -13,4 +13,11 @@ class UserMailer < ApplicationMailer
     @current_user = User.find current_user_id
     mail to: @user.email, subject: t("events.mailer.join_event")
   end
+
+  def send_email_notify_delay event_id, user_id, current_user_id
+    @event = Event.find event_id
+    @user = User.find user_id
+    @current_user = User.find current_user_id
+    mail to: @user.email, subject: "[#{@event.title}]"
+  end
 end

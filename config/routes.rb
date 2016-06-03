@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   root "calendars#index"
-  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
+  devise_for :users
   resources :users, only: :show do
     resources :calendars do
       resource :destroy_events, only: :destroy
@@ -22,4 +22,6 @@ Rails.application.routes.draw do
   end
   resources :particular_calendars, only: :show
   resources :show_events, only: :show
+  resources :sessions
+  get "auth/:provider/callback", to: "google_calendars#create"
 end

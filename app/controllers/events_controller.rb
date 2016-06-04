@@ -35,7 +35,6 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         ChatworkServices.new(@event).perform
-        NotifyServices.new(@event).perform
 
         if valid_params? params[:repeat_ons], event_params[:repeat_type]
           @repeat_ons = params[:repeat_ons]
@@ -43,6 +42,13 @@ class EventsController < ApplicationController
             RepeatOn.create! repeat_on: repeat_on, event_id: @event.id
           end
         end
+
+        if @event.repeat_type.present?
+          GenerateEventFullcalendarServices.new.generate_event_delay @event
+        else
+          NotifyServices.new(@event).perform
+        end
+
         flash[:success] = t "events.flashs.created"
         format.html do
           redirect_to user_event_path current_user, @event

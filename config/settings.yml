@@ -28,3 +28,5 @@ minutes_in_day: 1440
 room_id: "51184775"
 email: "https://www.googleapis.com/auth/userinfo.email"
 calendar: "https://www.googleapis.com/auth/calendar"
+notify_type:
+  email: "email"

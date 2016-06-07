@@ -215,7 +215,7 @@ $(document).on('page:change', function() {
   function deleteEventPopup(event) {
     $('#btn-delete-event').unbind('click');
     $('#btn-delete-event').click(function() {
-      var exception_type;
+      var exception_type = [];
       hiddenDialog('popup');
       if (event.repeat_type == null || event.repeat_type.length == 0) {
         deleteEvent(event, exception_type);
@@ -225,11 +225,12 @@ $(document).on('page:change', function() {
     });
   }
 
-  function deleteEvent(event, exception_type) {
+  function deleteEvent(event, exception_type, notification_type) {
     $.ajax({
       url: '/api/events/' + event.event_id,
       type: 'DELETE',
       data: {
+        notification_type: notification_type,
         exception_type: exception_type,
         exception_time: event.start.format(),
         finish_date: (event.end !== null) ? event.end.format('MM-DD-YYYY H:mm A') : ''
@@ -269,8 +270,14 @@ $(document).on('page:change', function() {
     yCordinate = (windowH - dialogH) / 2;
     dialog.css({'top': yCordinate, 'left': xCordinate});
     showDialog('dialog-repeat-popup');
+
     $('.btn-confirm').click(function() {
-      deleteEvent(event, $(this).attr('rel'));
+      var notification_types = [];
+      $(".notify input[type='checkbox']:checked").each(function(k, v) {
+        notification_types.push(v.name);
+      });
+
+      deleteEvent(event, $(this).attr('rel'), notification_types);
       hiddenDialog('dialog-repeat-popup');
     });
   }

@@ -27,7 +27,6 @@ class GenerateEventFullcalendarServices
   def generate_event_delay event
     @event_temp = EventFullcalendar.new event
     @repeat_every = event.repeat_every
-    binding.pry
     preprocess_repeat_type event, Settings.notify_type.email
   end
 

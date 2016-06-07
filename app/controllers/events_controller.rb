@@ -37,6 +37,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         ChatworkServices.new(@event).perform
+        NotifyDesktopServices.new(@event, current_user).perform
 
         if valid_params? params[:repeat_ons], event_params[:repeat_type]
           @repeat_ons = params[:repeat_ons]

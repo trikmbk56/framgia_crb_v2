@@ -32,6 +32,7 @@ gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "websocket-rails"
 gem "rest-client"
+gem "faye-websocket", "0.10.0"
 
 group :development, :test do
   gem "letter_opener"

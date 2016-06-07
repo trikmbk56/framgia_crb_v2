@@ -1,5 +1,7 @@
 class SyncGoogleCalendarServices
-  def initialize client, service, current_user
+
+  def initialize client, service, current_user, token
+    @token = token
     @client = client
     @service = service
     @current_user = current_user
@@ -14,6 +16,10 @@ class SyncGoogleCalendarServices
       event.status == Settings.status_confirmed
     end
     events.each{|event| create_event event}
+  end
+
+  def push_event
+    insert_event_to_calendar
   end
 
   private
@@ -86,6 +92,29 @@ class SyncGoogleCalendarServices
       else
         event.end_repeat = event_sync.end.dateTime.beginning_of_day
           .strftime Settings.event.format_datetime
+        end
+      end
+    end
+  end
+
+  def insert_event_to_calendar
+    events = @user.events
+    client = Google::APIClient.new
+    client.authorization.access_token = @token
+    service = client.discovered_api("calendar", "v3")
+    events.each do |event|
+      if event.google_event_id.nil?
+        attendees = event.attendees
+        emails = Array.new
+        attendees.each {|attendee| emails << {email: attendee.user_email}}
+        recurrences = event.repeat_type.nil? ? "" : recurrence_google_calendar(event)
+        event_google = event_google_calendar event, client, service, recurrences, emails
+        result = client.execute(api_method: service.events.insert,
+          parameters: {"calendarId": "primary"},
+          body: JSON.dump(event_google),
+          headers: {"Content-Type": Settings.content_type})
+        event.google_event_id = result.data.id
+        event.save
       end
     end
   end
@@ -100,5 +129,55 @@ class SyncGoogleCalendarServices
     repeat_ons = recurrence_hash["BYDAY"].split(",") unless recurrence_hash["BYDAY"].nil?
 
     return repeat_type, end_repeat, every, repeat_ons
+  end
+
+  def google_calendar_time_zone client, service
+    response = client.execute(api_method: service.calendar_list.list)
+    calendar = response.data.items.first
+    calendar.timeZone
+  end
+
+  def google_calendar_time_format client, service, dateTime
+    time_zone = google_calendar_time_zone client, service
+    time = dateTime.to_datetime.rfc3339.split("+")[0]
+    zone = dateTime.in_time_zone(time_zone).to_datetime.rfc3339
+    timeZone = /\+([^\]]+)/.match(zone)
+    time + timeZone.to_s
+  end
+
+  def join_event_title event
+    event.calendar.name.capitalize + ": "+ event.title
+  end
+
+  def recurrence_google_calendar event
+    recurrences = Array.new
+    recurrence = "RRULE:FREQ=" + event.repeat_type.upcase + ";" +
+      "UNTIL=" + event.end_repeat.strftime(Settings.event.format_date_basic) + ";" +
+      "INTERVAL=" + event.repeat_every.to_s
+    if event.weekly?
+      repeat_on_day = "BYDAY="
+      event.repeat_ons.each do |repeat|
+        repeat_on_day += repeat.repeat_on.upcase + ","
+      end
+      recurrence = recurrence + ";" + repeat_on_day.chomp(",")
+    end
+    recurrences << recurrence
+  end
+
+  def event_google_calendar event, client, service, recurrences, emails
+    event_google = {
+      "summary": join_event_title(event),
+      "description": event.description,
+      "start": {
+        "dateTime": google_calendar_time_format(client, service, event.start_date),
+        "timeZone": google_calendar_time_zone(client, service)
+      },
+      "end": {
+        "dateTime": google_calendar_time_format(client, service, event.finish_date),
+        "timeZone": google_calendar_time_zone(client, service)
+      },
+      "recurrence": recurrences,
+      "attendees": emails
+    }
   end
 end

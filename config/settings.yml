@@ -8,6 +8,7 @@ event:
   format_date: "%Y-%m-%d"
   format_time: "%H:%M"
   format_datetime: "%Y-%m-%d %H:%M"
+  format_date_basic: "%Y%m%d"
   repeat_data: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
 repeat:
   repeat_type:
@@ -23,6 +24,7 @@ months: "months"
 years:  "years"
 seven: 7
 thirty: 30
+response_status_Ok: 200
 url: "localhost:3000/particular_calendars/"
 minutes_in_day: 1440
 room_id: "51184775"
@@ -31,3 +33,4 @@ calendar: "https://www.googleapis.com/auth/calendar"
 notify_type:
   email: "email"
 status_confirmed: "confirmed"
+content_type: "application/json"

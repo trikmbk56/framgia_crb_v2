@@ -1,5 +1,5 @@
 class RepeatOn < ActiveRecord::Base
   belongs_to :event
 
-  enum repeat_on: [:sun, :mon, :tue, :wed, :thu, :fri, :sat]
+  enum repeat_on: [:su, :mo, :tu, :we, :th, :fr, :sa]
 end

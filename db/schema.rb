@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20160608041902) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.string   "title",           limit: 255
+    t.string   "title",           limit: 255,   default: "No title"
     t.text     "description",     limit: 65535
     t.string   "status",          limit: 255
     t.string   "color",           limit: 255
@@ -81,9 +81,8 @@ ActiveRecord::Schema.define(version: 20160608041902) do
     t.text     "task_content",    limit: 65535
     t.text     "message_content", limit: 65535
     t.string   "google_event_id", limit: 255
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.string   "google_event_id", limit: 255
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
   end
 
   add_index "events", ["google_event_id"], name: "index_events_on_google_event_id", unique: true, using: :btree

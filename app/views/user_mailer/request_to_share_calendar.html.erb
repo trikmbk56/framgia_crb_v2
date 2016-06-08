@@ -1,7 +1,16 @@
-<h3><%= t "calendars.mailer.hi" %><%= @user.name %></h3>
-<p>
-  <%= t "calendars.mailer.you_have_request" %><%= @current_user.name %>,
-  <%= t "calendars.mailer.please_check" %>
-  <%= link_to t("calendars.edit"),
-    edit_user_calendar_url(@user, @user.default_calendar, email: @current_user.email) %>
-</p>
+<div>
+  <h2><%= t "calendars.mailer.hi" %><%= @user.name %></h2>
+  <p>
+    <%= t "calendars.mailer.request_email.you_have_request" %><%= @current_user.name %>,
+    <%= t "calendars.mailer.request_email.please_edit" %><%= @current_user.name %>,
+    <%= t "calendars.mailer.request_email.with" %>"<%= @current_user.email %>":
+  </p>
+  <center>
+    <%= link_to t("calendars.mailer.request_email.edit_link"),
+    edit_user_calendar_url(@user, @user.default_calendar, email: @current_user.email)%>
+  </center>
+  <p>
+    <%= t "calendars.mailer.thanks" %>
+    <br><strong><%= t "calendars.mailer.team" %></strong>
+  </p>
+</div>

@@ -39,6 +39,15 @@
         </tr>
       </tbody>
     </table>
+    <span class="notify">
+      <% @notifications.each do |notify| %>
+        <input type="checkbox" id="<%= notify.id %>"
+          name="<%= notify.id %>" value="<%= notify.id %>">
+        <label for="<%= notify.id %>">
+          <%= notify.notification_type   %>
+        </label>
+      <% end %>
+    </span>
     <div tabindex="0">
       <div class="btn-right btn btn-default"><%= action[:cancel] %></div>
     </div>

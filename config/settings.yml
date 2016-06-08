@@ -30,3 +30,4 @@ email: "https://www.googleapis.com/auth/userinfo.email"
 calendar: "https://www.googleapis.com/auth/calendar"
 notify_type:
   email: "email"
+status_confirmed: "confirmed"

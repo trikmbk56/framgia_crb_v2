@@ -13,5 +13,6 @@ class CreateCalendars < ActiveRecord::Migration
     end
 
     add_index :calendars, :parent_id
+    add_index :calendars, :name, unique: true
   end
 end

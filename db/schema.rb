@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160603085024) do
+ActiveRecord::Schema.define(version: 20160608041902) do
 
   create_table "attendees", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160603085024) do
     t.datetime "updated_at",                              null: false
   end
 
+  add_index "calendars", ["name"], name: "index_calendars_on_name", unique: true, using: :btree
   add_index "calendars", ["parent_id"], name: "index_calendars_on_parent_id", using: :btree
 
   create_table "colors", force: :cascade do |t|
@@ -79,9 +80,12 @@ ActiveRecord::Schema.define(version: 20160603085024) do
     t.string   "room_id",         limit: 255
     t.text     "task_content",    limit: 65535
     t.text     "message_content", limit: 65535
+    t.string   "google_event_id", limit: 255
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
   end
+
+  add_index "events", ["google_event_id"], name: "index_events_on_google_event_id", unique: true, using: :btree
 
   create_table "notification_events", force: :cascade do |t|
     t.integer  "event_id",        limit: 4
@@ -137,6 +141,7 @@ ActiveRecord::Schema.define(version: 20160603085024) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
+    t.string   "google_calendar_id",     limit: 255
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
     t.string   "token",                  limit: 255

@@ -20,8 +20,10 @@ class CreateEvents < ActiveRecord::Migration
       t.string :room_id
       t.text :task_content
       t.text :message_content
+      t.string :google_event_id
 
       t.timestamps null: false
     end
+    add_index :events, :google_event_id, unique: true
   end
 end

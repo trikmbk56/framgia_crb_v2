@@ -13,6 +13,8 @@ class Event < ActiveRecord::Base
   has_many :repeat_ons
   has_many :event_exceptions, class_name: Event.name, foreign_key: :parent_id,
     dependent: :destroy
+  has_many :notification_events, dependent: :destroy
+  has_many :notifications, through: :notification_events
 
   belongs_to :calendar
   belongs_to :owner, class_name: User.name, foreign_key: :user_id

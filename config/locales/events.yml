@@ -32,6 +32,7 @@ en:
       start_time: "Start time"
       title: "Event title"
       to: "to"
+      notifications: "Notifications"
     links:
       edit: "Edit"
     placeholder:
@@ -118,3 +119,6 @@ en:
       join_event: "Join event"
       your_event: "Your event"
       is_comming:  "is comming"
+    notification:
+      success: "add notification successfully"
+      deleted: "Notification is destroy"

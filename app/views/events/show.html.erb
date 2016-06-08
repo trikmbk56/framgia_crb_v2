@@ -35,6 +35,17 @@
               <% end %>
             </ul>
           </div>
+          <div class="contain">
+            <div class="lb-notification">
+              <%= label_tag :notification, t("events.labels.notifications") %>
+            </div>
+            <% @notification_events.each_with_index do |notification_event, i| %>
+              <span>
+                <%= ", " if i > 0 %>
+                <%= notification_event.notification_type %>
+              </span>
+            <% end %>
+          </div>
         </div>
         <div class="lb-contain">
           <div class="lbcal">

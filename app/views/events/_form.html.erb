@@ -60,6 +60,13 @@
       <%= f.select :user_ids, @users.collect {|user| [user.name, user.id]}, {},
         {id: "attendee", multiple: :true} %>
     </div>
+    <div class="form-group">
+      <%= f.label :notification %> <br>
+      <span class="notify">
+        <%= f.collection_check_boxes(:notification_ids,
+          @notifications, :id, :notification_type) %>
+      </span>
+    </div>
     <div class="overlay-bg"></div>
     <%= render "events/dialog_repeat_form", f: f %>
   <% end %>

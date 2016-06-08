@@ -1,7 +1,8 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
   before_action :load_calendars, only: [:new, :edit]
-  before_action :load_attendees, only: [:new, :edit, :show]
+  before_action :load_attendees, :load_notification_event,
+    only: [:new, :edit, :show]
   before_action only: [:edit, :update, :destroy] do
     validate_permission_change_of_calendar @event.calendar
   end
@@ -17,6 +18,7 @@ class EventsController < ApplicationController
 
   def show
     @attendees = @event.attendees
+    @notification_events = @event.notification_events
   end
 
   def create
@@ -98,6 +100,11 @@ class EventsController < ApplicationController
   def load_attendees
     @users = User.all
     @attendee = Attendee.new
+  end
+
+  def load_notification_event
+    @notifications = Notification.all
+    @notification_event = NotificationEvent.new
   end
 
   def valid_params? repeat_on, repeat_type

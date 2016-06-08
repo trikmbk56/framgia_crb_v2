@@ -42,10 +42,10 @@ class UpdateEventExceptionServices
 
         if event = event_exception_pre_nearest
           event.update_attributes end_repeat:
-            DateTime.parse(@event_params[:start_date]) - 1.days
+            DateTime.parse(@event_params[:start_date])
         else
           @event.update_attributes end_repeat:
-            DateTime.parse(@event_params[:start_date]) - 1.days
+            DateTime.parse(@event_params[:start_date])
         end
         event_after_exceptions = @event.event_exceptions.
           all_event_after_date @event_params[:start_date].to_datetime

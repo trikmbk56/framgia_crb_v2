@@ -92,13 +92,24 @@ class SyncGoogleCalendarServices
       else
         event.end_repeat = event_sync.end.dateTime.beginning_of_day
           .strftime Settings.event.format_datetime
-        end
       end
     end
   end
 
+  def extract_info_repeat recurrence_string
+    recurrence_string.slice! "RRULE:"
+    recurrence_hash =
+      Hash[recurrence_string.split(";").collect{|string| string.strip.split("=")}]
+    repeat_type = recurrence_hash["FREQ"].downcase
+    end_repeat = recurrence_hash["UNTIL"].to_datetime
+    every = recurrence_hash["INTERVAL"]
+    repeat_ons = recurrence_hash["BYDAY"].split(",") unless recurrence_hash["BYDAY"].nil?
+
+    return repeat_type, end_repeat, every, repeat_ons
+  end
+
   def insert_event_to_calendar
-    events = @user.events
+    events = @current_user.events
     client = Google::APIClient.new
     client.authorization.access_token = @token
     service = client.discovered_api("calendar", "v3")
@@ -117,18 +128,6 @@ class SyncGoogleCalendarServices
         event.save
       end
     end
-  end
-
-  def extract_info_repeat recurrence_string
-    recurrence_string.slice! "RRULE:"
-    recurrence_hash =
-      Hash[recurrence_string.split(";").collect{|string| string.strip.split("=")}]
-    repeat_type = recurrence_hash["FREQ"].downcase
-    end_repeat = recurrence_hash["UNTIL"].to_datetime
-    every = recurrence_hash["INTERVAL"]
-    repeat_ons = recurrence_hash["BYDAY"].split(",") unless recurrence_hash["BYDAY"].nil?
-
-    return repeat_type, end_repeat, every, repeat_ons
   end
 
   def google_calendar_time_zone client, service

@@ -24,7 +24,6 @@ class Event < ActiveRecord::Base
 
   validates :start_date, presence: true
   validates :finish_date, presence: true
-  validates :title, presence: true
 
   delegate :name, to: :owner, prefix: :owner, allow_nil: true
   delegate :name , to: :calendar, prefix: true, allow_nil: true

@@ -147,7 +147,7 @@ class GenerateEventFullcalendarServices
         times_occurs << exception_event.exception_time.to_date
       end
 
-      while ex_update_follow.last <= exception_event.end_repeat.to_date - step
+      while ex_update_follow.last < exception_event.end_repeat.to_date - step
         ex_update_follow << ex_update_follow.last + step
         times_occurs << times_occurs.last + step
       end

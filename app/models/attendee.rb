@@ -4,7 +4,7 @@ class Attendee < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
 
-  delegate :name, to: :user, prefix: :user, allow_nil: :true
+  delegate :name, :email, to: :user, prefix: :user, allow_nil: :true
   delegate :id, to: :user, prefix: :attendee
   delegate :chatwork_id, to: :user, allow_nil: :true
 end

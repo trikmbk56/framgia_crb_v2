@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160608041902) do
     t.string   "google_event_id", limit: 255
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
+    t.string   "google_event_id", limit: 255
   end
 
   add_index "events", ["google_event_id"], name: "index_events_on_google_event_id", unique: true, using: :btree

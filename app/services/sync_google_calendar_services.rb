@@ -38,6 +38,7 @@ class SyncGoogleCalendarServices
       event.google_event_id = event_sync.id
     end
     set_date_time_for_event event_sync, event
+    handle_repeat event_sync, event
     event.save
   end
 
@@ -63,5 +64,41 @@ class SyncGoogleCalendarServices
         event.exception_time = event.start_date
       end
     end
+  end
+
+  def handle_repeat event_sync, event
+    if event_sync.recurrence.present?
+      repeat_type, end_repeat, every, repeat_ons =
+        extract_info_repeat event_sync.recurrence[0]
+      if event_sync.start.date.present?
+        event.start_repeat = event_sync.start.date
+      else
+        event.start_repeat = event_sync.start.dateTime
+          .strftime Settings.event.format_datetime
+      end
+      event.end_repeat = end_repeat.beginning_of_day
+        .strftime Settings.event.format_datetime
+      event.repeat_type = Event::repeat_types[repeat_type]
+      event.repeat_every = every ||= 1 unless repeat_type.nil?
+    else
+      if event_sync.end.date.present?
+        event.end_repeat = event_sync.end.date
+      else
+        event.end_repeat = event_sync.end.dateTime.beginning_of_day
+          .strftime Settings.event.format_datetime
+      end
+    end
+  end
+
+  def extract_info_repeat recurrence_string
+    recurrence_string.slice! "RRULE:"
+    recurrence_hash =
+      Hash[recurrence_string.split(";").collect{|string| string.strip.split("=")}]
+    repeat_type = recurrence_hash["FREQ"].downcase
+    end_repeat = recurrence_hash["UNTIL"].to_datetime
+    every = recurrence_hash["INTERVAL"]
+    repeat_ons = recurrence_hash["BYDAY"].split(",") unless recurrence_hash["BYDAY"].nil?
+
+    return repeat_type, end_repeat, every, repeat_ons
   end
 end

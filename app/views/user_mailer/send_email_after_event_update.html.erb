@@ -2,24 +2,24 @@
   <h2><%= t "calendars.mailer.hi" %><%= @user.name %></h2>
   <p>
     <%= t "calendars.mailer.event_update.you_have_event_change" %>
-    <%= @event_before_update.title %>.<br>
+    <%= @event_before_update.title %>.<br/>
     <%= t "calendars.mailer.event_update.before" %>
     <%= @start_date_before.strftime(Settings.event.format_datetime) %> 
     <%= t "calendars.mailer.event_update.to" %>
-    <%= @finish_date_before.strftime(Settings.event.format_datetime) %><br>
+    <%= @finish_date_before.strftime(Settings.event.format_datetime) %><br/>
     <%= t "calendars.mailer.event_update.after" %>
     <%= @event_after_update.start_date.strftime(Settings.event.format_datetime) %> 
     <%= t "calendars.mailer.event_update.to" %>
-    <%= @event_after_update.finish_date.strftime(Settings.event.format_datetime) %><br>
+    <%= @event_after_update.finish_date.strftime(Settings.event.format_datetime) %><br/>
     <% if @event_after_update.repeat_type.present? %>
       <%= t "calendars.mailer.event_update.repeat_type" %>
-      <%= @event_after_update.repeat_type %><br>
+      <%= @event_after_update.repeat_type %><br/>
       <%= t "calendars.mailer.event_update.exception_type" %>
       <%= @event_after_update.exception_type %>
     <% end %>
   </p>
   <p>
     <%= t "calendars.mailer.thanks" %>
-    <br><strong><%= t "calendars.mailer.team" %></strong>
+    <br/><strong><%= t "calendars.mailer.team" %></strong>
   </p>
 </div>

@@ -1,0 +1,18 @@
+<div>
+  <h2><%= t "calendars.mailer.hi" %><%= @user.name %></h2>
+  <p>
+    <%= t "calendars.mailer.delete_event.event" %><br/>
+    <%= t "calendars.mailer.delete_event.title" %><%= @event_title %><br/>
+    <%= t "calendars.mailer.delete_event.start_date" %>
+    <%= @event_start_date.strftime(Settings.event.format_datetime) %><br/>
+    <%= t "calendars.mailer.delete_event.finish_date" %>
+    <%= @event_finish_date.strftime(Settings.event.format_datetime) %><br/>
+    <%= t "calendars.mailer.delete_event.exception_type" %>
+    <%= @event_exception_type %><br/>
+    <%= t "calendars.mailer.delete_event.has_been_deleted" %>
+  </p>
+  <p>
+    <%= t "calendars.mailer.thanks" %>
+    <br/><strong><%= t "calendars.mailer.team" %></strong>
+  </p>
+</div>

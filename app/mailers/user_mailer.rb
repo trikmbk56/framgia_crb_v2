@@ -31,6 +31,16 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def send_email_after_delete_event(user_id, event_title, event_start_date,
+    event_finish_date, event_exception_type)
+    @user = User.find_by id: user_id
+    @event_title = event_title
+    @event_start_date = event_start_date
+    @event_finish_date = event_finish_date
+    @event_exception_type = event_exception_type
+    mail to: @user.email, subject: t("calendars.mailer.delete_event.subject")
+  end
+
   private 
   def send_email_after_event_update_to_attendees start_date_before, finish_date_before
     @start_date_before = DateTime.parse start_date_before

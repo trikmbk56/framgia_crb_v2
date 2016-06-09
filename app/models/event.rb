@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
   require "chatwork"
 
   after_create :send_notify
+  before_destroy :send_email_delete_no_repeat_event
 
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :all_day,
     :repeat_type, :repeat_every, :user_id, :calendar_id, :start_date,
@@ -112,8 +113,23 @@ class Event < ActiveRecord::Base
   end
 
   def send_notify
+    if exception_type.nil?
+      attendees.each do |attendee|
+        SendEmailWorker.perform_async id, attendee.user_id, user_id
+      end
+    elsif self.delete_only? || self.delete_all_follow?
+      parent = Event.find_by id: parent_id
+      parent.attendees.each do |attendee|
+        SendEmailAfterDeleteEventWorker.perform_async(attendee.user_id, title,
+          start_date, finish_date, exception_type)
+      end
+    end
+  end
+
+  def send_email_delete_no_repeat_event
     attendees.each do |attendee|
-      SendEmailWorker.perform_async id, attendee.user_id, user_id
+      SendEmailAfterDeleteEventWorker.perform_async(attendee.user_id, title,
+        start_date, finish_date, nil) 
     end
   end
 end

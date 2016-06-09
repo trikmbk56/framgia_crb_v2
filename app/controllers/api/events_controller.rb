@@ -74,7 +74,8 @@ class Api::EventsController < ApplicationController
       render text: t("events.flashs.deleted")
     else
       destroy_event_repeat @event, params[:exception_type],
-        params[:exception_time]
+        params[:exception_time], params[:start_date_before_delete],
+        params[:finish_date_before_delete]
       render text: t("events.flashs.deleted")
     end
   end
@@ -103,7 +104,8 @@ class Api::EventsController < ApplicationController
     end
   end
 
-  def destroy_event_repeat event, exception_type, exception_time
+  def destroy_event_repeat(event, exception_type, exception_time,
+    start_date_before_delete, finish_date_before_delete)
     if @event.parent_id.nil?
       parent = @event
     else
@@ -117,7 +119,7 @@ class Api::EventsController < ApplicationController
     else
       event.dup.update_attributes(exception_type: exception_type,
         exception_time: exception_time, parent_id: parent.id,
-        start_date: exception_time)
+        start_date: start_date_before_delete, finish_date: finish_date_before_delete)
     end
   end
 end

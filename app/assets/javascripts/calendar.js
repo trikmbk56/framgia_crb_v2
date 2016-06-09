@@ -233,7 +233,9 @@ $(document).on('page:change', function() {
         notification_type: notification_type,
         exception_type: exception_type,
         exception_time: event.start.format(),
-        finish_date: (event.end !== null) ? event.end.format('MM-DD-YYYY H:mm A') : ''
+        finish_date: (event.end !== null) ? event.end.format('MM-DD-YYYY H:mm A') : '',
+        start_date_before_delete: event.start._i,
+        finish_date_before_delete: event.end._i
       },
       dataType: 'text',
       success: function(text){

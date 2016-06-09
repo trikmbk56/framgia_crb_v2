@@ -9,7 +9,7 @@ event:
   format_time: "%H:%M"
   format_datetime: "%Y-%m-%d %H:%M"
   format_date_basic: "%Y%m%d"
-  repeat_data: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+  repeat_data: ["su", "mo", "tu", "we", "th", "fr", "sa"]
 repeat:
   repeat_type:
     daily: "daily"
@@ -24,6 +24,7 @@ months: "months"
 years:  "years"
 seven: 7
 thirty: 30
+sync_params_true: "true"
 response_status_Ok: 200
 url: "localhost:3000/particular_calendars/"
 minutes_in_day: 1440
@@ -34,3 +35,4 @@ notify_type:
   email: "email"
 status_confirmed: "confirmed"
 content_type: "application/json"
+refresh_token_url: "https://accounts.google.com/o/oauth2/token"

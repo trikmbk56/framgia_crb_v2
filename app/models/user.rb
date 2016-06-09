@@ -53,6 +53,16 @@ class User < ActiveRecord::Base
     self ==  user
   end
 
+  def self.find_for_google_oauth2 access_token, user
+    user.provider = access_token.provider
+    user.uid = access_token.uid
+    user.token = access_token.credentials.token
+    user.expires_at = access_token.credentials.expires_at
+    user.refresh_token = access_token.credentials.refresh_token
+    user.save
+    user
+  end
+
   private
   def create_calendar
     self.calendars.create({name: self.name, color_id: 1, is_default: true})

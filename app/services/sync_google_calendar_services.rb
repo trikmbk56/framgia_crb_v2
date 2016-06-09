@@ -18,8 +18,54 @@ class SyncGoogleCalendarServices
     events.each{|event| create_event event}
   end
 
-  def push_event
+  def push_events
     insert_event_to_calendar
+  end
+
+  class << self
+    def delete_to_google_calendar event
+      if event.owner.token.present?
+        if event.google_event_id.present?
+          refresh_token_if_expired event.owner
+          client = init_client event
+          service = client.discovered_api("calendar", "v3")
+          response = client.execute(api_method: service.events.delete,
+            parameters: {"calendarId": @current_user.google_calendar_id,
+            "eventId": event.google_event_id})
+          return true if response.status == 200 || response.status == 204
+        end
+      end
+      false
+    end
+
+    def refresh_token_if_expired user
+      if user_token_expired? user
+        response = RestClient.post(Settings.refresh_token_url,
+          grant_type: "refresh_token", refresh_token: user.refresh_token,
+          client_id: ENV["GOOGLE_CLIENT_ID"], client_secret: ENV["GOOGLE_CLIENT_SECRET"])
+        refresh_hash = JSON.parse response.body
+
+        user.token = refresh_hash["access_token"]
+        user.expires_at = DateTime.now.to_i.seconds + refresh_hash["expires_in"].to_i.seconds
+        user.save
+      end
+    end
+
+    def user_token_expired? user
+      expiry = Time.at(user.expires_at.to_i) if user.expires_at
+      return true if expiry.nil? || expiry < Time.now
+      false
+    end
+
+    def init_client event
+      client = Google::APIClient.new
+      client.authorization = Signet::OAuth2::Client.new(
+        client_id: ENV["GOOGLE_CLIENT_ID"],
+        client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+        access_token: event.owner.token
+      )
+      client
+    end
   end
 
   private
@@ -121,19 +167,16 @@ class SyncGoogleCalendarServices
   end
 
   def insert_event_to_calendar
-    events = @current_user.events
-    client = Google::APIClient.new
-    client.authorization.access_token = @token
-    service = client.discovered_api("calendar", "v3")
+    events = Event.event_google @current_user.id
     events.each do |event|
       if event.google_event_id.nil?
         attendees = event.attendees
         emails = Array.new
         attendees.each {|attendee| emails << {email: attendee.user_email}}
         recurrences = event.repeat_type.nil? ? "" : recurrence_google_calendar(event)
-        event_google = event_google_calendar event, client, service, recurrences, emails
-        result = client.execute(api_method: service.events.insert,
-          parameters: {"calendarId": "primary"},
+        event_google = event_google_calendar event, @client, @service, recurrences, emails
+        result = @client.execute(api_method: @service.events.insert,
+          parameters: {"calendarId": @current_user.google_calendar_id},
           body: JSON.dump(event_google),
           headers: {"Content-Type": Settings.content_type})
         event.google_event_id = result.data.id

@@ -8,7 +8,6 @@
   <ul>
     <% if user_signed_in? %>
       <li>
-        <%= link_to t("calendars.sync"), "/auth/google_oauth2" %>
         <a class="avatar" id="header-avatar" href="#">
           <%= get_avatar current_user %>
         </a>
@@ -16,6 +15,15 @@
           <div class="sub-setting">
             <%= link_to t("layout.show"), user_path(current_user) %>
           </div>
+
+          <div class="sub-setting">
+            <%= link_to t("calendars.push"), "/auth/google_oauth2?push=true" %>
+          </div>
+
+          <div class="sub-setting">
+            <%= link_to t("calendars.pull"), "/auth/google_oauth2?pull=true" %>
+          </div>
+
           <div class="sub-setting">
             <%= link_to t("session.link.sign_out"), destroy_user_session_path,
               method: :delete %>

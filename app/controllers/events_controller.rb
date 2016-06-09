@@ -72,6 +72,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update_attributes event_params
+      GoogleCalendarService.update_event @event
       flash[:success] = t "events.flashs.updated"
       redirect_to user_event_path current_user, @event
     else
@@ -81,6 +82,7 @@ class EventsController < ApplicationController
 
   def destroy
     if @event.destroy
+      GoogleCalendarService.delete_event @event
       flash[:success] = t "events.flashs.deleted"
     else
       flash[:danger] = t "events.flashs.not_deleted"

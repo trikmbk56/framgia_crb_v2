@@ -61,30 +61,32 @@ ActiveRecord::Schema.define(version: 20160608041902) do
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.string   "title",           limit: 255,   default: "No title"
-    t.text     "description",     limit: 65535
-    t.string   "status",          limit: 255
-    t.string   "color",           limit: 255
-    t.boolean  "all_day",                       default: false
-    t.integer  "repeat_type",     limit: 4
-    t.integer  "repeat_every",    limit: 4
-    t.integer  "user_id",         limit: 4
-    t.integer  "calendar_id",     limit: 4
+    t.string   "title",              limit: 255,   default: "No title"
+    t.text     "description",        limit: 65535
+    t.string   "status",             limit: 255
+    t.string   "color",              limit: 255
+    t.boolean  "all_day",                          default: false
+    t.integer  "repeat_type",        limit: 4
+    t.integer  "repeat_every",       limit: 4
+    t.integer  "user_id",            limit: 4
+    t.integer  "calendar_id",        limit: 4
     t.datetime "start_date"
     t.datetime "finish_date"
     t.datetime "start_repeat"
     t.datetime "end_repeat"
     t.datetime "exception_time"
-    t.integer  "exception_type",  limit: 4
-    t.integer  "parent_id",       limit: 4
-    t.string   "room_id",         limit: 255
-    t.text     "task_content",    limit: 65535
-    t.text     "message_content", limit: 65535
-    t.string   "google_event_id", limit: 255
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.integer  "exception_type",     limit: 4
+    t.integer  "parent_id",          limit: 4
+    t.string   "room_id",            limit: 255
+    t.text     "task_content",       limit: 65535
+    t.text     "message_content",    limit: 65535
+    t.string   "google_event_id",    limit: 255
+    t.string   "google_calendar_id", limit: 255
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
   end
 
+  add_index "events", ["google_calendar_id"], name: "index_events_on_google_calendar_id", using: :btree
   add_index "events", ["google_event_id"], name: "index_events_on_google_event_id", unique: true, using: :btree
 
   create_table "notification_events", force: :cascade do |t|

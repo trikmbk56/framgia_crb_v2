@@ -96,7 +96,7 @@ class Api::EventsController < ApplicationController
 
   def destroy_event event
     if event.destroy
-      SyncGoogleCalendarServices.delete_to_google_calendar event
+      GoogleCalendarService.delete_event event
       render text: t("events.flashs.deleted")
     else
       render text: t("events.flashs.not_deleted")

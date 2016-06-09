@@ -8,7 +8,7 @@ class GoogleCalendarsController < ApplicationController
     client = Google::APIClient.new
     client.authorization.access_token = @token
     service = client.discovered_api("calendar", "v3")
-    sync_google = SyncGoogleCalendarServices.new(client, service, current_user, @token)
+    sync_google = GoogleCalendarService.new(client, service, current_user, @token)
     if response.status.eql? Settings.response_status_Ok
       sync_google.push_events if push == Settings.sync_params_true
       sync_google.pull_events if pull == Settings.sync_params_true

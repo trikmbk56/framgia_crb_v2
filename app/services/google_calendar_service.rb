@@ -1,4 +1,4 @@
-class SyncGoogleCalendarServices
+class GoogleCalendarService
 
   def initialize client, service, current_user, token
     @token = token
@@ -19,23 +19,46 @@ class SyncGoogleCalendarServices
   end
 
   def push_events
-    insert_event_to_calendar
+    insert_event
   end
 
   class << self
-    def delete_to_google_calendar event
+    def delete_event event
       if event.owner.token.present?
         if event.google_event_id.present?
           refresh_token_if_expired event.owner
           client = init_client event
           service = client.discovered_api("calendar", "v3")
           response = client.execute(api_method: service.events.delete,
-            parameters: {"calendarId": @current_user.google_calendar_id,
+            parameters: {"calendarId": event.google_calendar_id,
             "eventId": event.google_event_id})
           return true if response.status == 200 || response.status == 204
         end
       end
       false
+    end
+
+    def update_event event
+      if event.owner.token.present?
+        refresh_token_if_expired event.owner
+        client = init_client event
+        service = client.discovered_api("calendar", "v3")
+        result = client.execute(api_method: service.events.get,
+          parameters: {"calendarId": event.google_calendar_id,
+          "eventId": event.google_event_id})
+
+        event_google = result.data
+        event_google.summary = join_event_title(event)
+        event_google.start.dateTime = time_format client, service, event.start_date
+        event_google.end.dateTime = time_format client, service, event.finish_date
+        event_google.description = event.description
+
+        response = client.execute(api_method: service.events.update,
+          parameters: {"calendarId": event.google_calendar_id,
+          "eventId": event.google_event_id},
+          body_object: event_google,
+          headers: {"Content-Type": Settings.content_type})
+      end
     end
 
     def refresh_token_if_expired user
@@ -65,6 +88,39 @@ class SyncGoogleCalendarServices
         access_token: event.owner.token
       )
       client
+    end
+
+    def time_zone client, service
+      response = client.execute(api_method: service.calendar_list.list)
+      calendar = response.data.items.first
+      calendar.timeZone
+    end
+
+    def time_format client, service, dateTime
+      time_Zone = time_zone client, service
+      time = dateTime.to_datetime.rfc3339.split("+")[0]
+      zone = dateTime.in_time_zone(time_Zone).to_datetime.rfc3339
+      timeZone = /\+([^\]]+)/.match(zone)
+      time + timeZone.to_s
+    end
+
+    def join_event_title event
+      event.calendar.name.capitalize + ": "+ event.title
+    end
+
+    def recurrence_event event
+      recurrences = Array.new
+      recurrence = "RRULE:FREQ=" + event.repeat_type.upcase + ";" +
+        "UNTIL=" + event.end_repeat.strftime(Settings.event.format_date_basic) + ";" +
+        "INTERVAL=" + event.repeat_every.to_s
+      if event.weekly?
+        repeat_on_day = "BYDAY="
+        event.repeat_ons.each do |repeat|
+          repeat_on_day += repeat.repeat_on.upcase + ","
+        end
+        recurrence = recurrence + ";" + repeat_on_day.chomp(",")
+      end
+      recurrences << recurrence
     end
   end
 
@@ -166,69 +222,39 @@ class SyncGoogleCalendarServices
     end
   end
 
-  def insert_event_to_calendar
+  def insert_event
     events = Event.event_google @current_user.id
     events.each do |event|
       if event.google_event_id.nil?
         attendees = event.attendees
         emails = Array.new
         attendees.each {|attendee| emails << {email: attendee.user_email}}
-        recurrences = event.repeat_type.nil? ? "" : recurrence_google_calendar(event)
+        recurrences = event.repeat_type.nil? ? "" : GoogleCalendarService.recurrence_event(event)
         event_google = event_google_calendar event, @client, @service, recurrences, emails
         result = @client.execute(api_method: @service.events.insert,
           parameters: {"calendarId": @current_user.google_calendar_id},
           body: JSON.dump(event_google),
           headers: {"Content-Type": Settings.content_type})
-        event.google_event_id = result.data.id
-        event.save
+        if result.status == 200
+          event.google_event_id = result.data.id
+          event.google_calendar_id = @current_user.google_calendar_id
+          event.save
+        end
       end
     end
-  end
-
-  def google_calendar_time_zone client, service
-    response = client.execute(api_method: service.calendar_list.list)
-    calendar = response.data.items.first
-    calendar.timeZone
-  end
-
-  def google_calendar_time_format client, service, dateTime
-    time_zone = google_calendar_time_zone client, service
-    time = dateTime.to_datetime.rfc3339.split("+")[0]
-    zone = dateTime.in_time_zone(time_zone).to_datetime.rfc3339
-    timeZone = /\+([^\]]+)/.match(zone)
-    time + timeZone.to_s
-  end
-
-  def join_event_title event
-    event.calendar.name.capitalize + ": "+ event.title
-  end
-
-  def recurrence_google_calendar event
-    recurrences = Array.new
-    recurrence = "RRULE:FREQ=" + event.repeat_type.upcase + ";" +
-      "UNTIL=" + event.end_repeat.strftime(Settings.event.format_date_basic) + ";" +
-      "INTERVAL=" + event.repeat_every.to_s
-    if event.weekly?
-      repeat_on_day = "BYDAY="
-      event.repeat_ons.each do |repeat|
-        repeat_on_day += repeat.repeat_on.upcase + ","
-      end
-      recurrence = recurrence + ";" + repeat_on_day.chomp(",")
-    end
-    recurrences << recurrence
   end
 
   def event_google_calendar event, client, service, recurrences, emails
     event_google = {
-      "summary": join_event_title(event),
+      "summary": GoogleCalendarService.join_event_title(event),
       "description": event.description,
       "start": {
-        "dateTime": google_calendar_time_format(client, service, event.start_date),
-        "timeZone": google_calendar_time_zone(client, service)
+        "dateTime": GoogleCalendarService.time_format(client, service, event.start_date),
+        "timeZone": GoogleCalendarService.time_zone(client, service)
       },
       "end": {
-        "dateTime": google_calendar_time_format(client, service, event.finish_date),
-        "timeZone": google_calendar_time_zone(client, service)
+        "dateTime": GoogleCalendarService.time_format(client, service, event.finish_date),
+        "timeZone": GoogleCalendarService.time_zone(client, service)
       },
       "recurrence": recurrences,
       "attendees": emails

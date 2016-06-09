@@ -44,8 +44,10 @@ class SyncGoogleCalendarServices
       event.google_event_id = event_sync.id
     end
     set_date_time_for_event event_sync, event
-    handle_repeat event_sync, event
-    event.save
+    repeat_ons = handle_repeat event_sync, event
+    if event.save && repeat_ons.present?
+      create_repeat_on event.id, repeat_ons
+    end
   end
 
   def set_date_time_for_event event_sync, event
@@ -94,6 +96,7 @@ class SyncGoogleCalendarServices
           .strftime Settings.event.format_datetime
       end
     end
+    repeat_ons
   end
 
   def extract_info_repeat recurrence_string
@@ -106,6 +109,15 @@ class SyncGoogleCalendarServices
     repeat_ons = recurrence_hash["BYDAY"].split(",") unless recurrence_hash["BYDAY"].nil?
 
     return repeat_type, end_repeat, every, repeat_ons
+  end
+
+  def create_repeat_on event_id, repeat_ons
+    repeat_ons.each do |on|
+      object_repeat_on = RepeatOn.new
+      object_repeat_on.event_id = event_id
+      object_repeat_on.repeat_on = RepeatOn::repeat_ons[on.downcase]
+      object_repeat_on.save
+    end
   end
 
   def insert_event_to_calendar

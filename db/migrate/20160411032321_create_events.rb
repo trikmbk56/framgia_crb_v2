@@ -21,9 +21,11 @@ class CreateEvents < ActiveRecord::Migration
       t.text :task_content
       t.text :message_content
       t.string :google_event_id
+      t.string :google_calendar_id
 
       t.timestamps null: false
     end
     add_index :events, :google_event_id, unique: true
+    add_index :events, :google_calendar_id
   end
 end

@@ -51,3 +51,11 @@ en:
         to: "to "
         repeat_type: "Repeat type: "
         exception_type: "Exception type: "
+      delete_event:
+        subject: "You have deleted event"
+        event: "Event with: "
+        title: "Title: "
+        start_date: "Start date: "
+        finish_date: "Finish date: "
+        exception_type: "Exception type: "
+        has_been_deleted: "Has been deleted."

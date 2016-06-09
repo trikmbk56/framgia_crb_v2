@@ -142,12 +142,14 @@ ActiveRecord::Schema.define(version: 20160608041902) do
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
     t.string   "google_calendar_id",     limit: 255
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
     t.string   "token",                  limit: 255
     t.string   "uid",                    limit: 255
     t.string   "provider",               limit: 255
+    t.string   "expires_at",             limit: 255
+    t.string   "refresh_token",          limit: 255
     t.boolean  "email_require",                      default: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

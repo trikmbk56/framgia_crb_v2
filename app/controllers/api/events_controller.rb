@@ -38,8 +38,7 @@ class Api::EventsController < ApplicationController
       params[:start_repeat] = params[:start_repeat]
     end
     if params[:end_repeat].nil?
-      difference = (params[:start_date].to_date - @event.start_date.to_date).to_i
-      params[:end_repeat] = @event.end_repeat + difference.days
+      params[:end_repeat] = @event.end_repeat
     else
       params[:end_repeat] = params[:end_repeat].to_date + 1.days
     end

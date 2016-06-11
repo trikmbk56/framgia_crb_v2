@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20160608041902) do
     t.datetime "exception_time"
     t.integer  "exception_type",     limit: 4
     t.integer  "parent_id",          limit: 4
-    t.string   "room_id",            limit: 255
+    t.string   "chatwork_room_id",   limit: 255
     t.text     "task_content",       limit: 65535
     t.text     "message_content",    limit: 65535
     t.string   "google_event_id",    limit: 255

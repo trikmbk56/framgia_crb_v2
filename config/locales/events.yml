@@ -122,3 +122,6 @@ en:
     notification:
       success: "add notification successfully"
       deleted: "Notification is destroy"
+      email: "Email"
+      chatwork: "Chatwork"
+      desktop: "Desktop"

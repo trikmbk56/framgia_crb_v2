@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20160608041902) do
   end
 
   add_index "events", ["google_calendar_id"], name: "index_events_on_google_calendar_id", using: :btree
-  add_index "events", ["google_event_id"], name: "index_events_on_google_event_id", unique: true, using: :btree
+  add_index "events", ["google_event_id"], name: "index_events_on_google_event_id", using: :btree
 
   create_table "notification_events", force: :cascade do |t|
     t.integer  "event_id",        limit: 4

@@ -129,7 +129,7 @@ class Event < ActiveRecord::Base
   def send_email_delete_no_repeat_event
     attendees.each do |attendee|
       SendEmailAfterDeleteEventWorker.perform_async(attendee.user_id, title,
-        start_date, finish_date, nil) 
+        start_date, finish_date, nil)
     end
   end
 end

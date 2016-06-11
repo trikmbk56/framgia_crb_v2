@@ -20,5 +20,6 @@ class NotificationEmailService
       Delayed::Job.enqueue(EmailNotifyWorker.new(@event.id, attendee.user_id,
         @event.user_id), 0, time)
     end
+    Delayed::Job.enqueue NotificationDesktopJob.new(@event), 0, time
   end
 end

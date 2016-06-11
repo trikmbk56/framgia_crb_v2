@@ -1,7 +1,7 @@
 <div id="maincell">
   <div class="contain">
     <div class="form-action">
-      <%= link_to root_path, title: t("events.buttons.go_back"),
+      <%= link_to :back, title: t("events.buttons.go_back"),
         "data-no-turbolink": true, class: "btn-go-back" do %>
         <i class="go-back"></i>
       <% end %>
@@ -27,24 +27,13 @@
             <ul>
               <% @event.attendees.each do |attendee| %>
                 <li class="l-att-<%= attendee.id %>">
-                  <div id="att-<%= attendee.id %>" class="btn-del"
-                    ev-id="<%= @event.id %>" user-id="<%= current_user.id %>">
+                  <div id="att-<%= attendee.id %>" ev-id="<%= @event.id %>"
+                    user-id="<%= current_user.id if user_signed_in? %>">
                   </div>
                   <div><%= attendee.user_name %></div>
                 </li>
               <% end %>
             </ul>
-          </div>
-          <div class="contain">
-            <div class="lb-notification">
-              <%= label_tag :notification, t("events.labels.notifications") %>
-            </div>
-            <% @notification_events.each_with_index do |notification_event, i| %>
-              <span>
-                <%= ", " if i > 0 %>
-                <%= notification_event.notification_type %>
-              </span>
-            <% end %>
           </div>
         </div>
         <div class="lb-contain">

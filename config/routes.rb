@@ -1,18 +1,21 @@
 Rails.application.routes.draw do
-
   root "calendars#index"
   devise_for :users
+  resources :calendars
+
   resources :users, only: :show do
     resources :calendars do
       resource :destroy_events, only: :destroy
-      resources :particular_calendars, only: :show
     end
-    resources :events, except: :index do
+    resources :events, except: [:index] do
       resources :attendees, only: :destroy
     end
   end
   resources :attendees
-  resources :events, only: :show
+  resources :events, except: :index
+  resources :particular_calendars, only: :show
+  get "auth/:provider/callback", to: "google_calendars#create"
+
   namespace :api do
     resources :calendars, only: [:update, :new]
     resources :users, only: :index
@@ -20,7 +23,4 @@ Rails.application.routes.draw do
     resources :request_emails, only: :new
     resources :particular_events, only: [:index, :show]
   end
-  resources :particular_calendars, only: :show
-  resources :show_events, only: :show
-  get "auth/:provider/callback", to: "google_calendars#create"
 end

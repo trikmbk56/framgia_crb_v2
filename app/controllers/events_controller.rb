@@ -1,24 +1,27 @@
 class EventsController < ApplicationController
   load_and_authorize_resource
+  skip_before_action :authenticate_user!, only: :show
   before_action :load_calendars, only: [:new, :edit]
   before_action :load_attendees, :load_notification_event,
-    only: [:new, :edit, :show]
+    only: [:new, :edit]
   before_action only: [:edit, :update, :destroy] do
     validate_permission_change_of_calendar @event.calendar
-  end
-  before_action only: [:show] do
-    validate_permission_see_detail_of_calendar @event.calendar
   end
 
   def new
     if params[:event_id]
       @event = Event.find(params[:event_id]).dup
     end
-  end
 
-  def show
-    @attendees = @event.attendees
-    @notification_events = @event.notification_events
+    Notification.all.each do |notification|
+      @event.notification_events.find_or_initialize_by notification: notification
+    end
+
+    Settings.event.repeat_data.each do |repeat_on|
+      @event.repeat_ons.find_or_initialize_by repeat_on: repeat_on
+    end
+
+    # @form = EventForm.new @event
   end
 
   def create
@@ -68,14 +71,38 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @repeat_ons = @event.repeat_ons
+    Notification.all.each do |notification|
+      @event.notification_events.find_or_initialize_by notification: notification
+    end
+
+    RepeatOn.repeat_ons.values.each do |repeat_on|
+      @event.repeat_ons.find_or_initialize_by repeat_on: repeat_on
+    end
+
+    data = JSON.parse Base64.urlsafe_decode64(params[:fdata])
+    @event.start_date = DateTime.strptime(data["start_date"], "%m-%d-%Y %H:%M %p")
+    @event.finish_date = DateTime.strptime(data["finish_date"], "%m-%d-%Y %H:%M %p")
+
+    # @form = EventForm.new @event
   end
 
   def update
-    if @event.update_attributes event_params
+    data = JSON.parse Base64.urlsafe_decode64(params[:fdata])
+    start_date = DateTime.strptime(data["start_date"], "%m-%d-%Y %H:%M %p")
+    finish_date = DateTime.strptime(data["finish_date"], "%m-%d-%Y %H:%M %p")
+
+    if @event.start_date == start_date
+      @event.assign_attributes event_params
+    else
+      @event = Event.new event_params.merge({parent_id: @event.id})
+      @event.exception_time = @event.start_date
+      @event.exception_type = "edit_only"
+    end
+
+    if @event.save
       NotificationDesktopService.new(@event, current_user).perform
       flash[:success] = t "events.flashs.updated"
-      redirect_to user_event_path current_user, @event
+      redirect_to root_path
     else
       render :edit
     end

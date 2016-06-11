@@ -28,7 +28,7 @@ sync_params_true: "true"
 response_status_Ok: 200
 url: "localhost:3000/particular_calendars/"
 minutes_in_day: 1440
-room_id: "51184775"
+chatwork_room_id: "51184775"
 email: "https://www.googleapis.com/auth/userinfo.email"
 calendar: "https://www.googleapis.com/auth/calendar"
 notify_type:

@@ -17,7 +17,7 @@ class CreateEvents < ActiveRecord::Migration
       t.datetime :exception_time
       t.integer :exception_type
       t.integer :parent_id
-      t.string :room_id
+      t.string :chatwork_room_id
       t.text :task_content
       t.text :message_content
       t.string :google_event_id

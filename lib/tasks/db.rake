@@ -15,6 +15,13 @@ namespace :db do
       Fabricate :permission, permission: I18n.t("permissions.permission_3")
       Fabricate :permission, permission: I18n.t("permissions.permission_4")
 
+      Fabricate :notification, notification_type:
+        I18n.t("events.notification.email")
+      Fabricate :notification, notification_type:
+        I18n.t("events.notification.chatwork")
+      Fabricate :notification, notification_type:
+        I18n.t("events.notification.desktop")
+
       user_hash = {
         "Khong Minh Tri": "khong.minh.tri",
         "Bui Quoc Viet": "bui.quoc.viet",

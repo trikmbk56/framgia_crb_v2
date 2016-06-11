@@ -12,9 +12,7 @@ class GoogleCalendarService
   def pull_events
     results = @client.execute(api_method: @service.events.list,
       parameters: {"calendarId": @current_user.google_calendar_id})
-    events = results.data.items.select do |event|
-      event.status == Settings.status_confirmed
-    end
+    events = results.data.items
     save_event events
   end
 
@@ -26,10 +24,12 @@ class GoogleCalendarService
   def save_event events
     google_parent_events = Array.new
     events.each do |event|
-      event_google = EventGoogle.new(event, @calendars, @default_calendar,
-        @current_user)
-      unless event.id.include?("_")
-        google_parent_events << save_event_after_convert(event_google)
+      if event.status == Settings.status_confirmed
+        event_google = EventGoogle.new(event, @calendars, @default_calendar,
+          @current_user)
+        unless event.id.include?("_")
+          google_parent_events << save_event_after_convert(event_google)
+        end
       end
     end
     google_parent_events.each do |event_parent|

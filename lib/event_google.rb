@@ -11,22 +11,35 @@ class EventGoogle
     @current_user = current_user
     @description = @event_sync.description
     @google_event_id = @event_sync.id
-    @google_calendar_id = @event_sync.organizer.email
+    if @event_sync.status == Settings.status_confirmed
+      @google_calendar_id = @event_sync.organizer.email
+    else
+      @google_calendar_id = parent.google_calendar_id
+    end
   end
 
   def convert_to_local
-    event = Event.new
-    calendar_id, event_title = extract_event_title @event_sync.summary
-    event.title = event_title
-    event.description = description
-    event.user_id = @current_user.id
-    event.calendar_id = calendar_id
-    event.google_event_id = google_event_id
-    event.google_calendar_id = google_calendar_id
-    set_date_time_for_event @event_sync, event
-    repeat_ons = handle_repeat @event_sync, event, @parent
-    event.parent_id = @parent.id if @event_sync.id.include?("_")
-    return event, repeat_ons
+    if @event_sync.status == Settings.status_confirmed
+      event = Event.new
+      calendar_id, event_title = extract_event_title @event_sync.summary
+      event.title = event_title
+      event.description = description
+      event.user_id = @current_user.id
+      event.calendar_id = calendar_id
+      event.google_event_id = google_event_id
+      event.google_calendar_id = google_calendar_id
+      set_date_time_for_event @event_sync, event
+      repeat_ons = handle_repeat @event_sync, event, @parent
+      event.parent_id = @parent.id if @event_sync.id.include?("_")
+      return event, repeat_ons
+    else
+      event = @parent.dup
+      set_date_time_for_event @event_sync, event
+      event.google_event_id = google_event_id
+      event.parent_id = @parent.id
+      repeat_ons = nil
+      return event, repeat_ons
+    end
   end
 
   def is_child_event?
@@ -43,7 +56,14 @@ class EventGoogle
   end
 
   def set_date_time_for_event event_sync, event
-    if event_sync.start.date.present?
+    if @event_sync.status == Settings.status_cancelled
+      if event_sync.originalStartTime.date_time.present?
+        event.exception_time = event_sync.originalStartTime.dateTime
+      else
+        event.exception_time = event_sync.originalStartTime.date
+      end
+      event.exception_type = Event.exception_types[:delete_only]
+    elsif event_sync.start.date.present?
       event.all_day = true
       event.start_date = event.start_repeat =
         event_sync.start.date.to_datetime.beginning_of_day

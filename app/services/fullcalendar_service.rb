@@ -1,4 +1,4 @@
-class GenerateEventFullcalendarServices
+class FullcalendarService
   def initialize events = nil, current_user = nil, event_exceptions = nil
     @events = events
     @current_user = current_user
@@ -126,7 +126,7 @@ class GenerateEventFullcalendarServices
           @event_edit = EventFullcalendar.new exception_event
 
           if function.present?
-            NotifyServices.new(event, @event_edit).perform
+            NotificationEmailService.new(event, @event_edit).perform
           else
             @event_shows << @event_edit.dup
           end
@@ -162,7 +162,7 @@ class GenerateEventFullcalendarServices
         @event_edit_follow.id = SecureRandom.urlsafe_base64
 
         if function.present?
-          NotifyServices.new(event, @event_edit_follow).perform
+          NotificationEmailService.new(event, @event_edit_follow).perform
         else
           @event_shows << @event_edit_follow.dup
         end
@@ -185,7 +185,7 @@ class GenerateEventFullcalendarServices
       @event_temp.id = SecureRandom.urlsafe_base64
 
       if function.present?
-        NotifyServices.new(event, @event_temp).perform
+        NotificationEmailService.new(event, @event_temp).perform
       else
         @event_shows << @event_temp.dup
       end

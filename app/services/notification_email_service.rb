@@ -1,4 +1,4 @@
-class NotifyServices
+class NotificationEmailService
   def initialize event, event_fullcalendar = nil
     @event = event
     @event_fullcalendar = event_fullcalendar

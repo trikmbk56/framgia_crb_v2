@@ -1,4 +1,4 @@
-class UpdateEventExceptionServices
+class EventExceptionService
 
   def initialize event, params
     @exception_type = params[:exception_type]

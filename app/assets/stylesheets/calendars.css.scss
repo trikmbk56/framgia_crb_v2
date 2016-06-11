@@ -122,22 +122,21 @@
 
   #other-calendar {
     .send-request-email {
+      position: relative;
       #request-email-input {
-        width: 135px;
+        font-size: 12px;
+        width: 100%;
         height: 25px;
         box-sizing: border-box;
-        padding: 7px 5px 5px;
+        padding: 5px 5px;
         border: 1px solid #bababa;
         border-right: 0;
         color: gray;
         outline: none;
-        min-width: 0;
-        margin-right: -5px;
       }
       #request-email-button {
         width: 25px;
         height: 25px;
-        padding: 5px 0px;
         background-color: #fff;
         color: #999;
         border: 1px solid #bababa;
@@ -146,8 +145,11 @@
         transition: background-color 0.2s;
         background-image: url(image_path("icon_add.png"));
         background-repeat: no-repeat;
-        background-size: 22px 22px;
+        background-size: 20px 20px;
         background-position: center;
+        position: absolute;
+        top: 0;
+        right: 0;
         &:hover {
           background-color: #bababa;
         }
@@ -512,6 +514,7 @@ table.ui-datepicker-calendar {
     margin: 0px!important;
     line-height: 2em;
     text-align: left!important;
+    cursor: pointer;
     span {
       font-weight: normal;
     }

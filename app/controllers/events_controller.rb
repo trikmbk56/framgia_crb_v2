@@ -37,7 +37,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         ChatworkServices.new(@event).perform
-        NotifyDesktopServices.new(@event, current_user).perform
+        NotificationDesktopService.new(@event, current_user).perform
 
         if valid_params? params[:repeat_ons], event_params[:repeat_type]
           @repeat_ons = params[:repeat_ons]
@@ -47,9 +47,9 @@ class EventsController < ApplicationController
         end
 
         if @event.repeat_type.present?
-          GenerateEventFullcalendarServices.new.generate_event_delay @event
+          FullcalendarService.new.generate_event_delay @event
         else
-          NotifyServices.new(@event).perform
+          NotificationEmailService.new(@event).perform
         end
 
         flash[:success] = t "events.flashs.created"

@@ -1,4 +1,4 @@
-class NotifyDesktopServices
+class NotificationDesktopService
   def initialize event, current_user
     @event = event
     @current_user = current_user

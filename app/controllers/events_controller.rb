@@ -73,6 +73,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update_attributes event_params
+      NotificationDesktopService.new(@event, current_user).perform
       flash[:success] = t "events.flashs.updated"
       redirect_to user_event_path current_user, @event
     else

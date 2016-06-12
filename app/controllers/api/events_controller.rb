@@ -15,8 +15,7 @@ class Api::EventsController < ApplicationController
         }
       end
     else
-      @events = Event.in_calendars params[:calendars], params[:start_time_view],
-        params[:end_time_view]
+      @events = Event.in_calendars params[:calendars]
       @event_exceptions = @events.has_exceptions
       @data = FullcalendarService.new(@events, current_user,
         @event_exceptions).repeat_data

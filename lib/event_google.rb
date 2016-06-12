@@ -1,5 +1,5 @@
 class EventGoogle
-  ATTRS = [:description, :google_event_id]
+  ATTRS = [:description, :google_event_id, :google_calendar_id]
 
   attr_reader *ATTRS
 
@@ -11,6 +11,7 @@ class EventGoogle
     @current_user = current_user
     @description = @event_sync.description
     @google_event_id = @event_sync.id
+    @google_calendar_id = @event_sync.organizer.email
   end
 
   def convert_to_local
@@ -21,6 +22,7 @@ class EventGoogle
     event.user_id = @current_user.id
     event.calendar_id = calendar_id
     event.google_event_id = google_event_id
+    event.google_calendar_id = google_calendar_id
     set_date_time_for_event @event_sync, event
     repeat_ons = handle_repeat @event_sync, event, @parent
     event.parent_id = @parent.id if @event_sync.id.include?("_")
@@ -36,7 +38,7 @@ class EventGoogle
     calendar_name, event_title = title.split(": ").each{|string| string.capitalize!}
     calendar = @calendars.find_by name: calendar_name
     calendar_id = calendar.present? ? calendar.id : @default_calendar.id
-
+    event_title ||= title
     return calendar_id, event_title
   end
 
@@ -91,8 +93,10 @@ class EventGoogle
         event.end_repeat = event_sync.end.dateTime.beginning_of_day
           .strftime Settings.event.format_datetime
       end
-      event.repeat_type = parent.repeat_type
-      event.repeat_every = parent.repeat_every
+      if parent.present?
+        event.repeat_type = parent.repeat_type
+        event.repeat_every = parent.repeat_every
+      end
     end
     repeat_ons
   end

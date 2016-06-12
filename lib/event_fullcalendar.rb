@@ -32,6 +32,7 @@ class EventFullcalendar
       editable: valid_permission_user_in_calendar?(user_id, calendar_id)
     }
   end
+
   def valid_permission_user_in_calendar? user_id, calendar_id
     user_calendar = UserCalendar.find_by(user_id: user_id, calendar_id: calendar_id)
     Settings.permissions_can_make_change.include? user_calendar.permission_id

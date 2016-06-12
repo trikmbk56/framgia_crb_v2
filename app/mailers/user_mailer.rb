@@ -35,8 +35,8 @@ class UserMailer < ApplicationMailer
     event_finish_date, event_exception_type)
     @user = User.find_by id: user_id
     @event_title = event_title
-    @event_start_date = event_start_date
-    @event_finish_date = event_finish_date
+    @event_start_date = DateTime.parse event_start_date
+    @event_finish_date = DateTime.parse event_finish_date
     @event_exception_type = event_exception_type
     mail to: @user.email, subject: t("calendars.mailer.delete_event.subject")
   end

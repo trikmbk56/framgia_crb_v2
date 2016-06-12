@@ -9,9 +9,15 @@
       <tbody>
         <tr>
           <td>
-            <div rel="<%= action[:only][:rel] %>" class="btn btn-confirm btn-default">
-              <%= action[:only][:btn] %>
-            </div>
+            <% if is_event_controller? %>
+              <button class="btn btn-confirm btn-default" type="submit" name="event[exception_type]" value="edit_only">
+                <%= action[:only][:btn] %>
+              </button>
+            <% else%>
+              <div rel="<%= action[:only][:rel] %>" class="btn btn-confirm btn-default">
+                <%= action[:only][:btn] %>
+              </div>
+            <% end %>
           </td>
           <td class="explanation-cell">
             <p><%= action[:only][:explanation] %></p>
@@ -19,9 +25,15 @@
         </tr>
         <tr>
           <td>
-            <div class="btn btn-confirm btn-default" rel="<%= action[:following][:rel] %>">
-              <%= action[:following][:btn] %>
-            </div>
+            <% if is_event_controller? %>
+              <button class="btn btn-confirm btn-default" type="submit" name="event[exception_type]" value="edit_all_follow">
+                <%= action[:following][:btn] %>
+              </button>
+            <% else%>
+              <div class="btn btn-confirm btn-default" rel="<%= action[:following][:rel] %>">
+                <%= action[:following][:btn] %>
+              </div>
+            <% end %>
           </td>
           <td class="explanation-cell">
             <p><%= action[:following][:explanation] %></p>
@@ -29,9 +41,15 @@
         </tr>
         <tr>
           <td>
-            <div rel="<%= action[:all][:rel] %>" class="btn btn-confirm btn-default">
-              <%= action[:all][:btn] %>
-            </div>
+            <% if is_event_controller? %>
+              <button class="btn btn-confirm btn-default" type="submit" name="event[exception_type]" value="edit_all">
+                <%= action[:all][:btn] %>
+              </button>
+            <% else%>
+              <div rel="<%= action[:all][:rel] %>" class="btn btn-confirm btn-default">
+                <%= action[:all][:btn] %>
+              </div>
+            <% end %>
           </td>
           <td class="explanation-cell">
             <p><%= action[:all][:explanation] %></p>
@@ -41,8 +59,7 @@
     </table>
     <span class="notify">
       <% @notifications.each do |notify| %>
-        <input type="checkbox" id="<%= notify.id %>"
-          name="<%= notify.id %>" value="<%= notify.id %>">
+        <input type="checkbox" id="<%= notify.id %>" name="<%= notify.id %>" value="<%= notify.id %>">
         <label for="<%= notify.id %>">
           <%= notify.notification_type   %>
         </label>

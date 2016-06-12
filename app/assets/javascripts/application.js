@@ -19,7 +19,6 @@
 //= require calendar
 //= require i18n
 //= require i18n/translations
-//= require event
 //= require select2
 //= require user
 //= require jquery.timepicker
@@ -30,9 +29,15 @@
 //= require clipboard.min
 //= require notification
 //= require websocket_rails/main
+//= require websocket.init
+//= require_self
 
-$(document).ready(function() {
-  if(Notification.permission !== 'granted') {
-    Notification.requestPermission();
-  }
+var clipboard = new Clipboard('.copy-link');
+
+clipboard.on('success', function(e) {
+  e.clearSelection();
 });
+
+$('.copy-link').on('click', function() {
+  alert('copied');
+})

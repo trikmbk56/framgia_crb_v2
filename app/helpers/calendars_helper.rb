@@ -40,4 +40,8 @@ module CalendarsHelper
   def confirm_popup_repeat_events action
     render "events/confirm_popup_repeat", action: action
   end
+
+  def is_event_controller?
+    params[:controller] == "events"
+  end
 end

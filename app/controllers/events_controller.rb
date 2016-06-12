@@ -87,25 +87,36 @@ class EventsController < ApplicationController
   end
 
   def update
-    data = JSON.parse Base64.urlsafe_decode64(params[:fdata])
-    start_date = DateTime.strptime(data["start_date"], "%m-%d-%Y %H:%M %p")
-    finish_date = DateTime.strptime(data["finish_date"], "%m-%d-%Y %H:%M %p")
+    # data = JSON.parse Base64.urlsafe_decode64(params[:fdata])
+    # start_date = DateTime.strptime(data["start_date"], "%m-%d-%Y %H:%M %p")
+    # finish_date = DateTime.strptime(data["finish_date"], "%m-%d-%Y %H:%M %p")
 
-    if @event.start_date == start_date
-      @event.assign_attributes event_params
-    else
-      @event = Event.new event_params.merge({parent_id: @event.id})
-      @event.exception_time = @event.start_date
-      @event.exception_type = "edit_only"
-    end
+    # if @event.start_date == start_date
+    #   @event.assign_attributes event_params
+    # else
+    #   @event = Event.new event_params.merge({parent_id: @event.id})
+    #   @event.exception_time = @event.start_date
+    #   @event.exception_type = "edit_only"
+    # end
 
-    if @event.save
-      NotificationDesktopService.new(@event, current_user).perform
-      flash[:success] = t "events.flashs.updated"
-      redirect_to root_path
-    else
-      render :edit
-    end
+    # if @event.save
+    #   NotificationDesktopService.new(@event, current_user).perform
+    #   EventExceptionService.new(@event.parent, event_params).update_event_exception
+    #   flash[:success] = t "events.flashs.updated"
+    #   redirect_to root_path
+    # else
+    #   render :edit
+    # end
+
+    params[:event] = params[:event].merge({
+      exception_time: event_params[:start_date],
+      start_repeat: event_params[:start_date],
+      end_repeat: event_params[:end_repeat].nil? ? @event.end_repeat : (event_params[:end_repeat].to_date + 1.days)
+    })
+
+    EventExceptionService.new(@event, event_params, {}).update_event_exception
+    flash[:success] = t "events.flashs.updated"
+    redirect_to root_path
   end
 
   def destroy

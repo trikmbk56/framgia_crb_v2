@@ -22,6 +22,7 @@ class EventsController < ApplicationController
   end
 
   def create
+    create_calendar_all_event_array event_params[:calendar_id]
     @event = current_user.events.new event_params
     if event_params[:start_repeat].blank?
       @event.start_repeat = event_params[:start_date]
@@ -111,5 +112,76 @@ class EventsController < ApplicationController
 
   def valid_params? repeat_on, repeat_type
     repeat_on.present? && repeat_type == Settings.repeat.repeat_type.weekly
+  end
+
+  def create_calendar_all_event_array calendar_id
+    calendar = Calendar.find_by id: calendar_id
+    @array = []
+    calendar.events.each do |event|
+      if event.start_repeat.strftime("%D") == event.end_repeat.strftime("%D")
+        @array << event
+      else
+        @event_copy = event.dup
+        event.event_exceptions.sort_by_start_date.each do |event_exception|
+          case event_exception.exception_type
+          when "delete_only"
+            analyze_repeat_event_when_delete_only event_exception
+          when "delete_all_follow"
+            analyze_repeat_event_when_delete_all_follow event_exception
+          when "edit_only"
+            analyze_repeat_event_when_edit_only event_exception
+          when "edit_all_follow"
+            analyze_repeat_event_when_edit_all_follow event_exception
+          end
+          if @event_copy.start_repeat.beginning_of_day > @event_copy.end_repeat
+            break
+          end
+        end
+        if @event_copy.start_repeat.beginning_of_day <= @event_copy.end_repeat
+          @array << @event_copy
+        end
+      end
+    end
+    binding.pry
+  end
+
+  def analyze_repeat_event_when_delete_only event_exception
+    if (event_exception.exception_time - 1.days).end_of_day >= @event_copy.start_repeat
+      new_event = @event_copy.dup
+      new_event.end_repeat = event_exception.exception_time - 1.days
+      @array << new_event
+    end
+    @event_copy.start_repeat = event_exception.exception_time + 1.days
+  end
+
+  def analyze_repeat_event_when_delete_all_follow event_exception
+    @event_copy.end_repeat = event_exception.exception_time - 1.days
+  end
+
+  def analyze_repeat_event_when_edit_only event_exception
+    if (event_exception.exception_time - 1.days).end_of_day >= @event_copy.start_repeat
+      new_event = @event_copy.dup
+      new_event.end_repeat = event_exception.exception_time - 1.days
+      @array << new_event
+    end
+    new_event = event_exception.dup
+    new_event.start_repeat = event_exception.exception_time
+    new_event.end_repeat = event_exception.exception_time
+    @array << new_event
+    @event_copy.start_repeat = event_exception.exception_time + 1.days
+  end
+
+  def analyze_repeat_event_when_edit_all_follow event_exception
+    binding.pry
+    if (event_exception.exception_time - 1.days).end_of_day >= @event_copy.start_repeat
+      new_event = @event_copy.dup
+      new_event.end_repeat = event_exception.exception_time - 1.days
+      @array << new_event
+    end
+    new_event = event_exception.dup
+    new_event.start_repeat = event_exception.exception_time
+    new_event.end_repeat = @event_copy.end_repeat
+    @event_copy = new_event
+    binding.pry
   end
 end

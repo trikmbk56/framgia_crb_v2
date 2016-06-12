@@ -627,6 +627,7 @@ $(document).on('page:change', function() {
     event.preventDefault();
     var form =  $('#new_event');
     event_title = $('#event-title').val();
+    console.log($(form));
     $.ajax({
       url: $(form).attr('action'),
       type: 'POST',

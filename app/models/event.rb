@@ -34,6 +34,8 @@ class Event < ActiveRecord::Base
 
   enum repeat_type: [:daily, :weekly, :monthly, :yearly]
 
+  scope :sort_by_start_date, -> {order(start_date: :asc)}
+
   scope :my_events, ->user_id do
     where("finish_time between ? and ? and user_id = ?",
       Date.today.beginning_of_week, Date.today.end_of_week, user_id)

@@ -29,7 +29,6 @@
 //= require particular_calendar
 //= require clipboard.min
 //= require notification
-//= require websocket_rails/main
 
 $(document).ready(function() {
   if(Notification.permission !== 'granted') {

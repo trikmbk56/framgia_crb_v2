@@ -218,7 +218,8 @@ $(document).on('page:change', function() {
     $('#btn-delete-event').click(function() {
       var exception_type = [];
       hiddenDialog('popup');
-      if (event.repeat_type == null || event.repeat_type.length == 0) {
+      if (event.repeat_type == null || event.repeat_type.length == 0 ||
+        event.exception_type == 'edit_only') {
         deleteEvent(event, exception_type);
       }else {
         confirm_repeat_popup(event);

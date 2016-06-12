@@ -82,6 +82,7 @@ $(document).on('page:change', function() {
       }
     },
     eventClick: function(event, jsEvent, view) {
+      localStorage.setItem('current_event', event)
       initDialogEventClick(event, jsEvent);
     },
     dayClick: function(date, jsEvent, view) {
@@ -149,13 +150,7 @@ $(document).on('page:change', function() {
       updateEvent(event, allDay, null, 1);
     }
   });
-  var clipboard = new Clipboard('.copy-link');
-  clipboard.on('success', function(e) {
-    e.clearSelection();
-  });
-  $('.copy-link').on('click', function() {
-    alert('copied');
-  })
+
   function initDialogEventClick(event, jsEvent) {
     if ($('#popup') !== null)
       $('#popup').remove();
@@ -200,14 +195,13 @@ $(document).on('page:change', function() {
       allDay = 0;
       if(event.allDay)
         allDay = 1;
-      if (event.repeat_type == null || event.repeat_type.length == 0 ||
-        event.exception_type == 'edit_only') {
+      if (event.repeat_type == null || event.repeat_type.length == 0 || event.exception_type == 'edit_only') {
         if (event.exception_type != null)
           exception_type = event.exception_type;
         else
           exception_type = null;
         updateEvent(event, 0, exception_type, 0);
-      }else {
+      } else {
         confirm_update_popup(event, allDay, event.end);
       }
     });
@@ -218,10 +212,9 @@ $(document).on('page:change', function() {
     $('#btn-delete-event').click(function() {
       var exception_type = [];
       hiddenDialog('popup');
-      if (event.repeat_type == null || event.repeat_type.length == 0 ||
-        event.exception_type == 'edit_only') {
+      if (event.repeat_type == null || event.repeat_type.length == 0 || event.exception_type == 'edit_only') {
         deleteEvent(event, exception_type);
-      }else {
+      } else {
         confirm_repeat_popup(event);
       }
     });
@@ -293,26 +286,28 @@ $(document).on('page:change', function() {
   });
 
   function updateEvent(event, allDay, exception_type, is_drop) {
-    var start_time_before_drag, start_time_before_drag;
+    var start_time_before_drag, finish_time_before_drag;
     event.end ? setDateTime(event.start, event.end) : setDateTime(event.start, event.start);
     if(event.title == '')
       event.title = I18n.t('calendars.events.no_title');
     if (event.allDay !== true){
       start_time_before_drag = event.start._i;
-      start_time_before_drag = event.end._i;
+      finish_time_before_drag = event.end._i;
     };
     $.ajax({
       url: '/api/events/' + event.event_id,
       data: {
-        title: event.title,
-        start_date: start_date.format(),
-        finish_date: finish_date.format(),
-        all_day: allDay,
-        exception_type: exception_type,
+        event: {
+          title: event.title,
+          start_date: start_date.format(),
+          finish_date: finish_date.format(),
+          all_day: allDay,
+          exception_type: exception_type,
+          end_repeat: event.end_repeat
+        },
         is_drop: is_drop,
         start_time_before_drag: start_time_before_drag,
-        finish_time_before_drag: start_time_before_drag,
-        end_repeat: event.end_repeat,
+        finish_time_before_drag: finish_time_before_drag
       },
       type: 'PUT',
       dataType: 'text',
@@ -809,10 +804,18 @@ $(document).on('page:change', function() {
       }
     });
   });
+
   $('.calendar-address').on('click', function() {
     $('.cal-dialog').css("display", "block");
   })
+
   $('.cal-dialog-title-close, .goog-buttonset-default').on('click', function() {
     $('.cal-dialog').css("display", "none");
   })
+
+  $(document).on('click', '.btn-confirmation-repeat', function() {
+    var current_event = localStorage.getItem('current_event');
+    var allDay = current_event.allDay;
+    confirm_update_popup(current_event, allDay, current_event.end);
+  });
 });

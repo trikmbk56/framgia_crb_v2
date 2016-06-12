@@ -4,9 +4,16 @@
     <div class="form-action">
       <%= link_to root_path, title: t("events.buttons.go_back"),
         "data-no-turbolink": true, class: "btn-go-back" do %>
-          <i class="go-back"></i>
+        <i class="go-back"></i>
       <% end %>
-      <%= f.submit t("events.buttons.save"), class: "btn-save" %>
+
+      <button class="btn-save <%= "btn-confirmation-repeat" if @event.exist_repeat? && !@event.edit_only? %>"
+        type=<%= @event.exist_repeat? && !@event.edit_only? ? "button" : "submit" %> style="display: inline-block;">
+        <%= t("events.buttons.save") %>
+      </button>
+
+      <%#= f.submit t("events.buttons.save"), class: "btn-save" %>
+
       <%= link_to t("events.buttons.discard"), root_path, class: "btn-discard",
         "data-no-turbolink": true %>
       <% if is_edit_form? action_name %>
@@ -82,5 +89,7 @@
     </div>
     <div class="overlay-bg"></div>
     <%= render "events/dialog_repeat_form", f: f %>
+
+    <%= confirm_popup_repeat_events t("events.repeat_dialog.edit") %>
   <% end %>
 </div>

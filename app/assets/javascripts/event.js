@@ -29,6 +29,7 @@ $(document).on('page:change', function(){
   if($('.edit_event').length > 0){
     $('#start_date').datepicker('setDate', $('#start_date').val());
   }
+
   $(document).on('change', '.date-time', function(event) {
     $('#event_start_date').val(start_date.val() + ' ' + start_time.val());
     $('#event_finish_date').val(finish_date.val() + ' ' + finish_time.val());
@@ -36,6 +37,7 @@ $(document).on('page:change', function(){
     $('#event_end_repeat').val(end_repeat.val());
   });
 });
+
 $(document).ready(function() {
   $('.btn-del').click(function() {
     attendee = $(this).attr('id');
@@ -55,25 +57,6 @@ $(document).ready(function() {
         }
       });
     }
-  });
-
-  ws_rails = new WebSocketRails(location.host+'/websocket', true);
-  ws_rails.on_open = function(data) {
-    console.log('Connection has been established: ', data);
-  }
-
-  ws_rails.bind('websocket_notify', function(message){
-    var title = message['title'];
-    var start = message['start'];
-    var finish = message['finish'];
-    var desc = message['desc']
-    var attendees = message['attendees'];
-    var from_user = message['from_user'];
-    var to_user = message['to_user']
-    n = new Notification(title, {
-      body: 'Start: ' + start + '\nFinish: ' + finish + '\ndesc: ' + desc
-      + '\nFrom: ' + from_user + '\nReciever: ' + to_user});
-    n.close();
   });
 });
 
@@ -111,6 +94,7 @@ $(document).on('page:change', function(){
     var strTime = hours + ':' + minutes + ampm;
     return strTime;
   }
+
   function checkAllday(){
     if ($('#all_day')[0].checked){
       start_time.hide();
@@ -130,6 +114,7 @@ $(document).on('page:change', function(){
       $('#event_all_day').val(false);
     }
   }
+
   function showDialog(dialogId) {
     var dialog = $('#' + dialogId);
     $(dialog).removeClass('dialog-hidden');
@@ -178,6 +163,7 @@ $(document).on('page:change', function(){
       dialog_form.centerScreen();
       showDialog('dialog-repeat-event-form');
     }
+
     if(!$('.cb-repeat').hasClass('first')) {
       if(this.checked)
         $('.dialog-repeat-event').show();
@@ -242,6 +228,7 @@ $(document).on('page:change', function(){
     this.css('left', ($(window).width() - this.width()) / 2 + $ (window).scrollLeft() + 'px');
     return this;
   }
+
   function showRepeatOn() {
     var repeat_type = $('#event_repeat_type').val();
     var repeat_weekly = "weekly";

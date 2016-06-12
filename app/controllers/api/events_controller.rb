@@ -24,24 +24,19 @@ class Api::EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find_by id: params[:id]
-    if @event.parent_id.nil?
-      parent = @event
-    else
-      parent = @event.event_parent
-    end
-    params[:exception_time] = params[:start_date]
-    if params[:start_repeat].nil?
-      params[:start_repeat] = params[:start_date]
-    else
-      params[:start_repeat] = params[:start_repeat]
-    end
-    if params[:end_repeat].nil?
-      params[:end_repeat] = @event.end_repeat
-    else
-      params[:end_repeat] = params[:end_repeat].to_date + 1.days
-    end
-    EventExceptionService.new(parent, params).update_event_exception
+    event_params.merge({
+      exception_time: event_params[:start_date],
+      start_repeat: event_params[:start_date],
+      end_repeat: event_params[:end_repeat].nil? ? @event.end_repeat : (event_params[:end_repeat].to_date + 1.days)
+    })
+
+    argv = {
+      is_drop: params[:is_drop],
+      start_time_before_drag: params[:start_time_before_drag],
+      finish_time_before_drag: params[:finish_time_before_drag]
+    }
+
+    EventExceptionService.new(@event, event_params, argv).update_event_exception
     render text: t("events.flashs.updated")
   end
 
@@ -92,8 +87,7 @@ class Api::EventsController < ApplicationController
 
   private
   def event_params
-    params.permit :id, :title, :all_day, :start_repeat, :end_repeat,
-      :start_date, :finish_date, :exception_type, :exception_time
+    params.require(:event).permit Event::ATTRIBUTES_PARAMS
   end
 
   def exception_params

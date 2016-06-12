@@ -420,7 +420,9 @@ $(document).on('page:change', function() {
   });
 
   $(document).click(function() {
-    saveLastestView();
+    if ($('.fc-view-container').length != 0)
+      saveLastestView();
+
     if (!$(event.target).hasClass('create')
       && !$(event.target).closest('#event-popup').hasClass('dropdown-menu')){
       $('#source-popup').removeClass('open');

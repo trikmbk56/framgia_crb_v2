@@ -39,11 +39,8 @@ class Event < ActiveRecord::Base
       Date.today.beginning_of_week, Date.today.end_of_week, user_id)
   end
 
-  scope :in_calendars, ->calendars, start_time_view, end_time_view do
-    where "calendar_id IN (?) and ((end_repeat >= ? and end_repeat <= ?) or
-      (start_repeat >= ? and start_repeat <= ?) or (start_repeat <= ? and end_repeat >= ?))",
-      calendars, start_time_view, end_time_view, start_time_view, end_time_view,
-      end_time_view, end_time_view
+  scope :in_calendars, ->calendar_ids do
+    where "calendar_id IN (?)", calendar_ids
   end
 
   scope :upcoming_event, ->calendar_id do

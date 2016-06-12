@@ -68,19 +68,19 @@
 }
 
 .action {
-    color: #1b1b1b;
-    font-family: Arial;
-    font-size: 13px;
-    clear: both;
-    height: 30px;
-    line-height: 30px;
-    position: relative;
-    line-height: 30px;
-    .right-actions {
-      display: inline-block;
-      float: right;
-      margin-right: -16px;
-    }
+  color: #1b1b1b;
+  font-family: Arial;
+  font-size: 13px;
+  clear: both;
+  height: 30px;
+  line-height: 30px;
+  position: relative;
+  line-height: 30px;
+  .right-actions {
+    display: inline-block;
+    float: right;
+    margin-right: -16px;
+  }
 }
 
 .select-calendar {
@@ -213,23 +213,23 @@
 }
 
 .no-prong, .top-prong, .bottom-prong {
-    position: absolute;
-    height: 9px;
-    width: 18px;
-    overflow: hidden;
+  position: absolute;
+  height: 9px;
+  width: 18px;
+  overflow: hidden;
 }
 
 .overlay-bg {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height:100%;
-    width: 100%;
-    cursor: pointer;
-    z-index: 1000;
-    background: #000;
-    background: rgba(0,0,0,0.75);
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height:100%;
+  width: 100%;
+  cursor: pointer;
+  z-index: 1000;
+  background: #000;
+  background: rgba(0,0,0,0.75);
 }
 
 /* Create event new page */
@@ -526,7 +526,7 @@
   }
 
   div {
-      display: block;
+    display: block;
   }
 
   .ep-recl-dialog-title {
@@ -606,15 +606,15 @@
   }
 
   .ep-rec-ends-th {
-      vertical-align: top;
+    vertical-align: top;
   }
 
   .ep-rec-ends-opt {
-      display: block;
+    display: block;
   }
 
   input[type="radio"] {
-      margin: 3px 5px 3px 0;
+    margin: 3px 5px 3px 0;
   }
 
   input[type="radio"] {
@@ -623,60 +623,60 @@
 
 
   textarea, select {
-      font-family: arial,sans-serif;
-      font-size: 100%;
+    font-family: arial,sans-serif;
+    font-size: 100%;
   }
 
   input[type="radio" i] {
-      margin: 3px 3px 0px 5px;
+    margin: 3px 3px 0px 5px;
   }
 
   input[type="radio" i] {
-      -webkit-appearance: radio;
-      box-sizing: border-box;
+    -webkit-appearance: radio;
+    box-sizing: border-box;
   }
 
   input[type="radio" i], input[type="checkbox" i] {
-      background-color: initial;
-      padding: initial;
-      border: initial;
+    background-color: initial;
+    padding: initial;
+    border: initial;
   }
 
   textarea, keygen, select, button {
-      text-rendering: auto;
-      color: initial;
-      letter-spacing: normal;
-      word-spacing: normal;
-      text-transform: none;
-      text-indent: 0px;
-      text-shadow: none;
-      display: inline-block;
-      text-align: start;
-      margin: 0em 0em 0em 0em;
-      font: 13.3333px Arial;
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em 0em 0em 0em;
+    font: 13.3333px Arial;
   }
 
   textarea, keygen, select, button, meter, progress {
-      -webkit-writing-mode: horizontal-tb;
+    -webkit-writing-mode: horizontal-tb;
   }
 
 
   .ep-rec-summary {
-      font-weight: bold;
+    font-weight: bold;
   }
 
   .ep-rec-buttons-padding {
-      padding-top: 15px;
+    padding-top: 15px;
   }
 
   .ep-recl-dialog .goog-imageless-button {
-      margin: 1px 5px 1px 1px;
+    margin: 1px 5px 1px 1px;
   }
 
   .goog-inline-block {
-      position: relative;
-      display: -moz-inline-box;
-      display: inline-block;
+    position: relative;
+    display: -moz-inline-box;
+    display: inline-block;
   }
 
   .goog-imageless-button, .navbuttonouter {
@@ -728,46 +728,45 @@
   }
 
   select:not([size]):not([multiple]), select[size="0"], select[size="1"] {
-      background-color: #F0F0F0
+    background-color: #F0F0F0
   }
 
   keygen, select, select[size="0"], select[size="1"] {
-      border-radius: 0px;
-      border-color: rgb(169, 169, 169);
+    border-radius: 0px;
+    border-color: rgb(169, 169, 169);
   }
 
   select:not(:-internal-list-box) {
-      overflow: visible !important;
+    overflow: visible !important;
   }
 
   select {
-      -webkit-appearance: menulist;
-      box-sizing: border-box;
-      align-items: center;
-      white-space: pre;
-      -webkit-rtl-ordering: logical;
-      color: black;
-      background-color: white;
-      cursor: default;
-      border: 1px solid;
+    -webkit-appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    color: black;
+    background-color: white;
+    cursor: default;
+    border: 1px solid;
   }
 
   input, textarea, keygen, select, button {
-      text-rendering: auto;
-      color: initial;
-      letter-spacing: normal;
-      word-spacing: normal;
-      text-transform: none;
-      text-indent: 0px;
-      text-shadow: none;
-      display: inline-block;
-      text-align: start;
-      margin: 0em 0em 0em 0em;
-      font: 13.3333px Arial;
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 0em 0em 0em 0em;
   }
 
   input, textarea, keygen, select, button, meter, progress {
-      -webkit-writing-mode: horizontal-tb;
+    -webkit-writing-mode: horizontal-tb;
   }
 
   .ep-rec-dow label {
@@ -777,11 +776,11 @@
   }
 
   input[type="checkbox"], input[type="radio"], .ep-rec label {
-      vertical-align: middle;
+    vertical-align: middle;
   }
 
   label {
-      cursor: default;
+    cursor: default;
   }
 }
 .bubble {

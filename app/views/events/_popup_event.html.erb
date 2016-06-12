@@ -19,21 +19,21 @@
               <%= t "events.popup.time_label" %>
             </label>
             <span id="time-event-popup" class="tile-content">
-              <%= event.all_day ? "#{start_date}" : "#{start_date} To #{finish_date}" %>
+              <%= event.all_day? ? "#{start_date}" : "#{start_date} To #{finish_date}" %>
             </span>
           </div>
           <div id="calendar-data">
             <label class="calendar-event-label"><%= t "events.popup.calendar" %></label>
             <span id="calendar-event-popup" class="tile-content">
-              <%= event.calendar.name %>
+              <%= event.calendar_name %>
             </span>
           </div>
         </div>
         <div id="footer-popup">
           <% if params[:controller] == "api/particular_events" %>
-            <%= link_via_permission event %>
+            <%= link_via_permission event, fdata %>
           <% else %>
-            <%= btn_via_permission user, event %>
+            <%= btn_via_permission user, event, fdata %>
           <% end %>
         </div>
       </div>

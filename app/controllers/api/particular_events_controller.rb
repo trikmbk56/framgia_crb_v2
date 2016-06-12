@@ -17,11 +17,22 @@ class Api::ParticularEventsController < ApplicationController
 
   def show
     @event = Event.find_by id: params[:id]
+    locals = {
+      start_date: params[:start],
+      finish_date: params[:end]
+    }.to_json
+
     respond_to do |format|
       format.html {
         render partial: "events/popup_event",
-          locals: {user: current_user, title: @event.title,
-          event: @event, start_date: params[:start], finish_date: params[:end]}
+          locals: {
+            user: current_user,
+            title: @event.title,
+            event: @event,
+            start_date: params[:start],
+            finish_date: params[:end],
+            fdata: Base64.urlsafe_encode64(locals)
+          }
       }
     end
   end

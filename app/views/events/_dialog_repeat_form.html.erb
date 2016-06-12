@@ -9,23 +9,28 @@
         <tbody>
           <tr>
             <th><%= t ".repeats" %></th>
-            <td class="repeat_type"><%= f.select(:repeat_type,
-              Settings.repeat.repeat_type) %></td>
+            <td class="repeat_type">
+              <%= f.select(:repeat_type, Settings.repeat.repeat_type) %>
+            </td>
           </tr>
         </tbody>
         <tbody>
           <tr>
             <th><%= t ".repeat_every" %></th>
-            <td><div id = "select-repeat-every"><%= f.select(:repeat_every,
-              1..Settings.repeat.repeat_every) %></div></td>
+            <td>
+              <div id = "select-repeat-every">
+                <%= f.select(:repeat_every, 1..Settings.repeat.repeat_every) %>
+              </div>
+            </td>
           </tr>
           <tr>
             <th><%= t ".start_on" %></th>
             <td>
               <%= f.hidden_field :start_repeat %>
-              <%= text_field_tag :start_repeat,
-                datetime_format(@event.start_date, "short_date"),
-                required: true, class: "date start fix-width-date date-time", id: "start-date-repeat" %>
+              <%= f.text_field :start_repeat,
+                value: datetime_format(@event.start_repeat, "short_date"),
+                required: true, class: "date start fix-width-date date-time",
+                id: "start-date-repeat" %>
             </td>
           </tr>
           <tr>
@@ -33,13 +38,15 @@
             <td>
               <span class="ep-rec-ends-opt">
                 <%= f.hidden_field :end_repeat %>
-                <%= text_field_tag :end_repeat, datetime_format(@event.finish_date, "short_date"), required: true, class: "date finish date-time",
+                <%= f.text_field :end_repeat,
+                  value: datetime_format(@event.end_repeat, "short_date"),
+                  required: true, class: "date finish date-time",
                   id: "end-date-repeat" %>
               </span>
             </td>
           </tr>
           <tr class="dialog-hidden" id="repeat-on">
-            <%= render "events/repeat_on" %>
+            <%= render "events/repeat_on", f: f %>
           </tr>
         </tbody>
         <tbody>

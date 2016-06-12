@@ -34,6 +34,9 @@ class Event < ActiveRecord::Base
 
   enum repeat_type: [:daily, :weekly, :monthly, :yearly]
 
+  accepts_nested_attributes_for :notification_events, allow_destroy: true
+  accepts_nested_attributes_for :repeat_ons, allow_destroy: true
+
   scope :my_events, ->user_id do
     where("finish_time between ? and ? and user_id = ?",
       Date.today.beginning_of_week, Date.today.end_of_week, user_id)
@@ -65,9 +68,11 @@ class Event < ActiveRecord::Base
     where "start_date < ?", start_date
   end
 
-  def self.event_exception_at_time exception_type, start_time, end_time
-    find_by "exception_type IN (?) and exception_time >= ? and exception_time <= ?",
-      exception_type, start_time, end_time
+  class << self
+    def event_exception_at_time exception_type, start_time, end_time
+      find_by "exception_type IN (?) and exception_time >= ? and exception_time <= ?",
+        exception_type, start_time, end_time
+    end
   end
 
   def json_data user_id
@@ -92,6 +97,10 @@ class Event < ActiveRecord::Base
 
   def is_diff_between_start_and_finish_date?
     start_date.to_date != finish_date.to_date
+  end
+
+  def exist_repeat?
+    repeat_type.present?
   end
 
   private

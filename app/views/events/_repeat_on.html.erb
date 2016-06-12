@@ -2,9 +2,14 @@
 <td>
   <div>
     <span class="ep-rec-dow">
-      <% Settings.event.repeat_data.each_with_index do |r, i| %>
-        <%= check_box_tag "repeat_ons[]", r, false, id: "repeat-#{i}" %>
-        <%= label_tag r %>
+      <%= f.fields_for :repeat_ons do |repeat_builder| %>
+        <%= repeat_builder.check_box :repeat_on,
+          {
+            checked: repeat_builder.object.persisted?,
+            id: "repeat-#{repeat_builder.index}"
+          },
+          repeat_builder.object.repeat_on, nil %>
+        <%= repeat_builder.label :repeat_on, repeat_builder.object.repeat_on %>
       <% end %>
     </span>
   </div>

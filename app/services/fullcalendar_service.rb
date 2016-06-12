@@ -8,19 +8,19 @@ class FullcalendarService
   def repeat_data
     @event_shows = []
     @event_no_repeats = @events.no_repeats
-    if @event_no_repeats.size > 0
-      @event_no_repeats.each do |event|
-        new_event_fullcalendar event
-      end
+
+    @event_no_repeats.each do |event|
+      @event_temp = EventFullcalendar.new event
+      @event_shows << @event_temp.dup
     end
+
     @event_has_repeats = @events - @event_no_repeats
     @event_has_repeats.each do |event|
       @event_temp = EventFullcalendar.new event
       @repeat_every = event.repeat_every
-      unless event.parent_id.present?
-        preprocess_repeat_type event
-      end
+      preprocess_repeat_type event unless event.parent_id.present?
     end
+
     @event_shows.map{|event| event.json_data(@current_user.id)}
   end
 
@@ -58,11 +58,6 @@ class FullcalendarService
     when "yearly"
       repeat_yearly event, event.start_repeat.to_date, function
     end
-  end
-
-  def new_event_fullcalendar event
-    @event_temp = EventFullcalendar.new event
-    @event_shows << @event_temp.dup
   end
 
   def repeat_daily event, start, function = nil

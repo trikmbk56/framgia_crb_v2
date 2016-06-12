@@ -26,28 +26,10 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.new event_params
-    if event_params[:start_repeat].blank?
-      @event.start_repeat = event_params[:start_date]
-    else
-      @event.start_repeat = event_params[:start_repeat]
-    end
-    if event_params[:end_repeat].blank?
-      @event.end_repeat = event_params[:finish_date].to_date
-    else
-      @event.end_repeat = event_params[:end_repeat].to_date
-    end
-
     respond_to do |format|
       if @event.save
         ChatworkServices.new(@event).perform
         NotificationDesktopService.new(@event, current_user).perform
-
-        if valid_params? params[:repeat_ons], event_params[:repeat_type]
-          @repeat_ons = params[:repeat_ons]
-          @repeat_ons.each do |repeat_on|
-            RepeatOn.create! repeat_on: repeat_on, event_id: @event.id
-          end
-        end
 
         if @event.repeat_type.present?
           FullcalendarService.new.generate_event_delay @event
@@ -56,15 +38,11 @@ class EventsController < ApplicationController
         end
 
         flash[:success] = t "events.flashs.created"
-        format.html do
-          redirect_to user_event_path current_user, @event
-        end
+        format.html {redirect_to root_path}
         format.js {@data = @event.json_data(current_user.id)}
       else
         flash[:error] = t "events.flashs.not_created"
-        format.html do
-          redirect_to new_user_event_path current_user
-        end
+        format.html {redirect_to new_event_path}
         format.js
       end
     end

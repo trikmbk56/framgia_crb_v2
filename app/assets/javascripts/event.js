@@ -76,8 +76,9 @@ $(document).on('page:change', function(){
     $('#all_day').prop('checked', true);
     checkAllday();
   }
+
   $('#all_day').on('click', function() {
-    checkAllday();
+    checkAllday(this);
   });
 
   $('#event_repeat_type').on('change', function() {
@@ -95,11 +96,10 @@ $(document).on('page:change', function(){
     return strTime;
   }
 
-  function checkAllday(){
-    if ($('#all_day')[0].checked){
+  function checkAllday(element){
+    if (element.checked) {
       start_time.hide();
       finish_time.hide();
-      $('#event_all_day').val(true);
       var start = new Date();
       start.setHours(0,0,0,0);
       var end = new Date();
@@ -108,10 +108,9 @@ $(document).on('page:change', function(){
       finish_time.val(formatAMPM(end));
       $('#event_start_date').val(start_date.val() + ' ' + start_time.val());
       $('#event_finish_date').val(finish_date.val() + ' ' + finish_time.val());
-    }else{
+    } else {
       start_time.show();
       finish_time.show();
-      $('#event_all_day').val(false);
     }
   }
 

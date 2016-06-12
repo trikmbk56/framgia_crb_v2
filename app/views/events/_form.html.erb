@@ -12,8 +12,6 @@
         <%= t("events.buttons.save") %>
       </button>
 
-      <%#= f.submit t("events.buttons.save"), class: "btn-save" %>
-
       <%= link_to t("events.buttons.discard"), root_path, class: "btn-discard",
         "data-no-turbolink": true %>
       <% if is_edit_form? action_name %>
@@ -30,7 +28,6 @@
     <div class="form-group" id="dateTime">
       <%= f.hidden_field :start_date %>
       <%= f.hidden_field :finish_date %>
-      <%= f.hidden_field :all_day %>
       <%= text_field_tag :start_date,
         datetime_format(@event.start_date, "short_date"), required: true,
         class: "date start form-control fix-width-date date-time" %>
@@ -47,7 +44,7 @@
     </div>
     <div class="form-group" id="checkox-new-event">
       <div class="all-day">
-        <%= f.check_box :all_day, {}, 1, 0 %>
+        <%= f.check_box :all_day, {id: "all_day"}, 1, 0 %>
         <%= f.label :all_day %>
       </div>
       <div class="cb-repeat first <%= "repeat-on" if @event.exist_repeat? %>">

@@ -3,7 +3,6 @@ class EventExceptionService
   def initialize event, params, argv = {}
     @exception_type = params[:exception_type]
     @event = event
-    @event_before_update_id = @event.id
     @event_params = params
     @is_drop = argv[:is_drop].to_i rescue 0
     @start_time_before_drag = argv[:start_time_before_drag]
@@ -13,9 +12,6 @@ class EventExceptionService
   def update_event_exception
     if @is_drop == 0
       case @event_params[:exception_type]
-      when ""
-        @event.update_attributes @event_params
-        @event_after_update = @event
       when "edit_all"
         @event_exception_edits = if @event.event_parent.present?
           Event.exception_edits @event.event_parent.id
@@ -35,21 +31,22 @@ class EventExceptionService
       when "edit_all_follow"
         initial_value @event_params[:start_date], @event_params[:finish_date], @event
         save_this_event_exception @event
-        if event = event_exception_pre_nearest
-          event.update_attributes end_repeat:
-            DateTime.parse(@event_params[:start_date])
-        else
-          @event.update_attributes end_repeat:
-            DateTime.parse(@event_params[:start_date])
-        end
-        event_after_exceptions = @event.event_exceptions.
-          all_event_after_date @event_params[:start_date].to_datetime
+
+        event_exception_pre_nearest.update_attributes end_repeat: @event_params[:start_date]
+
+        event_after_exceptions = @event.event_exceptions
+          .after_date @event_params[:start_date].to_datetime
+
         event_after_exceptions.each do |event|
           update_attributes_event event
         end
-        event_allfollow_exceptions = @event.event_exceptions.
-          event_follow_after_date @event_params[:start_date].to_datetime
-        event_allfollow_exceptions.destroy_all
+
+        event_all_follow_exceptions = @event.event_exceptions
+          .event_follow_after_date @event_params[:start_date].to_datetime
+        event_all_follow_exceptions.destroy_all
+      else
+        @event.update_attributes @event_params
+        @event_after_update = @event
       end
     else
       create_event_when_drop
@@ -62,10 +59,12 @@ class EventExceptionService
     end
 
     if @event_after_update.present?
-      SendEmailAfterEventUpdateWorker.perform_async(@event_before_update_id,
-        @event_after_update.id,
-        @start_time_before_drag,
-        @finish_time_before_drag)
+      argv =  {event_before_update_id: @event.id,
+        event_after_update_id: @event_after_update.id,
+        start_date_before: @start_time_before_drag,
+        finish_date_before: @finish_time_before_drag
+      }
+      EmailWorker.perform_async argv, :update_event
     end
   end
 
@@ -85,37 +84,40 @@ class EventExceptionService
   end
 
   def update_attributes_event event
-    event.update_attributes(
-      title: @event_params[:title],
-      start_date: (event.start_date.change(
-      {hour: @hour_start, min: @minute_start, sec: @second_start})),
-      finish_date: (event.finish_date.change(
-      {hour: @hour_end, min: @minute_end, sec: @second_end})))
+    @event_params[:start_date] = event.start_date.change({hour: @hour_start,
+      min: @minute_start, sec: @second_start
+    })
+
+    @event_params[:finish_date] = event.finish_date.change({hour: @hour_end,
+      min: @minute_end, sec: @second_end
+    })
+
+    event.update_attributes @event_params.permit!
   end
 
   def save_this_event_exception event
     if event.event_parent.present?
-      event.update_attributes @event_params
       @event_after_update = event
     else
       @event_params[:parent_id] = @event.id
-      @event_params[:id] = nil
+      @event_params.delete :id
       @event_after_update = @event.dup
-      @event_after_update.update_attributes @event_params.permit!
     end
+
+    @event_after_update.update_attributes @event_params.permit!
   end
 
   def event_exception_pre_nearest
     if @event.event_parent.present?
-      @event.event_parent.event_exceptions
+      return @event.event_parent.event_exceptions
         .event_pre_nearest(@event_params[:start_date])
         .order(start_date: :desc).first
     end
+    @event
   end
 
   def create_event_when_drop
-    @event_params[:exception_type] = nil
-    @event_params[:exception_time] = nil
+    [:exception_type, :exception_time].each{|k| @event_params.delete k}
     @event_params[:start_repeat] = @event_params[:start_date]
     @event_params[:end_repeat] = @event_params[:finish_date]
     @event_after_update = @event.dup

@@ -32,12 +32,16 @@
 //= require websocket.init
 //= require_self
 
-var clipboard = new Clipboard('.copy-link');
+if($('.copy-link').length > 0) {
+  var clipboard = new Clipboard('.copy-link');
 
-clipboard.on('success', function(e) {
-  e.clearSelection();
-});
+  clipboard.on('success', function(e) {
+    e.clearSelection();
+  });
 
-$('.copy-link').on('click', function() {
-  alert('copied');
-})
+  $('.copy-link').on('click', function() {
+    alert('copied');
+  })
+}
+
+

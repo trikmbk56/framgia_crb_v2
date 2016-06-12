@@ -30,7 +30,7 @@ class Event < ActiveRecord::Base
   delegate :name , to: :calendar, prefix: true, allow_nil: true
 
   enum exception_type: [:delete_only, :delete_all_follow, :edit_only,
-    :edit_all_follow]
+    :edit_all_follow, :edit_all]
 
   enum repeat_type: [:daily, :weekly, :monthly, :yearly]
 
@@ -60,10 +60,10 @@ class Event < ActiveRecord::Base
   scope :exception_edits, ->id do
     where "parent_id = ? AND exception_type IN (?)", id, [2, 3]
   end
-  scope :event_follow_after_date, ->start_date do
-    where "start_date > ? AND exception_type = ?", start_date, 3
+  scope :event_follow_after_date, ->date do
+    where "start_date > ? AND exception_type = ?", date, 3
   end
-  scope :all_event_after_date, ->start_date{where "start_date > ?", start_date}
+  scope :after_date, ->date{where "start_date > ?", date}
   scope :event_pre_nearest, ->start_date do
     where "start_date < ?", start_date
   end
@@ -121,21 +121,34 @@ class Event < ActiveRecord::Base
   def send_notify
     if exception_type.nil?
       attendees.each do |attendee|
-        SendEmailWorker.perform_async id, attendee.user_id, user_id
+        argv = {event_id: id, user_id: attendee.user_id, current_user_id: user_id}
+        EmailWorker.perform_async argv
       end
     elsif self.delete_only? || self.delete_all_follow?
       parent = Event.find_by id: parent_id
       parent.attendees.each do |attendee|
-        SendEmailAfterDeleteEventWorker.perform_async(attendee.user_id, title,
-          start_date, finish_date, exception_type)
+        argv = {
+          user_id: attendee.user_id,
+          event_title: title,
+          event_start_date: start_date,
+          event_finish_date: finish_date,
+          event_exception_type: exception_type
+        }
+        EmailWorker.perform_async argv, :delete_event
       end
     end
   end
 
   def send_email_delete_no_repeat_event
     attendees.each do |attendee|
-      SendEmailAfterDeleteEventWorker.perform_async(attendee.user_id, title,
-        start_date, finish_date, nil)
+      argv = {
+        user_id: attendee.user_id,
+        event_title: title,
+        event_start_date: start_date,
+        event_finish_date: finish_date,
+        event_exception_type: nil
+      }
+      EmailWorker.perform_async argv, :delete_event
     end
   end
 end

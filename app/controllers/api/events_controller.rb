@@ -65,12 +65,6 @@ class Api::EventsController < ApplicationController
 
   def destroy
     @event = Event.find_by id: params[:id]
-    if params[:notification_type].present?
-      params[:notification_type].each do |notification_type|
-        NotificationEvent.create(notification_id: notification_type,
-          event_id: @event.id)
-      end
-    end
     if @event.repeat_type.nil? || (@event.repeat_type &&
       params[:exception_type] == "delete_all" && @event.parent_id.nil?)
       destroy_event @event

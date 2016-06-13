@@ -9,7 +9,6 @@ class CalendarsController < ApplicationController
   end
 
   def index
-    @notifications = Notification.all
     @my_calendars = current_user.my_calendars
     @other_calendars = current_user.other_calendars
     @manage_calendars = current_user.manage_calendars

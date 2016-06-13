@@ -29,13 +29,14 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         ChatworkServices.new(@event).perform
-        NotificationDesktopService.new(@event, current_user).perform
+        NotificationDesktopService.new(@event, Settings.create_event).perform
 
         if @event.repeat_type.present?
           FullcalendarService.new.generate_event_delay @event
         else
           NotificationEmailService.new(@event).perform
         end
+        NotificationDesktopJob.new(@event, Settings.start_event).perform
 
         flash[:success] = t "events.flashs.created"
         format.html {redirect_to root_path}

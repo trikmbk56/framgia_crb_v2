@@ -10,7 +10,9 @@ class Event < ActiveRecord::Base
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :all_day,
     :repeat_type, :repeat_every, :user_id, :calendar_id, :start_date,
     :finish_date, :start_repeat, :end_repeat, :exception_type, :exception_time,
-    user_ids: [], notification_ids: []]
+    attendees_attributes: [:id, :email, :_destroy],
+    repeat_ons_attributes: [:id, :_destroy],
+    notification_events_attributes: [:id, :notification_id, :_destroy]]
 
   has_many :attendees, dependent: :destroy
   has_many :users, through: :attendees
@@ -36,6 +38,7 @@ class Event < ActiveRecord::Base
 
   enum repeat_type: [:daily, :weekly, :monthly, :yearly]
 
+  accepts_nested_attributes_for :attendees, allow_destroy: true
   accepts_nested_attributes_for :notification_events, allow_destroy: true
   accepts_nested_attributes_for :repeat_ons, allow_destroy: true
 

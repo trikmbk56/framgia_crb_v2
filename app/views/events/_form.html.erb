@@ -75,11 +75,10 @@
       <div class="notify">
         <%= f.fields_for :notification_events do |ntbuilder| %>
           <p>
-            <%= ntbuilder.check_box :notification_id,
-              {checked: ntbuilder.object.persisted?},
-              ntbuilder.object.notification_id, nil %>
-            <%= ntbuilder.label :notification_id,
-              ntbuilder.object.notification_type %>
+            <%= ntbuilder.hidden_field :notification_id %>
+            <%= ntbuilder.check_box :_destroy,
+              {checked: ntbuilder.object.persisted?}, false, true %>
+            <%= ntbuilder.label :_destroy, ntbuilder.object.notification_type %>
           </p>
         <% end %>
       </div>

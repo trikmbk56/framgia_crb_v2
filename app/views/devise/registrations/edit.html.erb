@@ -49,6 +49,16 @@
         </div>
       </div>
 
+      <div class="field">
+        <div class="field-name">
+          <%= f.label :google_calendar_id %>
+        </div>
+        <div class="form">
+          <%= f.text_field :google_calendar_id, autocomplete: "off",
+            class: "form-control" %>
+        </div>
+      </div>
+
       <div class="button update-button">
         <%= f.submit t("devise.registrations.update"),
           class: "rc-button rc-button-submit",

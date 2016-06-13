@@ -210,7 +210,7 @@ $(document).on('page:change', function() {
   function deleteEventPopup(event) {
     $('#btn-delete-event').unbind('click');
     $('#btn-delete-event').click(function() {
-      var exception_type = [];
+      var exception_type;
       hiddenDialog('popup');
       if (event.repeat_type == null || event.repeat_type.length == 0 || event.exception_type == 'edit_only') {
         deleteEvent(event, exception_type);
@@ -220,17 +220,21 @@ $(document).on('page:change', function() {
     });
   }
 
-  function deleteEvent(event, exception_type, notification_type) {
+  function deleteEvent(event, exception_type) {
+    var start_date_before_delete, finish_date_before_delete;
+    if (event.allDay !== true){
+      start_date_before_delete = event.start._i;
+      finish_date_before_delete = event.end._i;
+    };
     $.ajax({
       url: '/api/events/' + event.event_id,
       type: 'DELETE',
       data: {
-        notification_type: notification_type,
         exception_type: exception_type,
         exception_time: event.start.format(),
         finish_date: (event.end !== null) ? event.end.format('MM-DD-YYYY H:mm A') : '',
-        start_date_before_delete: event.start._i,
-        finish_date_before_delete: event.end._i
+        start_date_before_delete: start_date_before_delete,
+        finish_date_before_delete: finish_date_before_delete,
       },
       dataType: 'text',
       success: function(text){
@@ -269,12 +273,7 @@ $(document).on('page:change', function() {
     showDialog('dialog-repeat-popup');
 
     $('.btn-confirm').click(function() {
-      var notification_types = [];
-      $(".notify input[type='checkbox']:checked").each(function(k, v) {
-        notification_types.push(v.name);
-      });
-
-      deleteEvent(event, $(this).attr('rel'), notification_types);
+      deleteEvent(event, $(this).attr('rel'));
       hiddenDialog('dialog-repeat-popup');
     });
   }

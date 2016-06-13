@@ -40,7 +40,9 @@ class FullcalendarService
       @repeat_ons = event.repeat_ons
       @repeat_ons.each do |repeat|
         @repeat = repeat
-        set_calculate_day @repeat
+        @repeat_on = repeat.repeat_on
+        @calculate_day = RepeatOn::repeat_ons[@repeat_on]
+
         if @calculate_day == @start_day
           repeat_weekly event, event.start_repeat.to_date, function
         elsif @calculate_day > @start_day
@@ -74,11 +76,6 @@ class FullcalendarService
 
   def repeat_yearly event, start, function = nil
     show_repeat_event event, @repeat_every.years, start,  function
-  end
-
-  def set_calculate_day repeat
-    @repeat_on = repeat.repeat_on
-    @calculate_day = RepeatOn::repeat_ons[@repeat_on]
   end
 
   def weekly_start_exception ex_event

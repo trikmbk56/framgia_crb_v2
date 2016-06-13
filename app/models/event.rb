@@ -2,6 +2,8 @@ class Event < ActiveRecord::Base
   include SharedMethods
   require "chatwork"
 
+  acts_as_paranoid
+
   after_create :send_notify
   before_destroy :send_email_delete_no_repeat_event
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608041902) do
+ActiveRecord::Schema.define(version: 20160612085116) do
 
   create_table "attendees", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -84,10 +84,12 @@ ActiveRecord::Schema.define(version: 20160608041902) do
     t.string   "google_calendar_id", limit: 255
     t.datetime "created_at",                                            null: false
     t.datetime "updated_at",                                            null: false
+    t.datetime "deleted_at"
   end
 
+  add_index "events", ["deleted_at"], name: "index_events_on_deleted_at", using: :btree
   add_index "events", ["google_calendar_id"], name: "index_events_on_google_calendar_id", using: :btree
-  add_index "events", ["google_event_id"], name: "index_events_on_google_event_id", unique: true, using: :btree
+  add_index "events", ["google_event_id"], name: "index_events_on_google_event_id", using: :btree
 
   create_table "notification_events", force: :cascade do |t|
     t.integer  "event_id",        limit: 4

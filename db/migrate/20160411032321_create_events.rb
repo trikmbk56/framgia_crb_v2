@@ -25,7 +25,7 @@ class CreateEvents < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :events, :google_event_id, unique: true
+    add_index :events, :google_event_id
     add_index :events, :google_calendar_id
   end
 end

@@ -18,6 +18,7 @@ class GoogleCalendarService
 
   def push_events
     insert_event
+    delete_event
   end
 
   private
@@ -109,6 +110,12 @@ class GoogleCalendarService
     instance.start.timeZone = time_zone @client, @service
     instance.end.dateTime = time_format @client, @service, event.finish_date
     instance.end.timeZone = time_zone @client, @service
+    recurrences = event.repeat_type.nil? ? "" : recurrence_event(event)
+    instance.recurrence = recurrences
+    attendees = event.attendees
+    emails = Array.new
+    attendees.each {|attendee| emails << {email: attendee.user_email}}
+    instance.attendees = emails
     response = @client.execute(api_method: @service.events.update,
       parameters: {"calendarId": @current_user.google_calendar_id,
       "eventId": instance.id},
@@ -133,47 +140,75 @@ class GoogleCalendarService
     }
   end
 
+  def calendars_can_manage user
+    calendars = Array.new
+    user.user_calendars.each do |user_calendar|
+      if Settings.permissions_can_make_change.include? user_calendar.permission_id
+        calendars << user_calendar.calendar_id
+      end
+    end
+    calendars
+  end
+
   def insert_event
-    events = Event.event_google @current_user.id
-    events.each do |event|
-      if event.google_event_id.nil?
-        attendees = event.attendees
-        emails = Array.new
-        attendees.each {|attendee| emails << {email: attendee.user_email}}
-        recurrences = event.repeat_type.nil? ? "" : recurrence_event(event)
-        event_google = event_google_calendar event, @client, @service, recurrences, emails
-        result = @client.execute(api_method: @service.events.insert,
-          parameters: {"calendarId": @current_user.google_calendar_id},
-          body: JSON.dump(event_google),
-          headers: {"Content-Type": Settings.content_type})
-        if result.status == 200
-          event.google_event_id = result.data.id
-          event.google_calendar_id = @current_user.google_calendar_id
-          event.save
-        end
-      elsif event.google_event_id.present?
-        unless event.exception_type.nil?
-          results = @client.execute(api_method: @service.events.instances,
-            parameters: {"calendarId": event.google_calendar_id,
-            "eventId": event.event_parent.google_event_id})
-          instances = results.data["items"]
-          instances.each_with_index do |instance, index|
-            if time_format(@client, @service, event.exception_time) == instance.originalStartTime["dateTime"].to_datetime.rfc3339
-              if event.delete_only?
-                delete_event_repeat instance
-              elsif event.delete_all_follow?
-                (index..instances.count-1).each do |i|
-                  delete_event_repeat instances[i]
-                end
-              elsif event.edit_only?
-                update_evemt_repeat instance, event
-              elsif
-                (index..instances.count-1).each do |i|
-                  update_evemt_repeat instance, events
+    calendar_ids = calendars_can_manage @current_user
+    calendar_ids.each do |calendar_id|
+      calendar = Calendar.find_by id: calendar_id
+      events = calendar.events
+      events.each do |event|
+        if event.google_event_id.nil?
+          attendees = event.attendees
+          emails = Array.new
+          attendees.each {|attendee| emails << {email: attendee.user_email}}
+          recurrences = event.repeat_type.nil? ? "" : recurrence_event(event)
+          event_google = event_google_calendar event, @client, @service, recurrences, emails
+          result = @client.execute(api_method: @service.events.insert,
+            parameters: {"calendarId": @current_user.google_calendar_id},
+            body: JSON.dump(event_google),
+            headers: {"Content-Type": Settings.content_type})
+          if result.status == 200
+            event.google_event_id = result.data.id
+            event.google_calendar_id = @current_user.google_calendar_id
+            event.save
+          end
+        elsif event.google_event_id.present?
+          unless event.exception_type.nil?
+            results = @client.execute(api_method: @service.events.instances,
+              parameters: {"calendarId": event.google_calendar_id,
+              "eventId": event.event_parent.google_event_id})
+            instances = results.data["items"]
+            instances.each_with_index do |instance, index|
+              if time_format(@client, @service, event.exception_time) == instance.originalStartTime["dateTime"].to_datetime.rfc3339
+                if event.delete_only?
+                  delete_event_repeat instance
+                elsif event.delete_all_follow?
+                  (index..instances.count-1).each do |i|
+                    delete_event_repeat instances[i]
+                  end
+                elsif event.edit_only?
+                  update_evemt_repeat instance, event
+                elsif
+                  (index..instances.count-1).each do |i|
+                    update_evemt_repeat instance, events
+                  end
                 end
               end
             end
           end
+        end
+      end
+    end
+  end
+
+  def delete_event
+    calendar_ids = calendars_can_manage @current_user
+    calendar_ids.each do |calendar_id|
+      event_deleteds = Event.with_deleted.where(calendar_id: calendar_id)
+      event_deleteds.each do |event|
+        if event.google_event_id.present? && event.deleted_at.present?
+          results = @client.execute(api_method: @service.events.delete,
+            parameters: {"calendarId": event.google_calendar_id,
+            "eventId": event.google_event_id})
         end
       end
     end

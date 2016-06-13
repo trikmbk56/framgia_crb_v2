@@ -14,8 +14,10 @@
             <li>
               <div class="qab-container gcal-popup">
                 <label><%= t "calendar.quick_add" %></label>
-                <textarea id="title-event-value"></textarea>
-                <div id="btn-quick-add">
+                <div class="inline-block">
+                  <textarea id="title-event-value" class="form-control" rows="1"></textarea>
+                </div>
+                <div id="btn-quick-add" class="button blue">
                   <%= link_to t("calendar.add"), "javascript:void(0)", id: "link-to-event" %>
                 </div>
                 <p><%= t "calendar.example" %></p>
@@ -57,7 +59,7 @@
         <div id="collapse2" class="panel-collapse collapse"
           aria-expanded="true">
           <div class="send-request-email border-light">
-            <input id="request-email-input" type="text"
+            <input id="request-email-input" type="text" class="form-control"
               placeholder="<%= t "calendars.request_email_input" %>">
             <button id="request-email-button"></button>
           </div>

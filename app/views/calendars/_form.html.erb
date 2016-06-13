@@ -94,7 +94,7 @@
         <%= select :user, :id,
           @users.collect{|user| [user.email + " <#{user.name}>", user.id]},
           {include_blank: true, selected: @user_selected ? @user_selected.id : -1},
-          {id: "textbox-email-share"} %>
+          {class: "form-control permission-select", id: "textbox-email-share"} %>
       </div>
       <div class="col2">
         <div>
@@ -102,9 +102,7 @@
             :id, :permission, {selected: 3},
             class: "form-control permission-select", id: "permission-select" %>
         </div>
-        <div>
-          <button type="button" id="add-person"><%= t "calendar.add_person" %></button>
-        </div>
+        <button type="button" id="add-person"><%= t "calendar.add_person" %></button>
       </div>
       <div class="col3"></div>
     </div>

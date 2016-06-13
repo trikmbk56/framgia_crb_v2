@@ -1,8 +1,33 @@
+@import "color";
+
 html, body{
-  color: #313131;
+  color: #555555 !important;
   background-color: #FFFFFF;
-  margin:0;
-  padding:0;
+  margin: 0px;
+  padding: 0px;
+  display: block;
+}
+
+body{
+  padding-top: 54px;
+  display: block;
+  position: relative;
+}
+
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after {
+  content: " ";
+  display: table;
+}
+
+.container:after,
+.container-fluid:after,
+.row:after {
+  clear: both;
 }
 
 a{
@@ -13,9 +38,82 @@ ul{
   list-style: none;
 }
 
-.container{
-  margin-left: auto;
+.container {
+  width: 95%;
+  // float: left;
   margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.row {
+  float: left;
+  display: block;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.col, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+  float: left;
+  position: relative;
+  min-height: 1px;
+}
+
+.col-md-12 {
+  width: 100%;
+}
+
+.col-md-11 {
+  width: 91.66666667%;
+}
+
+.col-md-10 {
+  width: 83.33333333%;
+}
+
+.col-md-9 {
+  width: 75%;
+}
+
+.col-md-8 {
+  width: 66.66666667%;
+}
+
+.col-md-7 {
+  width: 58.33333333%;
+}
+
+.col-md-6 {
+  width: 50%;
+}
+
+.col-md-5 {
+  width: 41.66666667%;
+}
+
+.col-md-4 {
+  width: 33.33333333%;
+}
+
+.col-md-3 {
+  width: 25%;
+}
+
+.col-md-2 {
+  width: 16.66666667%;
+}
+
+.col-md-1 {
+  width: 8.33333333%;
 }
 
 .clearfix{
@@ -30,6 +128,23 @@ ul{
   padding: 7px 12px;
   border-radius: 3px;
   color: #FFFFFF;
+  border: none;
+}
+
+.gray{
+  background-color: $gray;
+}
+
+.yellow{
+  background-color: $yellow;
+}
+
+.blue{
+  background-color: $blue;
+}
+
+.green{
+  background-color: $green;
 }
 
 .text-center{
@@ -38,4 +153,24 @@ ul{
 
 .text-right{
   text-align: right;
+}
+
+.red-text{
+  color: $red;
+}
+
+.yellow-text{
+  color: $yellow;
+}
+
+.blue-text{
+  color: $blue;
+}
+
+.green-text{
+  color: $green;
+}
+
+.gray-text{
+  color: $gray;
 }

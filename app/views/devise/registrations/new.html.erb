@@ -1,7 +1,19 @@
-<div id="sign-up">
-  <h1><%= t "devise.registrations.create_account" %></h1>
-  <div class="clearfix">
-    <div id="sign-up-form">
+<div id="sign-in">
+  <div class="sign-in-form-box">
+    <div class="sign-in-left">
+      <h2>
+        <%= t "devise.registrations.need_account" %>
+      </h2>
+      <p>
+        <%= t "devise.registrations.access_service" %>
+      </p>
+      <i class="glyphicon glyphicon-calendar"></i>
+      <center>
+        <%= image_tag "schedule.png" %>
+      </center>
+    </div>
+    <div id="sign-in-form">
+    <div class="form-body">
       <%= form_for resource, as: resource_name,
         url: registration_path(resource_name) do |f| %>
         <%= devise_error_messages! %>
@@ -33,12 +45,6 @@
             class: "form-control" %>
         </div>
 
-        <div class="field">
-          <%= f.label :chatwork_id %><br />
-          <%= f.text_field :chatwork_id, autocomplete: "off",
-            class: "form-control" %>
-        </div>
-
         <div class="signup-button">
           <%= f.submit t("devise.registrations.sign_up"),
             class: "rc-button rc-button-submit" %>
@@ -47,18 +53,6 @@
 
       <%= render "devise/shared/links" %>
     </div>
-
-    <div id="sign-up-left">
-      <h2>
-        <%= t "devise.registrations.need_account" %>
-      </h2>
-      <p>
-        <%= t "devise.registrations.access_service" %>
-      </p>
-      <i class="glyphicon glyphicon-calendar"></i>
-      <center>
-        <%= image_tag "schedule.png" %>
-      </center>
     </div>
   </div>
 </div>

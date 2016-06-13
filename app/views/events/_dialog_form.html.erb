@@ -3,7 +3,7 @@
     <div id="bubble-close" class="bubble-close"></div>
     <div id="bubbleContent" class="bubblecontent">
       <div class="tab-container">
-        <div class="tab-labels"><a class="tab-label e active"><%= t "events.dialog.event" %></a>
+        <div class="tab-labels"><a class="tab-label e active blue-text"><%= t "events.dialog.event" %></a>
         </div>
         <div class="tab-content">
           <%= form_for [current_user, @event], remote: true do |f| %>
@@ -13,7 +13,7 @@
             <div class="state-container">
               <div class="tab-panel e active">
                 <div class="tile-content">
-                  <%= f.text_field :title, id: "event-title", class: "gcal-textinput",
+                  <%= f.text_field :title, id: "event-title", class: "gcal-textinput form-control",
                     placeholder: t("events.dialog.placeholder"), required: true %>
                   <div class="error-title"></div>
                 </div>
@@ -30,17 +30,18 @@
                   <div class="calendar-container tile-content">
                     <div>
                       <%= f.select :calendar_id,
-                        options_for_select(select_my_calendar @manage_calendars),
-                        {class: "goog-flat-menu-button gcalSelect"} %>
+                        options_for_select(select_my_calendar @manage_calendars),{},
+                        {class: "goog-flat-menu-button gcalSelect form-control"} %>
                     </div>
+                    <br>
                   </div>
                 </div>
                 <div class="action">
                   <div class="right-actions">
-                    <button id="edit-event-btn" class="button button-edit">
+                    <button id="edit-event-btn" class="button green">
                       <%= t "events.dialog.edit_event" %>
                     </button>
-                    <button id="new-event-btn", class="button button-action">
+                    <button id="new-event-btn", class="button blue">
                       <%= t "events.dialog.create_event" %>
                     </button>
                   </div>

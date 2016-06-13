@@ -7,8 +7,8 @@ class Api::EventsController < ApplicationController
 
   def index
     if params[:page].present? || params[:calendar_id]
-      @data = current_user.events.upcoming_event(params[:calendar_id]).
-        page(params[:page]).per Settings.users.upcoming_event
+      @data = current_user.events.upcoming_event(params[:calendar_id])
+        .page(params[:page]).per Settings.users.upcoming_event
       respond_to do |format|
         format.html {
           render partial: "users/event", locals: {events: @data, user: current_user}

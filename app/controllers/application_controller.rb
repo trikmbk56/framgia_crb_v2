@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
   def store_location
     unless (request.path == "/users/sign_in" ||
       request.path == "/users/sign_up" ||

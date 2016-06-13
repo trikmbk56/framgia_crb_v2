@@ -7,14 +7,17 @@
         </div>
         <div class="tab-content">
           <%= form_for [current_user, @event], remote: true do |f| %>
-            <%= f.hidden_field :start_date, id: "start-time" %>
-            <%= f.hidden_field :finish_date, id: "finish-time" %>
-            <%= f.hidden_field :all_day, id: "all-day" %>
+            <%= f.hidden_field :start_date, id: "start-time", name: "start_date" %>
+            <%= f.hidden_field :finish_date, id: "finish-time", name: "finish_date" %>
+            <%= f.hidden_field :all_day, id: "all-day", name: "all_day" %>
             <div class="state-container">
               <div class="tab-panel e active">
                 <div class="tile-content">
-                  <%= f.text_field :title, id: "event-title", class: "gcal-textinput",
-                    placeholder: t("events.dialog.placeholder"), required: true %>
+                  <%= f.text_field :title, id: "event-title",
+                    class: "gcal-textinput",
+                    placeholder: t("events.dialog.placeholder"),
+                    name: "title",
+                    required: true %>
                   <div class="error-title"></div>
                 </div>
                 <div class="tile period-tile">
@@ -31,7 +34,8 @@
                     <div>
                       <%= f.select :calendar_id,
                         options_for_select(select_my_calendar @manage_calendars),
-                        {class: "goog-flat-menu-button gcalSelect"} %>
+                        {class: "goog-flat-menu-button gcalSelect"},
+                        name: "calendar_id" %>
                     </div>
                   </div>
                 </div>

@@ -30,6 +30,7 @@
 //= require notification
 //= require websocket_rails/main
 //= require websocket.init
+//= require base64.min
 //= require_self
 
 if($('.copy-link').length > 0) {

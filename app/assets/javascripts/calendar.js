@@ -644,8 +644,19 @@ $(document).on('page:change', function() {
     event.preventDefault();
     var form =  $('#new_event');
     var url = $(form).attr('action') + '/new';
-    var data = $(form).serialize();
-    window.location.href = url + '?data='+ data;
+
+    obj = Object();
+    var data = $(form).serializeArray();
+
+    $.each(data, function(_, element) {
+      if (element.name !== "utf8") {
+        obj[element.name] = element.value
+      }
+    });
+
+    content = JSON.stringify({event: obj})
+
+    window.location.href = url + '?data='+ Base64.encode(content);
   });
 
   $('#event-title').click(function(event) {

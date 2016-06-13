@@ -649,14 +649,20 @@ $(document).on('page:change', function() {
     var data = $(form).serializeArray();
 
     $.each(data, function(_, element) {
-      if (element.name !== "utf8") {
-        obj[element.name] = element.value
+      if (element.name.indexOf("start_date") > 0) {
+        obj["start_date"] = element.value
+      } else if(element.name.indexOf("finish_date") > 0) {
+        obj["finish_date"] = element.value
+      } else if(element.name.indexOf("all_day") > 0) {
+        obj["all_day"] = element.value
+      } else if(element.name.indexOf("title") > 0) {
+        obj["title"] = element.value
       }
     });
 
     content = JSON.stringify({event: obj})
 
-    window.location.href = url + '?data='+ Base64.encode(content);
+    window.location.href = url + '?fdata='+ Base64.encode(content);
   });
 
   $('#event-title').click(function(event) {

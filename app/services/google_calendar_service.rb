@@ -196,36 +196,44 @@ class GoogleCalendarService
     }
   end
 
+  def update_infor_event_repeat event
+    results = @client.execute(api_method: @service.events.instances,
+      parameters: {"calendarId": event.event_parent.google_calendar_id,
+      "eventId": event.event_parent.google_event_id})
+    instances = results.data["items"]
+    instances.each_with_index do |instance, index|
+      instance_time = instance.originalStartTime["dateTime"].to_datetime.rfc3339
+      if time_format(@client, @service, event.exception_time) == instance_time
+        if event.delete_only?
+          delete_event_repeat instance
+        elsif event.delete_all_follow?
+          (index..instances.count-1).each do |i|
+            delete_event_repeat instances[i]
+          end
+        elsif event.edit_only?
+          update_event_repeat instance, event
+        elsif
+          (index..instances.count-1).each do |i|
+            update_event_repeat instances[i], event
+          end
+        end
+      end
+    end
+  end
+
   def insert_event
     manage_calendars = @current_user.manage_calendars
     calendar_ids = manage_calendars.pluck(:id)
     events = Event.in_calendars calendar_ids
     events.each do |event|
       if event.google_event_id.nil?
-        add_event_to_google event
+        add_event_to_google event if event.exception_type.nil?
+        if event.event_parent.present? && event.event_parent.google_event_id.present?
+          update_infor_event_repeat event
+        end
       elsif event.google_event_id.present?
         unless event.exception_type.nil?
-          results = @client.execute(api_method: @service.events.instances,
-            parameters: {"calendarId": event.google_calendar_id,
-            "eventId": event.event_parent.google_event_id})
-          instances = results.data["items"]
-          instances.each_with_index do |instance, index|
-            if time_format(@client, @service, event.exception_time) == instance.originalStartTime["dateTime"].to_datetime.rfc3339
-              if event.delete_only?
-                delete_event_repeat instance
-              elsif event.delete_all_follow?
-                (index..instances.count-1).each do |i|
-                  delete_event_repeat instances[i]
-                end
-              elsif event.edit_only?
-                update_event_repeat instance, event
-              elsif
-                (index..instances.count-1).each do |i|
-                  update_event_repeat instances[i], event
-                end
-              end
-            end
-          end
+          update_infor_event_repeat event
         end
       end
     end
@@ -234,15 +242,11 @@ class GoogleCalendarService
   def delete_event
     manage_calendars = @current_user.manage_calendars
     calendar_ids = manage_calendars.pluck(:id)
-    calendar_ids.each do |calendar_id|
-      event_deleteds = Event.with_deleted.where(calendar_id: calendar_id)
-      event_deleteds.each do |event|
-        if event.google_event_id.present? && event.deleted_at.present?
-          results = @client.execute(api_method: @service.events.delete,
-            parameters: {"calendarId": event.google_calendar_id,
-            "eventId": event.google_event_id})
-        end
-      end
+    event_deleteds = Event.only_deleted.deleted_event_google calendar_ids
+    event_deleteds.each do |event|
+      results = @client.execute(api_method: @service.events.delete,
+        parameters: {"calendarId": event.google_calendar_id,
+        "eventId": event.google_event_id})
     end
   end
 end

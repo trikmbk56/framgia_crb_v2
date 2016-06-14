@@ -69,6 +69,10 @@ class Event < ActiveRecord::Base
     where "start_date < ?", start_date
   end
 
+  scope :deleted_event_google, ->calendar_ids do
+    where "calendar_id in (?) AND google_event_id IS NOT NULL", calendar_ids
+  end
+
   class << self
     def event_exception_at_time exception_type, start_time, end_time
       find_by "exception_type IN (?) and exception_time >= ? and exception_time <= ?",

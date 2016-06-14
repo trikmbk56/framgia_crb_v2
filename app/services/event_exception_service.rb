@@ -122,6 +122,11 @@ class EventExceptionService
     @event_params[:end_repeat] = @event_params[:finish_date]
     @event_after_update = @event.dup
     @event_after_update.update_attributes @event_params.permit!
+    unless @event.google_event_id.nil?
+      google_event_id_dup = @event.google_event_id + "_" +
+        @start_time_before_drag.to_datetime.strftime(Settings.event.format_date_basic)
+      @event_after_update.update_attributes(google_event_id: google_event_id_dup)
+    end
   end
 
   def create_event_with_exception_delete_only

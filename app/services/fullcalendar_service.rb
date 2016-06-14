@@ -8,7 +8,6 @@ class FullcalendarService
   def repeat_data
     @event_shows = []
     @event_no_repeats = @events.no_repeats
-
     @event_no_repeats.each do |event|
       @event_temp = EventFullcalendar.new event
       @event_shows << @event_temp.dup
@@ -21,7 +20,22 @@ class FullcalendarService
       preprocess_repeat_type event unless event.parent_id.present?
     end
 
-    @event_shows.map{|event| event.json_data(@current_user.id)}
+    @event_shows
+  end
+
+  def generate_event
+    @event_shows = []
+    event = @events.first
+    if event.repeat_type.nil?
+      @event_temp = EventFullcalendar.new event
+      @event_shows << @event_temp.dup
+    else
+      @event_temp = EventFullcalendar.new event
+      @repeat_every = event.repeat_every
+      preprocess_repeat_type event
+    end
+
+    @event_shows
   end
 
   def generate_event_delay event

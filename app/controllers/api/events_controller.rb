@@ -17,8 +17,10 @@ class Api::EventsController < ApplicationController
     else
       @events = Event.in_calendars params[:calendars]
       @event_exceptions = @events.has_exceptions
-      @data = FullcalendarService.new(@events, current_user,
+      @events = FullcalendarService.new(@events, current_user,
         @event_exceptions).repeat_data
+      @data = @events.map{|event| event.json_data(@current_user.id)}
+
       render json: @data
     end
   end

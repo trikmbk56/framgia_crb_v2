@@ -66,6 +66,7 @@ en:
       confirm_delete: "Are you sure"
       back: "Back"
       sign_up: "Sign up"
+      sign_in: "Sign in"
       create_account: "Create Your Calendar Account"
       minimum: "characters minimum"
       need_account: "You just need to have an account"

@@ -19,8 +19,7 @@
           data: {confirm: t("events.confirm.delete")}, class: "btn-discard" %>
       <% end %>
     </div>
-
-    <div class="form-content">
+    <div class="main-event-form">
       <div class="form-group">
         <%= f.label t "events.labels.title" %>
         <%= f.text_field :title, placeholder: t("events.placeholder.new_event"),
@@ -60,58 +59,51 @@
       </div>
     </div>
 
-    <div class="form-content">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <%= f.label t "events.labels.calendar" %>
-            <%= f.collection_select :calendar_id, @calendars, :id, :name, {},
-              selected: @event.calendar.try(:id), class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <%= f.label t "events.labels.description" %>
-            <%= f.text_area :description, class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <p><%= f.label :notifications %> </p>
-            <div class="notify">
-              <%= f.fields_for :notification_events do |ntbuilder| %>
-                <p>
-                  <%= ntbuilder.hidden_field :notification_id %>
-                  <%= ntbuilder.check_box :_destroy,
-                    {checked: ntbuilder.object.persisted?}, false, true %>
-                  <%= ntbuilder.label :_destroy, ntbuilder.object.notification_type %>
-                </p>
-              <% end %>
-            </div>
-          </div>
+    <div class="main-event-form">
+      <div class="form-group">
+        <%= f.label t "events.labels.calendar" %>
+        <%= f.collection_select :calendar_id, @calendars, :id, :name, {},
+          selected: @event.calendar.try(:id), class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label t "events.labels.description" %>
+        <%= f.text_area :description, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <p><%= f.label :notifications %> </p>
+        <div class="notify">
+          <%= f.fields_for :notification_events do |ntbuilder| %>
+            <p>
+              <%= ntbuilder.hidden_field :notification_id %>
+              <%= ntbuilder.check_box :_destroy,
+                {checked: ntbuilder.object.persisted?}, false, true %>
+              <%= ntbuilder.label :_destroy, ntbuilder.object.notification_type %>
+            </p>
+          <% end %>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <span class="label label-default"><%= t "calendar.attendee" %></span></br>
-            <input type="text" class"form-control" id="load-attendee"></input>
-            <input type="button" id="add-attendee" value="Add Attendee"></input>
+      </div>
+      <div class="form-group">
+        <span class="label label-default"><%= t "calendar.attendee" %></span></br>
+        <input type="text" class"form-control" id="load-attendee"></input>
+        <input type="button" id="add-attendee" value="Add Attendee"></input>
+      </div>
+      <div class="form-group" id="list-attendee">
+        <% @event.attendees.each_with_index do |attendee, key| %>
+          <div class="group_attendee" id="
+            group_attendee_<%= key %>">
+            <input type="hidden" name="event[attendees_attributes][<%= key %>][email
+            ]" value="email"></input>
+            <input type="hidden" name="event[attendees_attributes][<%= key %>][_destroy]" value=true></input>
+            <li><%= attendee.email %></li>
+            <span class="remove_attendee"><%= image_tag "cancel_icon.gif" %></span>
           </div>
-          <div class="form-group" id="list-attendee">
-            <% @event.attendees.each_with_index do |attendee, key| %>
-              <div class="group_attendee" id="
-                group_attendee_<%= key %>">
-                <input type="hidden" name="event[attendees_attributes][<%= key %>][email
-                ]" value="email"></input>
-                <input type="hidden" name="event[attendees_attributes][<%= key %>][_destroy]" value=true></input>
-                <li><%= attendee.email %></li>
-                <span class="remove_attendee"><%= image_tag "cancel_icon.gif" %></span>
-              </div>
-            <% end %>
-            <div class="group_attendee" style="display: none" id="group_attendee_<%= @event.attendees.count %>">
-              <input type="hidden" name="event[attendees_attributes][<%= @event.attendees.count %>][email]" value="email"></input>
-              <input type="hidden" name="event[attendees_attributes][<%= @event.attendees.count %>][_destroy]" value=true></input>
-              <li>email</li>
-              <span class="remove_attendee"><%= image_tag "cancel_icon.gif" %></span>
-            </div>
-          </div>
+        <% end %>
+        <div class="group_attendee" style="display: none" id="group_attendee_<%= @event.attendees.count %>">
+          <input type="hidden" name="event[attendees_attributes][<%= @event.attendees.count %>][email]" value="email"></input>
+          <input type="hidden" name="event[attendees_attributes][<%= @event.attendees.count %>][_destroy]" value=true></input>
+          <li>email</li>
+          <span class="remove_attendee"><%= image_tag "cancel_icon.gif" %></span>
         </div>
-        <div class="clearfix"></div>
       </div>
     </div>
 

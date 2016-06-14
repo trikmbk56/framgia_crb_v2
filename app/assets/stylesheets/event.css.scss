@@ -234,17 +234,29 @@
 
 /* Create event new page */
 #event {
+  .main-event-form{
+    width: 600px;
+    padding-left: 30px;
+  }
+
   .form-action {
     margin: 10px 10px 10px 0px;
     border-bottom: 1px solid #ebebeb;
     padding: 0 10px 10px 30px;
   }
 
+  label[for="event_to"]{
+    margin: 0 15px;
+  }
+
   .form-group {
-    padding: 0 0 10px 30px;
-    width: 50%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 0;
+    width: 100%;
     .select2 .selection .select2-selection {
-      border-radius: 0;
+      width: 100% !important;
+      margin-top: 5px !important;
     }
     input.select2-search__field {
       -webkit-appearance: textfield;
@@ -253,14 +265,12 @@
     }
   }
 
-  .form-control {
+  select {
     margin-top: 5px;
-    border-radius: 0px;
   }
 
-  select {
-    width: 97%;
-    margin-top: 5px;
+  .notify{
+    padding-left: 15px;
   }
 
   .fix-width-date {
@@ -273,13 +283,6 @@
     display: inline-block;
   }
 
-  textarea {
-    height: 50px;
-  }
-
-  label {
-    font-weight: bold;
-  }
   .dialog-repeat-event:hover {
     text-decoration: underline;
   }
@@ -315,16 +318,20 @@
     }
 
     .ev-title {
+
       padding-left: 30px;
-      margin: 10px 0;
+      margin: 20px 0 10px;
       .title {
-        font-size: 18px;
+        font-size: 22px;
+        line-height: 20px;
         font-weight: bold;
         margin-top: 10px;
       }
     }
 
     .ev-dt {
+      font-size: 15px;
+      font-style: italic;
       padding-left: 30px;
       margin-bottom: 10px;
       .lb-dt {
@@ -336,17 +343,19 @@
 
     .ev-cal {
       padding-left: 20px;
+      padding-right: 20px;
       .ev-contain {
-        max-width: 930px;
-        min-width: 600px;
         .lb-contain {
-          padding: 10px 10px;
-          padding-right: 300px;
+          width: 49.95%;
+          display: inline-block;
+          float: left;
           .lbcal {
             padding: 0;
             vertical-align: top;
-            border-bottom: 1px solid #ebebeb;
             ul {
+              font-size: 16px;
+              line-height: 20px;
+              border-bottom: 1px solid #CCCCCC;
               margin: 0;
               padding: 0;
               list-style: none;
@@ -356,7 +365,7 @@
               max-width: 500px;
               li:first-child {
                 width: 90px;
-                text-align: right;
+                text-align: left;
                 font-weight: bold;
               }
               li {
@@ -366,13 +375,17 @@
                 word-wrap: break-word;
               }
             }
+            ul.end-list{
+              border-bottom: 0px;
+            }
           }
         }
         .ev-att {
-          float: right;
+          font-size: 16px;
+          width: 49.55%;
           padding: 0;
-          vertical-align: top;
-          padding-top: 20px;
+          display: inline-block;
+          float: left;
           .contain {
             width: 250px;
             list-style: none;
@@ -441,6 +454,9 @@
               }
             }
           }
+        }
+        .ev-att::after{
+          clear: both;
         }
       }
     }

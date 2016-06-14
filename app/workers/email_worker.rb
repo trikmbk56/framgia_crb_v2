@@ -1,7 +1,7 @@
 class EmailWorker
   include Sidekiq::Worker
   def perform agrv = {}, ptype = nil
-    perform_update_event if ptype = :update_event
+    perform_update_event if ptype == :update_event
     perform_delete_event if ptype == :delete_event
     perform_normaly if ptype.nil?
   end

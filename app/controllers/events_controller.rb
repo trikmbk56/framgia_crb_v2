@@ -98,7 +98,6 @@ class EventsController < ApplicationController
     # else
     #   render :edit
     # end
-
     params[:event] = params[:event].merge({
       exception_time: event_params[:start_date],
       start_repeat: event_params[:start_date],

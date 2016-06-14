@@ -29,16 +29,27 @@ class GoogleCalendarService
         event_google = EventGoogle.new(event, @calendars, @default_calendar,
           @current_user)
         unless event.id.include?("_")
-          google_parent_events << save_event_after_convert(event_google)
+          event_temp = find_event_in_database event.id
+          if event_temp.present?
+            google_parent_events << update_event_after_convert(event_temp.id, event_google)
+          else
+            google_parent_events << save_event_after_convert(event_google)
+          end
         end
       end
     end
+
     google_parent_events.each do |event_parent|
       events.each do |event|
         event_google = EventGoogle.new(event, event_parent, @calendars,
           @default_calendar, @current_user)
         if event_google.is_child_event?
-          save_event_after_convert event_google
+          event_temp = find_event_in_database event.id
+          if event_temp.present?
+            update_event_after_convert event_temp.id, event_google
+          else
+            save_event_after_convert event_google
+          end
         end
       end
     end
@@ -52,6 +63,16 @@ class GoogleCalendarService
     event
   end
 
+  def update_event_after_convert event_id, event_google
+    event, repeat_ons = event_google.convert_to_local
+    hash = build_string_update event_id, event
+    if Event.update(hash.keys, hash.values) && repeat_ons.present?
+      RepeatOn.destroy_all id: event.id
+      create_repeat_on event.id, repeat_ons
+    end
+    Event.find_by id: event_id
+  end
+
   def create_repeat_on event_id, repeat_ons
     repeat_ons.each do |on|
       object_repeat_on = RepeatOn.new
@@ -59,6 +80,17 @@ class GoogleCalendarService
       object_repeat_on.repeat_on = RepeatOn::repeat_ons[on.downcase]
       object_repeat_on.save
     end
+  end
+
+  def find_event_in_database google_event_id
+    Event.find_by google_event_id: google_event_id
+  end
+
+  def build_string_update event_id, event_update
+    event_hash = Hash.new
+    event_hash[event_id] =
+      event_update.as_json.except!("id", "created_at", "updated_at")
+    event_hash
   end
 
   def time_format client, service, dateTime

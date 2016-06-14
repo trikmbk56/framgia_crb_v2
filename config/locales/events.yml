@@ -125,3 +125,6 @@ en:
       email: "Email"
       chatwork: "Chatwork"
       desktop: "Desktop"
+      remind_start_event: "Event start after 30 minutes"
+      remind_delete_event: "Event is deleted!"
+      remind_create: "Event created!"

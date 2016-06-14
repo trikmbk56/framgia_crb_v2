@@ -163,6 +163,14 @@ $dark: #173e43;
   margin-left: 0%;
 }
 
+.clearfix{
+  clear: both;
+}
+
+.row::after{
+  clear: bold;
+}
+
 .button{
   padding: 7px 12px;
   border-radius: 3px;

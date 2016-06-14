@@ -30,7 +30,7 @@
                   <div id="att-<%= attendee.id %>" ev-id="<%= @event.id %>"
                     user-id="<%= current_user.id if user_signed_in? %>">
                   </div>
-                  <div><%= attendee.user_name %></div>
+                  <div><%= attendee.email %></div>
                 </li>
               <% end %>
             </ul>

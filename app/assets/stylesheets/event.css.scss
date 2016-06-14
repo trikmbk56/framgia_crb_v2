@@ -913,3 +913,16 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.group_attendee{
+  display:  block;
+  li{
+    display: inline-block;
+  }
+  .remove_attendee{
+    margin-left: 13px;
+    &:hover{
+      cursor: pointer
+    }
+  }
+}

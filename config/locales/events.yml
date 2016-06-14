@@ -14,6 +14,8 @@ en:
       deleted: "Event deleted"
       not_deleted: "Event wasn't delete."
       delete_attendee: "Attendee deleted"
+      attendee_added: "Attendee has been already added"
+      invalid_email: "Please provide a valid email address"
     buttons:
       delete: "Delete"
       discard: "Discard"

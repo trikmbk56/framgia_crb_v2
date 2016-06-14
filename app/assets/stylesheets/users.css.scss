@@ -17,12 +17,12 @@
     }
   }
 
-ul {
-  padding-left: 0px;
-  li {
-    list-style: none;
+  ul {
+    padding-left: 0px;
+    li {
+      list-style: none;
+    }
   }
-}
   .u-content {
     width: 100%;
     .user-info {
@@ -81,7 +81,7 @@ ul {
           background-image: url(image_path("loading.gif"));
           background-size: 15px 15px;
           background-repeat: no-repeat;
-          background-position: center; 
+          background-position: center;
         }
       }
     }
@@ -91,8 +91,8 @@ ul {
       border: 0;
       padding: 7px 0;
       display: flex;
-      margin-bottom: 10px; 
-      padding-left: 10px;       
+      margin-bottom: 10px;
+      padding-left: 10px;
     }
   }
 

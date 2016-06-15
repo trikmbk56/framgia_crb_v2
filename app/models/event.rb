@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
 
   after_create :send_notify
   before_destroy :send_email_delete_no_repeat_event
+  before_save :default_title, if: "title.blank?"
 
   ATTRIBUTES_PARAMS = [:title, :description, :status, :color, :all_day,
     :repeat_type, :repeat_every, :user_id, :calendar_id, :start_date,
@@ -110,6 +111,10 @@ class Event < ActiveRecord::Base
   end
 
   private
+  def default_title
+    self.title = I18n.t "events.title_default"
+  end
+
   def format_time datetime
     datetime.try :strftime, Settings.event.format_time
   end

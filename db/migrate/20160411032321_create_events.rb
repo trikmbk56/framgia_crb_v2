@@ -1,7 +1,7 @@
 class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
-      t.string :title, default: "No title"
+      t.string :title
       t.text :description
       t.string :status
       t.string :color

@@ -68,6 +68,7 @@ class Event < ActiveRecord::Base
   scope :event_pre_nearest, ->start_date do
     where "start_date < ?", start_date
   end
+  scope :google_events, ->{where "parent_id IS NULL AND google_event_id IS NOT NULL"}
 
   class << self
     def event_exception_at_time exception_type, start_time, end_time

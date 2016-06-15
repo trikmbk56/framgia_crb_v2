@@ -68,6 +68,7 @@ class Event < ActiveRecord::Base
   scope :event_pre_nearest, ->start_date do
     where "start_date < ?", start_date
   end
+  scope :google_events, ->{where "parent_id IS NULL AND google_event_id IS NOT NULL"}
 
   scope :deleted_event_google, ->calendar_ids do
     where "calendar_id in (?) AND google_event_id IS NOT NULL", calendar_ids

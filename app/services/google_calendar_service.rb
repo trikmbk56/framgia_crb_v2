@@ -196,29 +196,41 @@ class GoogleCalendarService
     }
   end
 
+  def update_infor_event_no_repeat event
+    result = @client.execute(api_method: @service.events.get,
+      parameters: {"calendarId": event.google_calendar_id,
+      "eventId": event.google_event_id})
+    update_event_repeat result.data, event if result.status == 200
+  end
+
   def update_infor_event_repeat event
-    results = @client.execute(api_method: @service.events.instances,
-      parameters: {"calendarId": event.event_parent.google_calendar_id,
-      "eventId": event.event_parent.google_event_id})
-    instances = results.data["items"]
-    instances.each_with_index do |instance, index|
-      instance_time = instance.originalStartTime["dateTime"].to_datetime.rfc3339
-      if time_format(@client, @service, event.exception_time) == instance_time
-        if event.delete_only?
-          delete_event_repeat instance
-        elsif event.delete_all_follow?
-          (index..instances.count-1).each do |i|
-            delete_event_repeat instances[i]
-          end
-        elsif event.edit_only?
-          update_event_repeat instance, event
-        elsif
-          (index..instances.count-1).each do |i|
-            update_event_repeat instances[i], event
+    unless event.edit_all?
+      results = @client.execute(api_method: @service.events.instances,
+        parameters: {"calendarId": event.event_parent.google_calendar_id,
+        "eventId": event.event_parent.google_event_id})
+      instances = results.data["items"]
+      instances.each_with_index do |instance, index|
+        instance_time = instance.originalStartTime["dateTime"].to_datetime.rfc3339
+        if time_format(@client, @service, event.exception_time) == instance_time
+          if event.delete_only?
+            delete_event_repeat instance
+          elsif event.delete_all_follow?
+            (index..instances.count-1).each do |i|
+              delete_event_repeat instances[i]
+            end
+          elsif event.edit_only?
+            update_event_repeat instance, event
+          elsif
+            (index..instances.count-1).each do |i|
+              update_event_repeat instances[i], event
+            end
           end
         end
       end
+    else
+      update_infor_event_no_repeat event
     end
+
   end
 
   def insert_event
@@ -227,13 +239,17 @@ class GoogleCalendarService
     events = Event.in_calendars calendar_ids
     events.each do |event|
       if event.google_event_id.nil?
-        add_event_to_google event if event.exception_type.nil?
+        if event.exception_type.nil? || event.edit_all?
+          add_event_to_google event
+        end
         if event.event_parent.present? && event.event_parent.google_event_id.present?
           update_infor_event_repeat event
         end
       elsif event.google_event_id.present?
         unless event.exception_type.nil?
           update_infor_event_repeat event
+        else
+          update_infor_event_no_repeat event
         end
       end
     end

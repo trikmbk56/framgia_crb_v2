@@ -1,5 +1,6 @@
 <div id="event">
   <%= form_for @event do |f| %>
+    <%= render "shared/errors_messages", object: @event %>
     <%= hidden_field_tag :fdata, params[:fdata] %>
     <div class="form-action">
       <%= link_to root_path, title: t("events.buttons.go_back"),

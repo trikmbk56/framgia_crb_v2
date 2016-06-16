@@ -1,4 +1,5 @@
 <%= form_for [current_user, @calendar] do |f| %>
+  <%= render "shared/errors_messages", object: @calendar %>
   <%= f.hidden_field :parent_id,
     value: @calendar.parent_id.nil? ? params[:parent_id] : @calendar.parent_id %>
   <div class="form-action">

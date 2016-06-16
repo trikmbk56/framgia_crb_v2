@@ -29,7 +29,7 @@
               <%= f.hidden_field :start_repeat %>
               <%= f.text_field :start_repeat,
                 value: datetime_format(@event.start_repeat, "short_date"),
-                required: true, class: "date start fix-width-date date-time",
+                required: false, class: "date start fix-width-date date-time",
                 id: "start-date-repeat" %>
             </td>
           </tr>
@@ -40,7 +40,7 @@
                 <%= f.hidden_field :end_repeat %>
                 <%= f.text_field :end_repeat,
                   value: datetime_format(@event.end_repeat, "short_date"),
-                  required: true, class: "date finish date-time",
+                  required: false, class: "date finish date-time",
                   id: "end-date-repeat" %>
               </span>
             </td>

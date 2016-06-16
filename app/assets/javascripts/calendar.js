@@ -151,7 +151,7 @@ $(document).on('page:change', function() {
     }
   });
 
-  function initDialogEventClick(event, jsEvent) {
+  function initDialogEventClick(event, jsEvent){
     if ($('#popup') !== null)
       $('#popup').remove();
     $.ajax({
@@ -171,6 +171,7 @@ $(document).on('page:change', function() {
         if (event.editable){
           clickEditTitle(event);
         }
+        cancelPopupEvent(event);
       }
     });
   }
@@ -278,11 +279,14 @@ $(document).on('page:change', function() {
     });
   }
 
-  $('#calcontent').on('click', '.cancel-popup-event', function() {
-    hiddenDialog('popup');
-    hiddenDialog('dialog-repeat-popup');
-    hiddenDialog('dialog-update-popup');
-  });
+  function cancelPopupEvent(event){
+    $('#calcontent').on('click', '.cancel-popup-event', function() {
+      event.title = $('#title-popup').text().trim();
+      hiddenDialog('popup');
+      hiddenDialog('dialog-repeat-popup');
+      hiddenDialog('dialog-update-popup');
+    });
+  }
 
   function updateEvent(event, allDay, exception_type, is_drop) {
     var start_time_before_drag, finish_time_before_drag;

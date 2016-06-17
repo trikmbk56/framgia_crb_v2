@@ -6,12 +6,10 @@
         "data-no-turbolink": true, class: "btn-go-back" do %>
         <i class="go-back"></i>
       <% end %>
-
       <button class="btn-save <%= "btn-confirmation-repeat" if @event.exist_repeat? && !@event.edit_only? %>"
         type=<%= @event.exist_repeat? && !@event.edit_only? ? "button" : "submit" %> style="display: inline-block;">
         <%= t("events.buttons.save") %>
       </button>
-
       <%= link_to t("events.buttons.discard"), root_path, class: "btn-discard",
         "data-no-turbolink": true %>
       <% if is_edit_form? action_name %>
@@ -20,69 +18,100 @@
           data: {confirm: t("events.confirm.delete")}, class: "btn-discard" %>
       <% end %>
     </div>
-    <div class="form-group">
-      <%= f.label t "events.labels.title" %>
-      <%= f.text_field :title, placeholder: t("events.placeholder.new_event"),
-        autofocus: true, required: true, class: "form-control" %>
-    </div>
-    <div class="form-group" id="dateTime">
-      <%= f.hidden_field :start_date %>
-      <%= f.hidden_field :finish_date %>
-      <%= text_field_tag :start_date,
-        datetime_format(@event.start_date, "short_date"), required: true,
-        class: "date start form-control fix-width-date date-time" %>
-      <%= text_field_tag :start_time,
-        datetime_format(@event.start_date, "short_time"), required: true,
-        class: "time start form-control fix-width-time date-time" %>
-      <%= f.label t "events.labels.to" %>
-      <%= text_field_tag :finish_time,
-        datetime_format(@event.finish_date, "short_time"), required: true,
-        class: "time finish form-control fix-width-time date-time" %>
-      <%= text_field_tag :finish_date,
-        datetime_format(@event.finish_date, "short_date"), required: true,
-        class: "date finish form-control fix-width-date date-time" %>
-    </div>
-    <div class="form-group" id="checkox-new-event">
-      <div class="all-day">
-        <%= f.check_box :all_day, {id: "all_day"}, 1, 0 %>
-        <%= f.label :all_day %>
+
+    <div class="form-content">
+      <div class="form-group">
+        <%= f.label t "events.labels.title" %>
+        <%= f.text_field :title, placeholder: t("events.placeholder.new_event"),
+          autofocus: true, required: true, class: "form-control" %>
       </div>
-      <div class="cb-repeat first <%= "repeat-on" if @event.exist_repeat? %>">
-        <%= check_box_tag :repeat %>
-        <%= label_tag :repeat %>
-        <span>
-          <%= link_to t("events.links.edit"), "javascript:void(0)", class: "dialog-repeat-event"  %>
-        </span>
+      <div class="form-group" id="dateTime">
+        <%= f.hidden_field :start_date %>
+        <%= f.hidden_field :finish_date %>
+        <%= text_field_tag :start_date,
+          datetime_format(@event.start_date, "short_date"), required: true,
+          class: "date start form-control fix-width-date date-time" %>
+        <%= text_field_tag :start_time,
+          datetime_format(@event.start_date, "short_time"), required: true,
+          class: "time start form-control fix-width-time date-time" %>
+        <%= f.label t "events.labels.to" %>
+        <%= text_field_tag :finish_time,
+          datetime_format(@event.finish_date, "short_time"), required: true,
+          class: "time finish form-control fix-width-time date-time" %>
+        <%= text_field_tag :finish_date,
+          datetime_format(@event.finish_date, "short_date"), required: true,
+          class: "date finish form-control fix-width-date date-time" %>
       </div>
-    </div>
-    <div class="form-group">
-      <%= f.label t "events.labels.calendar" %>
-      <%= f.collection_select :calendar_id, @calendars, :id, :name, {},
-        selected: @event.calendar.try(:id), class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.label t "events.labels.description" %>
-      <%= f.text_area :description, class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.label :attendees %>
-      <%= f.select :user_ids,
-        @users.collect {|user| [user.name, user.id]}, {},
-        {id: "attendee", multiple: :true} %>
-    </div>
-    <div class="form-group">
-      <p><%= f.label :notifications %> </p>
-      <div class="notify">
-        <%= f.fields_for :notification_events do |ntbuilder| %>
-          <p>
-            <%= ntbuilder.hidden_field :notification_id %>
-            <%= ntbuilder.check_box :_destroy,
-              {checked: ntbuilder.object.persisted?}, false, true %>
-            <%= ntbuilder.label :_destroy, ntbuilder.object.notification_type %>
-          </p>
-        <% end %>
+      <div class="form-group" id="checkox-new-event">
+        <div class="all-day">
+          <%= f.check_box :all_day, {id: "all_day"}, 1, 0 %>
+          <%= f.label :all_day %>
+        </div>
+        <div class="cb-repeat first <%= "repeat-on" if @event.exist_repeat? %>">
+          <%= check_box_tag :repeat %>
+          <%= label_tag :repeat %>
+          <span>
+            <%= link_to t("events.links.edit"), "javascript:void(0)", class: "dialog-repeat-event"  %>
+          </span>
+        </div>
       </div>
     </div>
+
+    <div class="form-content">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.label t "events.labels.calendar" %>
+            <%= f.collection_select :calendar_id, @calendars, :id, :name, {},
+              selected: @event.calendar.try(:id), class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label t "events.labels.description" %>
+            <%= f.text_area :description, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <p><%= f.label :notifications %> </p>
+            <div class="notify">
+              <%= f.fields_for :notification_events do |ntbuilder| %>
+                <p>
+                  <%= ntbuilder.hidden_field :notification_id %>
+                  <%= ntbuilder.check_box :_destroy,
+                    {checked: ntbuilder.object.persisted?}, false, true %>
+                  <%= ntbuilder.label :_destroy, ntbuilder.object.notification_type %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <span class="label label-default"><%= t "calendar.attendee" %></span></br>
+            <input type="text" class"form-control" id="load-attendee"></input>
+            <input type="button" id="add-attendee" value="Add Attendee"></input>
+          </div>
+          <div class="form-group" id="list-attendee">
+            <% @event.attendees.each_with_index do |attendee, key| %>
+              <div class="group_attendee" id="
+                group_attendee_<%= key %>">
+                <input type="hidden" name="event[attendees_attributes][<%= key %>][email
+                ]" value="email"></input>
+                <input type="hidden" name="event[attendees_attributes][<%= key %>][_destroy]" value=true></input>
+                <li><%= attendee.email %></li>
+                <span class="remove_attendee"><%= image_tag "cancel_icon.png" %></span>
+              </div>
+            <% end %>
+            <div class="group_attendee" style="display: none" id="group_attendee_<%= @event.attendees.count %>">
+              <input type="hidden" name="event[attendees_attributes][<%= @event.attendees.count %>][email]" value="email"></input>
+              <input type="hidden" name="event[attendees_attributes][<%= @event.attendees.count %>][_destroy]" value=true></input>
+              <li>email</li>
+              <span class="remove_attendee"><%= image_tag "cancel_icon.png" %></span>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+
     <div class="overlay-bg"></div>
     <%= render "events/dialog_repeat_form", f: f %>
 

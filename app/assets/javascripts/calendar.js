@@ -2,7 +2,7 @@ $(document).on('page:change', function() {
   var start_date, finish_date, event_title;
   var GMT_0 = -420;
   var lastestView;
-  if (localStorage.getItem('lastestView') != "undefined")
+  if (localStorage.getItem('lastestView') != 'undefined')
     lastestView = localStorage.getItem('lastestView');
   else
     lastestView = 'agendaWeek';
@@ -494,7 +494,7 @@ $(document).on('page:change', function() {
   $('.clstMenu-child').click(function() {
     var windowH = $(window).height();
     var position = $(this).offset();
-    if ($(this).find(".sub").length > 0)
+    if ($(this).find('.sub').length > 0)
       $('#create-sub-calendar').addClass('hidden-menu');
     else
       $('#create-sub-calendar').removeClass('hidden-menu');
@@ -653,14 +653,14 @@ $(document).on('page:change', function() {
     var data = $(form).serializeArray();
 
     $.each(data, function(_, element) {
-      if (element.name.indexOf("start_date") > 0) {
-        obj["start_date"] = element.value
-      } else if(element.name.indexOf("finish_date") > 0) {
-        obj["finish_date"] = element.value
-      } else if(element.name.indexOf("all_day") > 0) {
-        obj["all_day"] = element.value
-      } else if(element.name.indexOf("title") > 0) {
-        obj["title"] = element.value
+      if (element.name.indexOf('start_date') > 0) {
+        obj['start_date'] = element.value
+      } else if(element.name.indexOf('finish_date') > 0) {
+        obj['finish_date'] = element.value
+      } else if(element.name.indexOf('all_day') > 0) {
+        obj['all_day'] = element.value
+      } else if(element.name.indexOf('title') > 0) {
+        obj['title'] = element.value
       }
     });
 
@@ -825,13 +825,47 @@ $(document).on('page:change', function() {
     });
   });
 
+  $('#add-attendee').on('click', function() {
+    id = $('#list-attendee').find('li').length;
+    attendee = $('#load-attendee').val();
+    exitEmail(attendee);
+    if (validateEmail(attendee)){
+      list_attendee = document.getElementById('list-attendee');
+      if(!exitEmail(attendee)){
+        var attendee_form = $('#group_attendee_'+(id-1)).clone()[0];
+
+        var group_attendee = $('#group_attendee_'+(id-1));
+
+        $(group_attendee).find('li')[0].innerHTML = attendee;
+        $(group_attendee).find('input[type=hidden]')[0].value = attendee;
+        $(group_attendee).find('input[type=hidden]')[1].value = false;
+        $(group_attendee).show();
+
+        attendee_form.id = 'group_attendee_'+id;
+        $(attendee_form).find('input[type=hidden]')[0].name = 'event[attendees_attributes]['+id+'][email]';
+        $(attendee_form).find('input[type=hidden]')[1].name = 'event[attendees_attributes]['+id+'][_destroy]';
+        $(attendee_form).find('input[type=hidden]')[1].value = true
+        list_attendee.appendChild(attendee_form);
+      }else {
+        alert(I18n.t('events.flashs.attendee_added'));
+      }
+    }else {
+      alert(I18n.t('events.flashs.invalid_email'));
+    }
+  });
+
+  $('#list-attendee').on('click', '.remove_attendee', function(event){
+    $(this).prev().prev('input[type=hidden]').val(true)
+    $(this).parent().hide();
+  });
+
   $('.calendar-address').on('click', function() {
-    $('.cal-dialog').css("display", "block");
-  })
+    $('.cal-dialog').css('display', 'block');
+  });
 
   $('.cal-dialog-title-close, .goog-buttonset-default').on('click', function() {
-    $('.cal-dialog').css("display", "none");
-  })
+    $('.cal-dialog').css('display', 'none');
+  });
 
   $(document).on('click', '.btn-confirmation-repeat', function() {
     var current_event = localStorage.getItem('current_event');
@@ -839,3 +873,22 @@ $(document).on('page:change', function() {
     confirm_update_popup(current_event, allDay, current_event.end);
   });
 });
+
+function validateEmail(email) {
+  var email = document.getElementById('load-attendee')
+  var re = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  if (!re.test(email.value)) {
+    return false;
+  }
+  return true;
+}
+
+function exitEmail(email) {
+  for(var i = 0; i < $('#list-attendee').find('li').length; i++){
+    if(email == $('#list-attendee').find('li')[i].innerHTML
+      && $($('#list-attendee').find('li')[i]).parent().find('input[type=hidden]')[1].value == 'false'){
+      return true;
+    }
+  };
+  return false;
+}

@@ -59,9 +59,9 @@ class EventsController < ApplicationController
       @event.repeat_ons.find_or_initialize_by repeat_on: repeat_on
     end
 
-    data = JSON.parse(Base64.urlsafe_decode64 params[:fdata]) rescue {"event": {}}
-    @event.start_date = DateTime.strptime(data["start_date"], "%m-%d-%Y %H:%M %p")
-    @event.finish_date = DateTime.strptime(data["finish_date"], "%m-%d-%Y %H:%M %p")
+    # data = JSON.parse(Base64.urlsafe_decode64 params[:fdata]) rescue {"event": {}}
+    # @event.start_date = DateTime.strptime(data["start_date"], "%m-%d-%Y %H:%M %p")
+    # @event.finish_date = DateTime.strptime(data["finish_date"], "%m-%d-%Y %H:%M %p")
 
     # @form = EventForm.new @event
   end

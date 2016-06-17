@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
     :repeat_type, :repeat_every, :user_id, :calendar_id, :start_date,
     :finish_date, :start_repeat, :end_repeat, :exception_type, :exception_time,
     attendees_attributes: [:id, :email, :_destroy],
-    repeat_ons_attributes: [:id, :_destroy],
+    repeat_ons_attributes: [:id, :repeat_on, :_destroy],
     notification_events_attributes: [:id, :notification_id, :_destroy]]
 
   has_many :attendees, dependent: :destroy

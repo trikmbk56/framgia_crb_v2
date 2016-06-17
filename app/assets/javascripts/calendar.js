@@ -319,7 +319,7 @@ $(document).on('page:change', function() {
         if(exception_type == 'edit_all_follow' || exception_type == 'edit_all')
           $('#full-calendar').fullCalendar('refetchEvents');
         else
-          $('#full-calendar').fullCalendar( 'renderEvent', event, true)
+          $('#full-calendar').fullCalendar('renderEvent', event, true)
       }
     });
   }

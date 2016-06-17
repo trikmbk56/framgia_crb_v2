@@ -14,7 +14,8 @@
       className: 'color-<%= @data[:color_id] %>',
       calendar: '<%= @data[:calendar] %>',
       repeat_type: '<%= @data[:repeat_type] %>',
-      allDay: <%= @data[:all_day] %>
+      allDay: <%= @data[:all_day] %>,
+      editable: true,
     }
     $('#full-calendar').fullCalendar('renderEvent', eventData, true);
     $('#full-calendar').fullCalendar('unselect');

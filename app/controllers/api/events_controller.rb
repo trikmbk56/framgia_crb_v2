@@ -29,7 +29,7 @@ class Api::EventsController < ApplicationController
     params[:event] = params[:event].merge({
       exception_time: event_params[:start_date],
       start_repeat: event_params[:start_date],
-      end_repeat: event_params[:end_repeat].nil? ? @event.end_repeat : (event_params[:end_repeat].to_date + 1.days)
+      end_repeat: event_params[:end_repeat].blank? ? @event.end_repeat : (event_params[:end_repeat].to_date + 1.days)
     })
 
     argv = {

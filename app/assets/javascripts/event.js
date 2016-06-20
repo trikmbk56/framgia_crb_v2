@@ -74,7 +74,7 @@ $(document).on('page:change', function(){
       && $('#start_time').val() == I18n.t("events.new.am")
       && $('#finish_time').val() == I18n.t("events.new.pm")){
     $('#all_day').prop('checked', true);
-    checkAllday();
+    checkAllday($('#all_day'));
   }
 
   $('#all_day').on('click', function() {

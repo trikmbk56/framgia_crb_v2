@@ -39,6 +39,8 @@ $(document).on('page:change', function(){
 });
 
 $(document).ready(function() {
+  $("#event_repeat_type, #event_repeat_every, #start-date-repeat, #end-date-repeat")
+    .prop("disabled", true);
   $('.btn-del').click(function() {
     attendee = $(this).attr('id');
     var attendeeId = attendee.substr(4);
@@ -158,6 +160,7 @@ $(document).on('page:change', function(){
 
   $('input[type="checkbox"]#repeat').change(function() {
     if(this.checked && $('.cb-repeat').hasClass('first')) {
+      enable_repeat_params();
       showRepeatOn();
       dialog_form.centerScreen();
       showDialog('dialog-repeat-event-form');
@@ -170,6 +173,16 @@ $(document).on('page:change', function(){
         $('.dialog-repeat-event').hide();
     }
   });
+
+  function enable_repeat_params() {
+    $("#event_repeat_type, #event_repeat_every, #start-date-repeat, #end-date-repeat")
+      .prop("disabled", false);
+  }
+
+  function disable_repeat_params() {
+    $("#event_repeat_type, #event_repeat_every, #start-date-repeat, #end-date-repeat")
+      .prop("disabled", true);
+  }
 
   $('.dialog-repeat-event').click(function() {
     showRepeatOn();
@@ -191,6 +204,7 @@ $(document).on('page:change', function(){
 
   $('#close, #cancel').click(function() {
     if($('.cb-repeat').hasClass('first'))
+      disable_repeat_params();
       uncheckRepeat();
     clearDialog();
   });

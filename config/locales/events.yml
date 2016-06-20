@@ -11,6 +11,7 @@ en:
       not_created: "Event was't create."
       updated: "Event was updated successfully."
       not_updated: "Event wasn't updated."
+      not_updated_because_overlap: "Event wasn't updated because of overlap."
       deleted: "Event deleted"
       not_deleted: "Event wasn't delete."
       delete_attendee: "Attendee deleted"

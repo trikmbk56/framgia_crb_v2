@@ -27,24 +27,32 @@ class EventsController < ApplicationController
 
   def create
     @event = current_user.events.new event_params
-    respond_to do |format|
-      if @event.save
-        ChatworkServices.new(@event).perform
-        NotificationDesktopService.new(@event, Settings.create_event).perform
+    time_overlap_for_create
+    if @time_overlap.nil?
+      respond_to do |format|
+        if @event.save
+          ChatworkServices.new(@event).perform
+          NotificationDesktopService.new(@event, Settings.create_event).perform
 
-        if @event.repeat_type.present?
-          FullcalendarService.new.generate_event_delay @event
+          if @event.repeat_type.present?
+            FullcalendarService.new.generate_event_delay @event
+          else
+            NotificationEmailService.new(@event).perform
+          end
+          NotificationDesktopJob.new(@event, Settings.start_event).perform
+
+          flash[:success] = t "events.flashs.created"
+          format.html {redirect_to root_path}
+          format.js {@data = @event.json_data(current_user.id)}
         else
-          NotificationEmailService.new(@event).perform
+          flash[:error] = t "events.flashs.not_created"
+          format.html {redirect_to new_event_path}
+          format.js
         end
-        NotificationDesktopJob.new(@event, Settings.start_event).perform
-
-        flash[:success] = t "events.flashs.created"
-        format.html {redirect_to root_path}
-        format.js {@data = @event.json_data(current_user.id)}
-      else
-        flash[:error] = t "events.flashs.not_created"
-        format.html {redirect_to new_event_path}
+      end
+    else
+      respond_to do |format|
+        format.html {redirect_to :back}
         format.js
       end
     end
@@ -129,5 +137,19 @@ class EventsController < ApplicationController
 
   def valid_params? repeat_on, repeat_type
     repeat_on.present? && repeat_type == Settings.repeat.repeat_type.weekly
+  end
+
+  def time_overlap_for_create
+    event_overlap = EventOverlap.new(@event)
+    if !event_overlap.overlap?
+      @time_overlap = nil
+    elsif @event.start_repeat.nil? || 
+      (@event.start_repeat.to_date >= event_overlap.time_overlap.to_date)
+      @time_overlap = Settings.full_overlap
+    else
+      @time_overlap = (event_overlap.time_overlap - 1.day).to_s
+      @event_params = event_params
+      @event_params[:end_repeat] = @time_overlap
+    end
   end
 end

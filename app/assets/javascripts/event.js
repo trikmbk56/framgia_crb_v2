@@ -210,10 +210,6 @@ $(document).on('page:change', function(){
     autoclose: true
   });
 
-  $('#start-date-repeat').on('change', function(){
-    checkedWeekly();
-  });
-
   function checkedWeekly() {
     var repeatOn = $('#start-date-repeat').val().split('-');
     var splitRepeatOn = new Date(repeatOn[2], repeatOn[1] - 1, repeatOn[0]);

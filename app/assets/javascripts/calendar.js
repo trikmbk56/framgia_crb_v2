@@ -846,6 +846,8 @@ $(document).on('page:change', function() {
         $(attendee_form).find('input[type=hidden]')[1].name = 'event[attendees_attributes]['+id+'][_destroy]';
         $(attendee_form).find('input[type=hidden]')[1].value = true
         list_attendee.appendChild(attendee_form);
+        $('#load-attendee').val('');
+        $('#load-attendee').focus();
       }else {
         alert(I18n.t('events.flashs.attendee_added'));
       }

@@ -99,14 +99,14 @@
                 ]" value="email"></input>
                 <input type="hidden" name="event[attendees_attributes][<%= key %>][_destroy]" value=true></input>
                 <li><%= attendee.email %></li>
-                <span class="remove_attendee"><%= image_tag "cancel_icon.png" %></span>
+                <span class="remove_attendee"><%= image_tag "cancel_icon.gif" %></span>
               </div>
             <% end %>
             <div class="group_attendee" style="display: none" id="group_attendee_<%= @event.attendees.count %>">
               <input type="hidden" name="event[attendees_attributes][<%= @event.attendees.count %>][email]" value="email"></input>
               <input type="hidden" name="event[attendees_attributes][<%= @event.attendees.count %>][_destroy]" value=true></input>
               <li>email</li>
-              <span class="remove_attendee"><%= image_tag "cancel_icon.png" %></span>
+              <span class="remove_attendee"><%= image_tag "cancel_icon.gif" %></span>
             </div>
           </div>
         </div>

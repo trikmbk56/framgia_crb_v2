@@ -118,6 +118,12 @@
       <% end %>
     </div>
   </div>
+  <div id="dialog_overlap_confirm">
+    <%= t"events.overloap.do_you_want_create?" %>
+  </div>
+  <div id="dialog_overlap">
+    <p><%= t"events.overloap.fulloverloap" %></p>
+  </div>
   <%= render "events/dialog_form" %>
   <%= confirm_popup_repeat_events t("events.repeat_dialog.delete") %>
   <%= confirm_popup_repeat_events t("events.repeat_dialog.edit") %>

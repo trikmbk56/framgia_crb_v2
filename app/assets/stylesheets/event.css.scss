@@ -913,7 +913,6 @@
   text-decoration: none;
   cursor: pointer;
 }
-
 .group_attendee{
   display:  block;
   li{
@@ -925,4 +924,7 @@
       cursor: pointer
     }
   }
+}
+.hidden {
+  display: none;
 }

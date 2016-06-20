@@ -131,4 +131,8 @@ en:
       remind_start_event: "Event start after 30 minutes"
       remind_delete_event: "Event is deleted!"
       remind_create: "Event created!"
-    title_default: "No title"
+      title_default: "No title"
+    overloap:
+      fulloverloap: "Event Overloap!"
+      do_you_want_create: "Event overlap! Do you want create?"
+

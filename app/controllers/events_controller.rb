@@ -143,7 +143,7 @@ class EventsController < ApplicationController
     event_overlap = EventOverlap.new(@event)
     if !event_overlap.overlap?
       @time_overlap = nil
-    elsif @event.start_repeat.nil? || 
+    elsif @event.start_repeat.nil? ||
       (@event.start_repeat.to_date >= event_overlap.time_overlap.to_date)
       @time_overlap = Settings.full_overlap
     else

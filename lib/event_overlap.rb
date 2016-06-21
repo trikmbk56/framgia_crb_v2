@@ -4,7 +4,7 @@ class EventOverlap
 
   def initialize event = nil
     @time_overlap = nil
-    array_time_from_fullcalendar event.calendar
+    array_time_from_fullcalendar event.calendar, event.parent_id
     array_time_from_event event
   end
 
@@ -21,12 +21,17 @@ class EventOverlap
   end
 
   private
-  def array_time_from_fullcalendar calendar
-    events = calendar.events
+  def array_time_from_fullcalendar calendar, parent_id
+    if parent_id.nil?
+      events = calendar.events
+    else
+      events = calendar.events.reject parent_id
+    end
     event_exceptions = events.has_exceptions
     @array_time_fullcalendar = FullcalendarService.new(events,
       event_exceptions).repeat_data.select do |event|
-      event.exception_type.nil? || event.exception_type > 1
+      event.exception_type.nil? || (event.exception_type != "delete_only" &&
+        event.exception_type != "delete_all_follow")
     end
     @array_time_fullcalendar = @array_time_fullcalendar.collect do |event|
       {start_date: event.start_date, finish_date: event.finish_date}

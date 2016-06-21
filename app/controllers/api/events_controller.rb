@@ -1,4 +1,5 @@
 class Api::EventsController < ApplicationController
+  include TimeOverlapForUpdate
   respond_to :json
   before_action only: [:edit, :update, :destroy] do
     load_event
@@ -38,8 +39,20 @@ class Api::EventsController < ApplicationController
       finish_time_before_drag: params[:finish_time_before_drag]
     }
 
-    EventExceptionService.new(@event, event_params, argv).update_event_exception
-    render text: t("events.flashs.updated")
+    event = Event.new event_params
+    if @event.event_parent.nil?
+      event.parent_id = @event.id
+    else
+      event.parent_id = @event.event_parent.id
+    end
+    event.calendar_id = @event.calendar_id
+    
+    if overlap_when_update? event
+      render text: t("events.flashs.not_updated_because_overlap")
+    else
+      EventExceptionService.new(@event, event_params, argv).update_event_exception
+      render text: t("events.flashs.updated")
+    end
   end
 
   def show

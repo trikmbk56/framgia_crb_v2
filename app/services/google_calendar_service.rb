@@ -60,8 +60,7 @@ class GoogleCalendarService
     sync_events_ids = sync_events.map{|event| event.google_event_id}
     delete_event_ids = google_event_ids - sync_events_ids
     delete_event_ids.each do |google_event_id|
-      Event.find_by(google_event_id: google_event_id)
-        .exception_type = Event.exception_types[:delete_only]
+      Event.find_by(google_event_id: google_event_id).destroy
     end
   end
 

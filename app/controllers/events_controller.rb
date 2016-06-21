@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  include TimeOverlapForUpdate
   load_and_authorize_resource
   skip_before_action :authenticate_user!, only: :show
   before_action :load_calendars, only: [:new, :edit]
@@ -102,8 +103,20 @@ class EventsController < ApplicationController
       end_repeat: event_params[:end_repeat].nil? ? @event.end_repeat : (event_params[:end_repeat].to_date + 1.days)
     })
 
-    EventExceptionService.new(@event, event_params, {}).update_event_exception
-    flash[:success] = t "events.flashs.updated"
+    event = Event.new event_params
+    if @event.event_parent.nil?
+      event.parent_id = @event.id
+    else
+      event.parent_id = @event.event_parent.id
+    end
+    event.calendar_id = @event.calendar_id
+
+    if overlap_when_update? event
+      flash[:error] = t "events.flashs.not_updated_because_overlap"
+    else
+      EventExceptionService.new(@event, event_params, {}).update_event_exception
+      flash[:success] = t "events.flashs.updated"
+    end
     redirect_to root_path
   end
 

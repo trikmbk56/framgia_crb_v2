@@ -57,6 +57,10 @@ class Event < ActiveRecord::Base
       order start_date: :asc
   end
 
+  scope :reject, ->event_id do
+    where("id != ? AND (parent_id IS NULL OR parent_id != ?)", event_id, event_id)
+  end
+  
   scope :no_repeats, ->{where repeat_type: nil}
   scope :has_exceptions, ->{where.not exception_type: nil}
   scope :exception_edits, ->id do

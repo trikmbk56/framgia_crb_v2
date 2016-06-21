@@ -19,6 +19,22 @@
     </div>
     <div class="ev-cal">
       <div class="ev-contain">
+        <div class="lb-contain">
+          <div class="lbcal">
+            <ul>
+              <li><%= label_tag :lbcal, t("events.labels.calendar") %></li>
+              <li><%= @event.calendar_name %></li>
+            </ul>
+            <ul>
+              <li><%= label_tag :lbowner, t("events.labels.owner_name") %></li>
+              <li><%= @event.owner_name %></li>
+            </ul>
+            <ul class="end-list">
+              <li><%= label_tag :lbdesc, t("events.labels.description") %></li>
+              <li><%= @event.description %></li>
+            </ul>
+          </div>
+        </div>
         <div class="ev-att">
           <div class="contain">
             <div class="lb-attendees">
@@ -33,22 +49,6 @@
                   <div><%= attendee.email %></div>
                 </li>
               <% end %>
-            </ul>
-          </div>
-        </div>
-        <div class="lb-contain">
-          <div class="lbcal">
-            <ul>
-              <li><%= label_tag :lbcal, t("events.labels.calendar") %></li>
-              <li><%= @event.calendar_name %></li>
-            </ul>
-            <ul>
-              <li><%= label_tag :lbowner, t("events.labels.owner_name") %></li>
-              <li><%= @event.owner_name %></li>
-            </ul>
-            <ul>
-              <li><%= label_tag :lbdesc, t("events.labels.description") %></li>
-              <li><%= @event.description %></li>
             </ul>
           </div>
         </div>

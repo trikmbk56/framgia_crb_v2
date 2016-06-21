@@ -19,6 +19,9 @@ body,textarea,input {
 
 .field {
   margin-top: 20px;
+  label{
+    margin-bottom: 5px;
+  }
 }
 
 .btn {
@@ -251,7 +254,8 @@ body,textarea,input {
 
 .rc-button {
   width: 100%;
-  padding: 5px;
+  padding: 7px;
+  border-radius: 3px;
   &:visited {
     display: inline-block;
     min-width: 46px;
@@ -275,15 +279,24 @@ body,textarea,input {
 .rc-button-submit {
   border: 1px solid #3079ED;
   color: #FFF;
+  font-size: 16px;
+  line-height: 18px;
   text-shadow: 0px 1px rgba(0, 0, 0, 0.1);
   background-color: #4D90FE;
   background-image: -moz-linear-gradient(center top , #4D90FE, #4787ED);
 }
 
 .form-control {
+  margin-top: 5px;
   display: block;
   width: 100%;
-  padding: 5px;
+  padding: 7px 10px;
+  font-size: 16px;
+  line-height: 18px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 3px;
   color: #555;
   background-color: #fff;
   background-image: none;
@@ -317,6 +330,10 @@ input[type=checkbox] {
 
 .col-md-3 {
   width: 25%;
+}
+
+.col-md-6{
+  width: 50%;
 }
 
 .col-md-9 {

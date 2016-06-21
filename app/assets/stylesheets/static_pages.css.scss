@@ -1,17 +1,17 @@
-html, body {
-  margin:0;
-  padding:0;
-  height:100%;
-}
-
 .container {
-  height: 90%;
+  width: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #header {
   height: 44px;
   width: 100%;
   background-color: #EFEDED;
+  border-bottom: 1px solid #CCCCCC; 
   ul {
     margin: 0;
     padding: 0;
@@ -24,14 +24,16 @@ html, body {
     width: 20%;
     height: 44px;
     .logo_left {
-      margin: 5px 10px 10px 10px;
-      padding-left: 20px;
+      margin: 0px;
+      padding: 6px 0px 6px 30px;
       a {
         text-decoration: none;
-        color: #337ab7;
+        color: #4D90FE;
         font-weight: bold;
+        line-height: 30px;
+        transition: all 0.5s;
         &:hover {
-          color: #747070;
+          color: #4CAF50;
         }
       }
     }
@@ -43,11 +45,14 @@ html, body {
     a {
       display: block;
       text-align: center;
-      padding: 7px 16px;
+      padding: 5px 16px;
       text-decoration: none;
       border-right: none;
       color: #747070;
     }
+  }
+  li.avatar-box{
+    padding-right: 30px;
   }
 
   .sub-menu {
@@ -85,12 +90,27 @@ html, body {
     display: none;
   }
 
-  .username-hearder {
-    padding: 16px 0px 10px 16px;
+  .username-hearder{
+    padding: 12px;
+    p{
+      margin: 0px;
+      line-height: 20px;
+      font-size: 16px;
+    }
   }
 
   .sub-setting {
     padding: 5px 10px;
+  }
+
+  .login{
+    height: 44px;
+    padding-right: 30px;
+    a{
+      font-size: 16px;
+      line-height: 20px;
+      padding: 12px;
+    }
   }
 }
 

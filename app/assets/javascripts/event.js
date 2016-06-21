@@ -10,7 +10,7 @@ $(document).on('page:change', function(){
     multiple: true,
     theme: 'bootstrap',
     tokenSeparators: [',', ' '],
-    width: '97%'
+    width: '100%'
   });
   $('#add_attendee').select2();
 

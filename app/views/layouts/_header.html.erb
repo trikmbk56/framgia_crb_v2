@@ -4,10 +4,9 @@
       <%= link_to t("layout.calendar-logo"), root_path %>
     </p>
   </div>
-
   <ul>
     <% if user_signed_in? %>
-      <li>
+      <li class="avatar-box">
         <a class="avatar" id="header-avatar" href="#">
           <%= get_avatar current_user %>
         </a>
@@ -15,15 +14,12 @@
           <div class="sub-setting">
             <%= link_to t("layout.show"), user_path(current_user) %>
           </div>
-
           <div class="sub-setting">
             <%= link_to t("calendars.push"), "/auth/google_oauth2?push=true" %>
           </div>
-
           <div class="sub-setting">
             <%= link_to t("calendars.pull"), "/auth/google_oauth2?pull=true" %>
           </div>
-
           <div class="sub-setting">
             <%= link_to t("session.link.sign_out"), destroy_user_session_path,
               method: :delete %>
@@ -36,11 +32,11 @@
       </li>
       <li>
         <div class="username-hearder">
-          <b><%= current_user.name %></b>
+          <p><%= current_user.name %></p>
         </div>
       </li>
     <% else %>
-      <li><%= link_to t("layout.log_in"), new_user_session_path %></li>
+      <li class="login"><%= link_to t("layout.log_in"), new_user_session_path %></li>
     <% end %>
   </ul>
 </header>

@@ -1,5 +1,5 @@
 <div id="event">
-  <%= form_for @event do |f| %>
+  <%= form_for @event, remote: true do |f| %>
     <%= render "shared/errors_messages", object: @event %>
     <%= hidden_field_tag :fdata, params[:fdata] %>
     <div class="form-action">
@@ -113,6 +113,13 @@
         </div>
         <div class="clearfix"></div>
       </div>
+    </div>
+
+    <div id="dialog_overlap_confirm" class="hidden">
+      <%= t"events.overloap.do_you_want_create?"  %>
+    </div>
+    <div id="dialog_overlap" class="hidden">
+      <p><%= t"events.overloap.fulloverloap" %></p>
     </div>
 
     <div class="overlay-bg"></div>

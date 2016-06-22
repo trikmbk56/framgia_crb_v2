@@ -211,10 +211,9 @@ $(document).on('page:change', function() {
   function deleteEventPopup(event) {
     $('#btn-delete-event').unbind('click');
     $('#btn-delete-event').click(function() {
-      var exception_type;
       hiddenDialog('popup');
       if (event.repeat_type == null || event.repeat_type.length == 0 || event.exception_type == 'edit_only') {
-        deleteEvent(event, exception_type);
+        deleteEvent(event, 'delete_only');
       } else {
         confirm_repeat_popup(event);
       }

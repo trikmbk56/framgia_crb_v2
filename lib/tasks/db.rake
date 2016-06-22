@@ -43,6 +43,10 @@ namespace :db do
         Fabricate :color, color_hex: color
       end
 
+      Settings.event.repeat_data.each do |date|
+        Fabricate :days_of_week, name: date
+      end
+
       user_hash.each do |key, value|
         user = Fabricate :user, name: key, email: value+"@framgia.com"
         calendar = user.calendars.first
@@ -60,9 +64,7 @@ namespace :db do
             user_id: user.id, repeat_type: i, repeat_every: 1
 
           if event.weekly?
-            3.times do |on|
-              Fabricate :repeat_on, event_id: event.id, repeat_on: on
-            end
+            3.times{Fabricate :repeat_on, event_id: event.id, days_of_week_id: rand(1..7)}
           end
 
           3.times do |j|

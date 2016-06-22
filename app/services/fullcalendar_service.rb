@@ -51,11 +51,9 @@ class FullcalendarService
       repeat_daily event, event.start_repeat.to_date, function
     when "weekly"
       @start_day = event.start_repeat.wday
-      @repeat_ons = event.repeat_ons
-      @repeat_ons.each do |repeat|
-        @repeat = repeat
-        @repeat_on = repeat.repeat_on
-        @calculate_day = RepeatOn::repeat_ons[@repeat_on]
+
+      event.days_of_weeks.each do |days_of_week|
+        @calculate_day = Settings.event.repeat_data.index(days_of_week.name)
 
         if @calculate_day == @start_day
           repeat_weekly event, event.start_repeat.to_date, function

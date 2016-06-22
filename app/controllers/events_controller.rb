@@ -19,9 +19,10 @@ class EventsController < ApplicationController
       @event.notification_events.find_or_initialize_by notification: notification
     end
 
-    Settings.event.repeat_data.each do |repeat_on|
-      @event.repeat_ons.find_or_initialize_by repeat_on: repeat_on
+    DaysOfWeek.all.each do |days_of_week|
+      @event.repeat_ons.find_or_initialize_by days_of_week: days_of_week
     end
+    @repeat_ons = @event.repeat_ons.sort{|a, b| a.days_of_week_id <=> b.days_of_week_id}
 
     # @form = EventForm.new @event
   end
@@ -64,9 +65,10 @@ class EventsController < ApplicationController
       @event.notification_events.find_or_initialize_by notification: notification
     end
 
-    RepeatOn.repeat_ons.values.each do |repeat_on|
-      @event.repeat_ons.find_or_initialize_by repeat_on: repeat_on
+    DaysOfWeek.all.each do |days_of_week|
+      @event.repeat_ons.find_or_initialize_by days_of_week: days_of_week
     end
+    @repeat_ons = @event.repeat_ons.sort{|a, b| a.days_of_week_id <=> b.days_of_week_id}
 
     # data = JSON.parse(Base64.urlsafe_decode64 params[:fdata]) rescue {"event": {}}
     # @event.start_date = DateTime.strptime(data["start_date"], "%m-%d-%Y %H:%M %p")

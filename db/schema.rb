@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160612085116) do
+ActiveRecord::Schema.define(version: 20160622060114) do
 
   create_table "attendees", force: :cascade do |t|
     t.string   "email",      limit: 255
@@ -41,6 +41,12 @@ ActiveRecord::Schema.define(version: 20160612085116) do
   create_table "colors", force: :cascade do |t|
     t.string   "title",      limit: 255
     t.string   "color_hex",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "days_of_weeks", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -115,10 +121,10 @@ ActiveRecord::Schema.define(version: 20160612085116) do
   end
 
   create_table "repeat_ons", force: :cascade do |t|
-    t.integer  "repeat_on",  limit: 4
-    t.integer  "event_id",   limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "event_id",        limit: 4
+    t.integer  "days_of_week_id", limit: 4
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "user_calendars", force: :cascade do |t|

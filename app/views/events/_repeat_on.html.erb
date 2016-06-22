@@ -2,15 +2,15 @@
 <td>
   <div>
     <span class="ep-rec-dow">
-      <%= f.fields_for :repeat_ons do |repeat_builder| %>
-        <%= repeat_builder.hidden_field :repeat_on %>
+      <%= f.fields_for :repeat_ons, @repeat_ons do |repeat_builder| %>
+        <%= repeat_builder.hidden_field :days_of_week_id %>
         <%= repeat_builder.check_box :_destroy,
           {
             checked: repeat_builder.object.persisted?,
             id: "repeat-#{repeat_builder.index}"
           },
           false, true %>
-        <%= repeat_builder.label :_destroy, repeat_builder.object.repeat_on %>
+        <%= repeat_builder.label :_destroy, repeat_builder.object.days_of_week.name %>
       <% end %>
     </span>
   </div>

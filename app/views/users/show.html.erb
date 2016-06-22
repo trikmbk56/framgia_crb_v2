@@ -1,43 +1,45 @@
-<div class="user-info-body">
-  <div class="u-title">
-    <h2><%= t "user.info.title" %></h2>
-  </div>
-  <div class="u-content">
-    <div class="col col-1">
-      <div class="user-info ">
-        <div class="u-avatar"><%= get_avatar current_user %></div>
-        <div class="u-name">
-          <h3><%=link_to @user.name, edit_user_registration_path %></h3>
-        </div>
-        <div class="u-email">
-          <b><%= t "user.info.email" %></b>
-          <i><%= @user.email %><br/></i>
+<div class="container main-profile">
+  <div class="row tanp-user-header">
+    <div class="col-md-4">
+      <div class="u-avatar">
+        <div class="img-circle">
+          <%= get_avatar current_user %>
         </div>
       </div>
-      <div class="u-calendar">
-        <h4 class="x-title"><%= t "user.info.calendars.title" %></h4>
-        <ul class="list-unstyled user_data">
-          <% @user.calendars.each do |calendar| %>
-            <li>
-              <label class="checkbox-calendar">
-                <%= check_box_tag "checkbox-calendar", calendar.id,
-                  true, class: "calendar-checkbox" %>
-                <%= calendar.name %>
-              </label>
-            </li>
-          <% end %>
-        </ul>
+      <div class="text-center">
+        <h1><%=link_to @user.name, edit_user_registration_path %></h1>
+        <b><%= t "user.info.email" %></b>
+        <i><%= @user.email %><br/></i>
       </div>
+      <div class="text-center">
+        <h1 class="dark-text text-center">
+          <%= t "user.info.calendars.title" %>
+        </h1>
+      </div>
+      <ul class="tanp-list-user">
+        <% @user.calendars.each do |calendar| %>
+          <li>
+            <label class="checkbox-calendar">
+              <%= check_box_tag "checkbox-calendar", calendar.id,
+                true, class: "calendar-checkbox" %>
+              <%= calendar.name %>
+            </label>
+          </li>
+        <% end %>
+      </ul>
     </div>
-    <div class="user-events col col-2">
-      <h3 class="x-title"><%= t "user.info.events.title" %></h3>
+
+    <div class="col-md-8">
+      <h1 class="text-center">
+        <%= t "user.info.events.title" %>
+      </h1>
       <div class="event-content">
-        <ul id="event-list-id">
+        <ul id="event-list-id" class="tanp-list-event">
           <%= render "event", events: @events, user: @user %>
         </ul>
       </div>
-      <div class="event-load">
-        <button id="load-more-event" class="btn-load" rel="1">
+      <div class="event-load text-center">
+        <button id="load-more-event" class="button blue button-load-more-event" rel="1">
           <%= t "user.info.events.button" %>
         </button>
       </div>

@@ -1,4 +1,5 @@
 /*calendar index*/
+@import "color";
 
 #calcontent {
   z-index: 1000;
@@ -52,6 +53,7 @@
       border-bottom-left-radius: 0;
     }
     .btn {
+      border-radius: 3px;
       position: relative;
       float: left;
       outline: none;
@@ -169,7 +171,8 @@
 
     textarea {
       width: 350px;
-      height: 17px
+      font-size: 13px;
+      padding: 4px;
     };
 
     p {
@@ -181,28 +184,25 @@
     label {
       font-size: 13px;
       font-weight: normal;
-      color: #222;
       display: block;
       font-weight: normal;
       margin: 0;
     };
 
     #btn-quick-add {
+      margin-top: 5px;
       display: inline-block;
-      background: #f5f5f5;
       border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 0;
       cursor: pointer;
-      font-size: 11px;
-      font-weight: bold;
-      height: 22px;
-      line-height: 22px;
+      font-size: 13px;
+      height: 27px;
+      line-height: 26px;
       min-width: 54px;
       outline: none;
       text-align: center;
       text-decoration: none;
       a {
-        color: black;
+        color: #ffffff;
         padding: 5px 16px;
       }
     }
@@ -219,7 +219,6 @@
     padding: 2px 0;
     margin-left: -16px;
     margin-right: -5px;
-    color: #222;
     font-weight: 500;
     position: relative;
     background: #fff;
@@ -334,7 +333,6 @@
       a {
         padding: 0.6em;
         display: block;
-        color: #333;
       }
       &:hover {
         background-color: #e6e6e6;
@@ -529,7 +527,6 @@ table.ui-datepicker-calendar {
     border: 1px solid #FFFFFF;
     background: #FFFFFF;
     font-weight: normal;
-    color: #000000;
     font-size: 12px;
   }
   td {
@@ -593,11 +590,10 @@ span.ui-icon.ui-icon-circle-triangle-e {
     display: block;
     font-size: 11px;
     font-weight: bold;
-    color: #9b9b9b
   }
 
   #title-popup {
-    color: #373AD7;
+    color: $blue;
     font-size: 15px;
     font-weight: bold;
     width: 335px;
@@ -909,10 +905,10 @@ span.ui-icon.ui-icon-circle-triangle-e {
     width: 40%;
   }
   .col2 {
-    width: 40%;
+    width: 50%;
   }
   .col3 {
-    width: 20%;
+    width: 10%;
   }
   #share-calendar-header {
     .col1, .col2, .col3 {
@@ -943,7 +939,6 @@ span.ui-icon.ui-icon-circle-triangle-e {
   }
 
   .permission-select {
-    margin-top: 6px;
     padding: 2px;
     cursor: pointer;
   }
@@ -954,9 +949,9 @@ span.ui-icon.ui-icon-circle-triangle-e {
     };
   }
   .select2-container .select2-selection--single {
+    border-radius: 3px;
     height: 22px;
     line-height: 22px;
-    border-radius: 0px;
     margin-left: 5px;
   }
   .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -1017,4 +1012,9 @@ span.ui-icon.ui-icon-circle-triangle-e {
 }
 #particular-calendar {
   margin: 5px 5px;
+}
+
+.inline-block{
+  position: relative;
+  display: inline-block;
 }

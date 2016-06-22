@@ -1,21 +1,21 @@
 /*users show information*/
+@import "color";
+
+.u-avatar{
+  .img-circle{
+    margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+  }
+}
 .user-info-body {
   overflow: auto;
   margin: 0 auto;
   width: 860px;
   padding: 10px;
   border: 1px solid #E6E9ED;
-  .u-title {
-    border-bottom: 2px solid #E6E9ED;
-    padding: 1px 5px 6px;
-    margin-bottom: 10px;
-    height: 30px;
-    h2 {
-      color: #73879C;
-      text-align: center;
-      margin-top: 0px
-    }
-  }
 
   ul {
     padding-left: 0px;
@@ -95,23 +95,43 @@
       padding-left: 10px;
     }
   }
+}
 
-  .img-circle {
-    border-radius: 50%;
-    width: 150px;
-    height: auto;
+.tanp-user-header{
+  display: block;
+  margin: 0px;
+  width: 100%;
+  padding: 20px 0px;
+  a{
+    color: $blue;
+    font-size: x-large;
   }
+}
 
-  .col {
-    float: left;
-    position: relative;
+.tanp-list-user, .tanp-list-event{
+  li{
+    padding: 13px;
+    border-bottom-width: 1.5px;
+    border-bottom-style: solid;
+    border-bottom-color: $green;
   }
+}
 
-  .col-1 {
-    width: 33.33333333%;
+.tanp-list-event{
+  a:hover{
+    color: $blue;
   }
+}
 
-  .col-2 {
-    width: 66.66666666%;
-  }
+.button-load-more-event{
+  font-size: larger;
+}
+
+.button-load-more-event:hover{
+  cursor: pointer;
+  color: $yellow;
+}
+
+.main-profile{
+  margin-bottom: 70px;
 }

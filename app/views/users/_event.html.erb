@@ -1,12 +1,19 @@
 <% events.each do |event| %>
   <li>
-    <b><%= link_to event.title, edit_user_event_path(user, event) %></b>
+    <h2>
+      <%= link_to event.title, edit_user_event_path(user, event), class: "blue-text" %>
+    </h2>
     <div class="time-event">
       <%= t "user.info.events.start" %>
-      <b><%= l event.start_date, format: t("events.time.formats.date_format") %></b>
+      <i class="yellow">
+        <%= l event.start_date, format: t("events.time.formats.date_format") %>
+      </i>
       <%= t "user.info.events.finish" %>
-      <b><%= l event.finish_date, format: t("events.time.formats.date_format") %></b>
+      <i class="yellow">
+        <%= l event.finish_date, format: t("events.time.formats.date_format") %>
+      </i>
     </div>
+    <br>
     <div class="calendar-event" ><%= t "user.info.events.calendar" %>
       <b><%= event.calendar.name %></b>
     </div>

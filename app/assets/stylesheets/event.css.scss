@@ -28,8 +28,6 @@
 }
 
 .tile-content {
-  color: #1b1b1b;
-  font-family: Arial;
   font-size: 13px;
   clear: both;
   position: relative;
@@ -131,7 +129,6 @@
 
 .tab-container .tab-label {
   border-right: 1px solid #999;
-  color: black;
   margin-left: 1ex;
   padding-right: 1ex;
 }
@@ -235,8 +232,18 @@
 /* Create event new page */
 #event {
   .main-event-form{
+    display: inline-block;
     width: 600px;
     padding-left: 30px;
+  }
+
+  .form-attendee{
+    position: absolute;
+    padding-top: 158px;
+    .form-control{
+      display: inline-block;
+      width: 300px;
+    }
   }
 
   .form-action {

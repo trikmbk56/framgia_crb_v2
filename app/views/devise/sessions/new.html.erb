@@ -12,11 +12,6 @@
       </center>
     </div>
     <div id="sign-in-form">
-      <div class="form-header">
-        <div id="image-header">
-          <%= image_tag "user.png" %>
-        </div>
-      </div>
       <div class="form-body">
         <%= form_for resource, as: resource_name,
           url: session_path(resource_name) do |f| %>

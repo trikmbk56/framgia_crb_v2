@@ -5,10 +5,10 @@
         <div class="btn-group" id="source-popup">
           <%= link_to t("calendar.create_event"),
             new_event_path, class: "btn btn-danger" %>
-          <button type="button" class="btn btn-danger dropdown-toggle create" data-toggle="dropdown" aria-haspopup="true">
+          <a class="btn btn-danger dropdown-toggle create" data-toggle="dropdown" aria-haspopup="true">
             <span class="caret"></span>
             <span class="sr-only"></span>
-          </button>
+          </a>
           <div id="current-user-id-popup"><%= current_user.id %></div>
           <ul class="dropdown-menu" id="event-popup">
             <li>

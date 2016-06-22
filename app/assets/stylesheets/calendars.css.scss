@@ -53,7 +53,6 @@
       border-bottom-left-radius: 0;
     }
     .btn {
-      border-radius: 3px;
       position: relative;
       float: left;
       outline: none;
@@ -171,8 +170,7 @@
 
     textarea {
       width: 350px;
-      font-size: 13px;
-      padding: 4px;
+      height: 25px;
     };
 
     p {
@@ -190,13 +188,12 @@
     };
 
     #btn-quick-add {
-      margin-top: 5px;
       display: inline-block;
       border: 1px solid rgba(0,0,0,0.1);
       cursor: pointer;
-      font-size: 13px;
-      height: 27px;
-      line-height: 26px;
+      font-size: 12px;
+      height: 24px;
+      line-height: 25px;
       min-width: 54px;
       outline: none;
       text-align: center;
@@ -626,9 +623,9 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
   .btn {
     font-weight: bold;
-    height: 30px;
-    line-height: 30px;
-    border: 1px solid #dcdcdc;
+    height: 26px;
+    line-height: 26px;
+    border: 0.5px solid #dcdcdc;
     padding: 0px 10px;
     background-color: #f5f5f5;
     &:hover {
@@ -790,62 +787,69 @@ span.ui-icon.ui-icon-circle-triangle-e {
 
 .color-1 {
   background-color: #AC725E!important;
-  border-color: #AC725E!important;
+  border-color: #AC725E;
 }
 
 .color-2 {
   background-color: #D06B64!important;
-  border-color: #D06B64!important;
+  border-color: #D06B64;
 }
 
 .color-3 {
   background-color: #F83A22!important;
-  border-color: #F83A22!important;
+  border-color: #F83A22;
 }
 
 .color-4 {
   background-color: #FA573C!important;
-  border-color: #FA573C!important;
+  border-color: #FA573C;
 }
 
 .color-5 {
   background-color: #FF7537!important;
-  border-color: #FF7537!important;
+  border-color: #FF7537;
 }
 
 .color-6 {
   background-color: #FFAD46!important;
-  border-color: #FFAD46!important;
+  border-color: #FFAD46;
 }
 
 .color-7 {
   background-color: #42D692!important;
-  border-color: #42D692!important;
+  border-color: #42D692;
 }
 
 .color-8 {
   background-color: #16A765!important;
-  border-color: #16A765!important;
+  border-color: #16A765;
 }
 
 .color-9 {
   background-color: #B3DC6C!important;
-  border-color: #B3DC6C!important;
+  border-color: #B3DC6C;
 }
 
 .color-10 {
   background-color: #4986E7!important;
-  border-color: #4986E7!important;
+  border-color: #4986E7;
 }
 
 .color-11 {
   background-color: #FBE983!important;
-  border-color: #FBE983!important;
+  border-color: #FBE983;
 }
 
 .color-12 {
   background-color: #FAD165!important;
-  border-color: #FAD165!important;
+  border-color: #FAD165;
+}
+
+.white-border{
+  border-color: #ffffff !important;
+  height: 200px;
+  background-color: red;
+  width: 200px;
 }
 
 .fc-right {

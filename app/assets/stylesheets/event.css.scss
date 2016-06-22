@@ -239,7 +239,7 @@
 
   .form-attendee{
     position: absolute;
-    padding-top: 158px;
+    padding-top: 144px;
     .form-control{
       display: inline-block;
       width: 300px;
@@ -258,7 +258,7 @@
 
   .form-group {
     margin-top: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     padding: 0;
     width: 100%;
     .select2 .selection .select2-selection {
@@ -281,7 +281,7 @@
   }
 
   .fix-width-date {
-    width: 90px;
+    width: 101px;
     display: inline-block;
   }
 
@@ -476,7 +476,7 @@
 
 .before-current {
   background-color: #9FA59C!important;
-  border-color: #9FA59C!important;
+  border-color: #9FA59C;
 }
 
 .modal-dialog {

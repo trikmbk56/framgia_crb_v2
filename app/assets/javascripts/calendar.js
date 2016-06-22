@@ -20,7 +20,8 @@ $(document).on('page:change', function() {
         buttonText: '4 days'
       }
     },
-    eventColor: '#7BD148',
+    borderColor: '#ffffff',
+    eventColor: '#ffffff',
     defaultView: lastestView,
     editable: true,
     selectHelper: true,
@@ -147,10 +148,11 @@ $(document).on('page:change', function() {
         allDay = 1;
         event.end = event.start;
       }
+
       updateEvent(event, allDay, null, 1);
     }
   });
-
+  
   function initDialogEventClick(event, jsEvent){
     if ($('#popup') !== null)
       $('#popup').remove();

@@ -25,7 +25,6 @@ body,textarea,input {
 }
 
 .btn {
-  border-radius: 3px;
   display: inline-block;
   padding: 6px 12px;
   margin-bottom: 0;
@@ -59,7 +58,6 @@ body,textarea,input {
 }
 
 .btn-primary {
-  border-radius: 3px;
   color: #fff;
   background-color: #337ab7;
   border-color: #2e6da4;
@@ -126,7 +124,6 @@ body,textarea,input {
 
 .btn-save {
   border: 1px solid transparent;
-  border-radius: 3px;
   color: #fff;
   cursor: pointer;
   font-size: 11px;
@@ -175,11 +172,9 @@ body,textarea,input {
   padding:  6px 16px;
   text-align: center;
   transition: all .218s;
-  -moz-border-radius: 2px;
   -moz-transition: all .218s;
   -moz-user-select: none;
   -o-transition: all .218s;
-  -webkit-border-radius: 3px;
   -webkit-transition: all .218s;
   -webkit-user-select: none;
   &:hover {
@@ -217,11 +212,9 @@ body,textarea,input {
   margin-right: 5px;
   text-align: center;
   transition: all .218s;
-  -moz-border-radius: 2px;
   -moz-transition: all .218s;
   -moz-user-select: none;
   -o-transition: all .218s;
-  -webkit-border-radius: 3px;
   -webkit-transition: all .218s;
   -webkit-user-select: none;
   &:hover {
@@ -255,7 +248,6 @@ body,textarea,input {
 .rc-button {
   width: 100%;
   padding: 7px;
-  border-radius: 3px;
   &:visited {
     display: inline-block;
     min-width: 46px;
@@ -266,7 +258,6 @@ body,textarea,input {
     height: 36px;
     padding: 8px 8px;
     line-height: 36px;
-    border-radius: 3px;
     transition: all 0.218s ease 0s;
     border: 1px solid #DCDCDC;
     background-color: #F5F5F5;
@@ -287,16 +278,15 @@ body,textarea,input {
 }
 
 .form-control {
-  margin-top: 5px;
+  margin-top: 3px;
   display: block;
   width: 100%;
-  padding: 7px 10px;
-  font-size: 16px;
+  padding: 4px 10px;
+  font-size: 13px;
   line-height: 18px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  border-radius: 3px;
   color: #555;
   background-color: #fff;
   background-image: none;

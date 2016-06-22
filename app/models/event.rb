@@ -60,7 +60,7 @@ class Event < ActiveRecord::Base
   scope :reject, ->event_id do
     where("id != ? AND (parent_id IS NULL OR parent_id != ?)", event_id, event_id)
   end
-  
+
   scope :no_repeats, ->{where repeat_type: nil}
   scope :has_exceptions, ->{where.not exception_type: nil}
   scope :exception_edits, ->id do
@@ -116,7 +116,7 @@ class Event < ActiveRecord::Base
 
   private
   def default_title
-    self.title = I18n.t "events.title_default"
+    self.title = I18n.t "events.notification.title_default"
   end
 
   def format_time datetime

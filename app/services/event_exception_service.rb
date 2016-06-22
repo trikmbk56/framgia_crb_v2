@@ -49,12 +49,15 @@ class EventExceptionService
         @event_after_update = @event
       end
     else
-      create_event_when_drop
-
-      if @event.event_parent.present?
-        event_exception.update_attributes exception_type: 0
+      if @event.repeat_type.present?
+        create_event_when_drop
+        if @event.event_parent.present?
+          event_exception.update_attributes exception_type: 0
+        else
+          create_event_with_exception_delete_only
+        end
       else
-        create_event_with_exception_delete_only
+        @event.update_attributes @event_params
       end
     end
 

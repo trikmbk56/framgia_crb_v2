@@ -1,0 +1,9 @@
+<% if @overlap_when_update %>
+  $('#dialog_overlap').dialog({
+    autoOpen: false,
+    modal: true
+  });
+  $('#dialog_overlap').dialog('open');
+<% else %>
+  window.location = '<%= root_path %>';
+<% end %>

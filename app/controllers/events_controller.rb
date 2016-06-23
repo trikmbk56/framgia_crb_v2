@@ -113,13 +113,17 @@ class EventsController < ApplicationController
     end
     event.calendar_id = @event.calendar_id
 
-    if overlap_when_update? event
-      flash[:error] = t "events.flashs.not_updated_because_overlap"
-    else
-      EventExceptionService.new(@event, event_params, {}).update_event_exception
-      flash[:success] = t "events.flashs.updated"
+    @overlap_when_update = overlap_when_update? event
+    respond_to do |format|
+      if @overlap_when_update
+        flash[:error] = t "events.flashs.not_updated_because_overlap"
+        format.js
+      else
+        EventExceptionService.new(@event, event_params, {}).update_event_exception
+        flash[:success] = t "events.flashs.updated"
+        format.js
+      end
     end
-    redirect_to root_path
   end
 
   def destroy

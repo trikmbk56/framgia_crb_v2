@@ -31,16 +31,10 @@ class EventExceptionService
         save_this_event_exception @event
       when "edit_all_follow"
         initial_value @event_params[:start_date], @event_params[:finish_date], @event
+
         save_this_event_exception @event
 
         event_exception_pre_nearest.update_attributes end_repeat: @event_params[:start_date]
-
-        event_after_exceptions = @event.event_exceptions
-          .after_date @event_params[:start_date].to_datetime
-
-        event_after_exceptions.each do |event|
-          update_attributes_event event
-        end
 
         event_all_follow_exceptions = @event.event_exceptions
           .event_follow_after_date @event_params[:start_date].to_datetime

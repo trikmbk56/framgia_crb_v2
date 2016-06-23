@@ -278,6 +278,10 @@ $(document).on('page:change', function() {
     });
   }
 
+  $('.btn-cancel, .bubble-close').click(function(event) {
+    hiddenDialog('dialog-update-popup');
+  });
+
   function cancelPopupEvent(event){
     $('#calcontent').on('click', '.cancel-popup-event', function() {
       event.title = $('#title-popup').text().trim();
@@ -450,6 +454,7 @@ $(document).on('page:change', function() {
       $('.sub-list').removeClass('background-hover');
       hiddenDialog('new-event-dialog');
       hiddenDialog('popup');
+      hiddenDialog('dialog-update-popup');
     }
   });
 

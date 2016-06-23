@@ -36,7 +36,7 @@
             <% end %>
           </td>
           <td class="explanation-cell">
-            <p><%= action[:following][:explanation] %></p>
+            <%= simple_format action[:following][:explanation] %>
           </td>
         </tr>
         <tr>
@@ -52,13 +52,13 @@
             <% end %>
           </td>
           <td class="explanation-cell">
-            <p><%= action[:all][:explanation] %></p>
+            <%= simple_format action[:all][:explanation] %>
           </td>
         </tr>
       </tbody>
     </table>
     <div tabindex="0">
-      <div class="btn-right btn btn-default"><%= action[:cancel] %></div>
+      <div class="btn-right btn btn-default btn-cancel"><%= action[:cancel] %></div>
     </div>
    </div>
 </div>

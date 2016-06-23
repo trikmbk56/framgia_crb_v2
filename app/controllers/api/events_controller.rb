@@ -128,9 +128,14 @@ class Api::EventsController < ApplicationController
     if event_exception
       event_exception.update_attributes exception_type: exception_type
     else
-      event.dup.update_attributes(exception_type: exception_type,
-        exception_time: exception_time, parent_id: parent.id,
-        start_date: start_date_before_delete, finish_date: finish_date_before_delete)
+      if parent.all_day?
+        event.dup.update_attributes(exception_type: exception_type,
+          exception_time: exception_time, parent_id: parent.id)
+      else
+        event.dup.update_attributes(exception_type: exception_type,
+          exception_time: exception_time, parent_id: parent.id,
+          start_date: start_date_before_delete, finish_date: finish_date_before_delete)
+      end
     end
   end
 end

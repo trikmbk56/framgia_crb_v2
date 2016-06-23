@@ -102,11 +102,15 @@ $(document).on('page:change', function() {
       }
     },
     select: function(start, end, jsEvent) {
-      setDateTime(start, end);
-      initDialogCreateEvent(start, end, false);
-      dialogCordinate(jsEvent, 'new-event-dialog', 'prong');
-      hiddenDialog('popup');
-      showDialog('new-event-dialog');
+      if(end._d.getDate() != start._d.getDate()){
+        $('#full-calendar').fullCalendar('unselect');
+      } else {
+        setDateTime(start, end);
+        initDialogCreateEvent(start, end, false);
+        dialogCordinate(jsEvent, 'new-event-dialog', 'prong');
+        hiddenDialog('popup');
+        showDialog('new-event-dialog');
+      }
     },
     eventResizeStart: function( event, jsEvent, ui, view ) {
       hiddenDialog('new-event-dialog');
@@ -152,7 +156,7 @@ $(document).on('page:change', function() {
       updateEvent(event, allDay, null, 1);
     }
   });
-  
+
   function initDialogEventClick(event, jsEvent){
     if ($('#popup') !== null)
       $('#popup').remove();

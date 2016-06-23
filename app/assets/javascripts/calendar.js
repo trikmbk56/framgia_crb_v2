@@ -83,7 +83,13 @@ $(document).on('page:change', function() {
     },
     eventClick: function(event, jsEvent, view) {
       localStorage.setItem('current_event', event)
-      initDialogEventClick(event, jsEvent);
+      if(event.title) {
+        initDialogEventClick(event, jsEvent);
+      } else {
+        dialogCordinate(jsEvent, 'new-event-dialog', 'prong');
+        showDialog('new-event-dialog');
+        $('#event-title').focus();
+      }
     },
     dayClick: function(date, jsEvent, view) {
       if(view.name === 'month') {

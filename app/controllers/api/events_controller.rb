@@ -47,10 +47,15 @@ class Api::EventsController < ApplicationController
     end
     event.calendar_id = @event.calendar_id
     if overlap_when_update? event
-      render text: t("events.flashs.not_updated_because_overlap")
+      render json: {message: t("events.flashs.not_updated_because_overlap")}
     else
-      EventExceptionService.new(@event, event_params, argv).update_event_exception
-      render text: t("events.flashs.updated")
+      exception_service = EventExceptionService.new(@event, event_params, argv)
+      exception_service.update_event_exception
+
+      render json: {
+        message: t("events.flashs.updated"),
+        event: exception_service.new_event.as_json
+      }
     end
   end
 

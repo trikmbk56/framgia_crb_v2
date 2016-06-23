@@ -306,12 +306,15 @@ $(document).on('page:change', function() {
   function updateEvent(event, allDay, exception_type, is_drop) {
     var start_time_before_drag, finish_time_before_drag;
     event.end ? setDateTime(event.start, event.end) : setDateTime(event.start, event.start);
+
     if(event.title == '')
       event.title = I18n.t('calendars.events.no_title');
+
     if (event.allDay !== true){
       start_time_before_drag = event.start._i;
       finish_time_before_drag = event.end._i;
     };
+
     $.ajax({
       url: '/api/events/' + event.event_id,
       data: {
@@ -328,13 +331,16 @@ $(document).on('page:change', function() {
         finish_time_before_drag: finish_time_before_drag
       },
       type: 'PUT',
-      dataType: 'text',
-      success: function(text) {
-        event.exception_type = exception_type;
+      dataType: 'json',
+      success: function(data) {
+        event.event_id = data.event.id;
+        event.exception_type = data.event.exception_type;
+        $('#full-calendar').fullCalendar('updateEvent', event);
+
         if(exception_type == 'edit_all_follow' || exception_type == 'edit_all')
           $('#full-calendar').fullCalendar('refetchEvents');
         else
-          $('#full-calendar').fullCalendar('renderEvent', event, true)
+          $('#full-calendar').fullCalendar('renderEvent', event, true);
       }
     });
   }

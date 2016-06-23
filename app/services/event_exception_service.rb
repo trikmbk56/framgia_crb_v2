@@ -1,4 +1,5 @@
 class EventExceptionService
+  attr_accessor :new_event
 
   def initialize event, params, argv = {}
     @exception_type = params[:exception_type]
@@ -51,8 +52,9 @@ class EventExceptionService
     else
       if @event.repeat_type.present?
         create_event_when_drop
+
         if @event.event_parent.present?
-          event_exception.update_attributes exception_type: 0
+          @event.update_attributes exception_type: 0
         else
           create_event_with_exception_delete_only
         end
@@ -123,13 +125,20 @@ class EventExceptionService
     [:exception_type, :exception_time].each{|k| @event_params.delete k}
     @event_params[:start_repeat] = @event_params[:start_date]
     @event_params[:end_repeat] = @event_params[:finish_date]
+
     @event_after_update = @event.dup
+    @event_after_update.repeat_type = nil
+    @event_after_update.repeat_every = nil
+
     @event_after_update.update_attributes @event_params.permit!
-    unless @event.google_event_id.nil?
+
+    if @event.google_event_id.present?
       google_event_id_dup = @event.google_event_id + "_" +
         @start_time_before_drag.to_datetime.strftime(Settings.event.format_date_basic)
       @event_after_update.update_attributes(google_event_id: google_event_id_dup)
     end
+
+    self.new_event = @event_after_update
   end
 
   def create_event_with_exception_delete_only

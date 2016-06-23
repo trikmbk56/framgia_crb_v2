@@ -21,7 +21,7 @@ $(document).on('page:change', function() {
       }
     },
     borderColor: '#ffffff',
-    eventColor: '#ffffff',
+    eventColor: '#4285f4',
     defaultView: lastestView,
     editable: true,
     selectHelper: true,

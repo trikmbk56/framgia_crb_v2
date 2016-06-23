@@ -23,6 +23,8 @@
       $('#particular-calendar').fullCalendar('renderEvent', eventData, true);
       $('#particular-calendar').fullCalendar('unselect');
     }
+    if (window.location.pathname != '<%= root_path %>')
+      window.location = '<%= root_path %>';
   <% end %>
 <% else %>
   <% if @time_overlap == 'full_overlap' %>
@@ -51,6 +53,7 @@
             $('#dialog_overlap_confirm').dialog('close');
           }
         });
+        window.location = '<%= root_path %>';
       },
       'Cancel' : function() {
         $(this).dialog('close');

@@ -30,7 +30,7 @@ class Api::EventsController < ApplicationController
     params[:event] = params[:event].merge({
       exception_time: event_params[:start_date],
       start_repeat: event_params[:start_date],
-      end_repeat: event_params[:end_repeat].blank? ? @event.end_repeat : (event_params[:end_repeat].to_date + 1.days)
+      end_repeat: event_params[:end_repeat].blank? ? @event.end_repeat : (event_params[:end_repeat].to_date)
     })
 
     argv = {
@@ -46,7 +46,6 @@ class Api::EventsController < ApplicationController
       event.parent_id = @event.event_parent.id
     end
     event.calendar_id = @event.calendar_id
-    
     if overlap_when_update? event
       render text: t("events.flashs.not_updated_because_overlap")
     else

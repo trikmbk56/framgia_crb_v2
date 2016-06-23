@@ -40,12 +40,9 @@ class Api::EventsController < ApplicationController
     }
 
     event = Event.new event_params
-    if @event.event_parent.nil?
-      event.parent_id = @event.id
-    else
-      event.parent_id = @event.event_parent.id
-    end
+    event.parent_id = @event.event_parent.nil? ? @event.id : @event.parent_id
     event.calendar_id = @event.calendar_id
+
     if overlap_when_update? event
       render json: {message: t("events.flashs.not_updated_because_overlap")}
     else
@@ -84,17 +81,15 @@ class Api::EventsController < ApplicationController
 
   def destroy
     @event = Event.find_by id: params[:id]
+
     if @event.repeat_type.nil? || (@event.repeat_type &&
       params[:exception_type] == "delete_all" && @event.parent_id.nil?)
       destroy_event @event
     elsif params[:exception_type] == "delete_all"
       destroy_event @event.event_parent
-      render text: t("events.flashs.deleted")
     else
-      destroy_event_repeat @event, params[:exception_type],
-        params[:exception_time], params[:start_date_before_delete],
-        params[:finish_date_before_delete]
-      render text: t("events.flashs.deleted")
+      destroy_event_repeat
+      render json: {message: t("events.flashs.deleted")}
     end
   end
 
@@ -114,33 +109,38 @@ class Api::EventsController < ApplicationController
 
   def destroy_event event
     if event.destroy
-      render text: t("events.flashs.deleted")
+      render json: {message: t("events.flashs.deleted")}, status: :ok
     else
-      render text: t("events.flashs.not_deleted")
+      render json: {message: t("events.flashs.not_deleted")}
     end
   end
 
-  def destroy_event_repeat(event, exception_type, exception_time,
-    start_date_before_delete, finish_date_before_delete)
-    if @event.parent_id.nil?
-      parent = @event
-    else
-      parent = @event.event_parent
-    end
-    event_exception = parent.event_exceptions.find_by "exception_time >= ? and
-      exception_time <= ?", exception_time.to_datetime.beginning_of_day,
-      exception_time.to_datetime.end_of_day
-    if event_exception
-      event_exception.update_attributes exception_type: exception_type
-    else
-      if parent.all_day?
-        event.dup.update_attributes(exception_type: exception_type,
-          exception_time: exception_time, parent_id: parent.id)
-      else
-        event.dup.update_attributes(exception_type: exception_type,
-          exception_time: exception_time, parent_id: parent.id,
-          start_date: start_date_before_delete, finish_date: finish_date_before_delete)
+  def destroy_event_repeat
+    exception_type = params[:exception_type]
+    exception_time = params[:exception_time]
+    start_date_before_delete = params[:start_date_before_delete]
+    finish_date_before_delete = params[:finish_date_before_delete]
+
+    if unpersisted_event?
+      parent = @event.parent_id.present? ? @event.event_parent : @event
+      dup_event = parent.dup
+      dup_event.exception_type = exception_type
+      dup_event.exception_time = exception_time
+      dup_event.parent_id = parent.id
+
+      unless @event.all_day?
+        dup_event.start_date = start_date_before_delete
+        dup_event.finish_date = finish_date_before_delete
       end
+
+      dup_event.save
+      return
     end
+
+    @event.update_attributes exception_type: exception_type
+  end
+
+  def unpersisted_event?
+    params[:persisted].to_i == 0
   end
 end

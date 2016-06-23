@@ -3,14 +3,15 @@ class EventFullcalendar
 
   ATTRS = [:id, :title, :description, :status, :color, :all_day,
     :repeat_type, :repeat_every, :user_id, :calendar_id, :start_date, :finish_date,
-    :start_repeat, :end_repeat, :exception_time, :exception_type, :event_id]
+    :start_repeat, :end_repeat, :exception_time, :exception_type, :event_id, :persisted]
 
   attr_accessor *ATTRS
 
-  def initialize event
-    ATTRS[1..-2].each do |attr|
+  def initialize event, persisted = false
+    ATTRS[1..-3].each do |attr|
       instance_variable_set "@#{attr}", event.send(attr)
     end
+    @persisted = persisted
     @id, @event_id = SecureRandom.urlsafe_base64, event.id
   end
 
@@ -29,7 +30,8 @@ class EventFullcalendar
       exception_type: exception_type,
       event_id: event_id,
       exception_time: exception_time,
-      editable: valid_permission_user_in_calendar?(user_id, calendar_id)
+      editable: valid_permission_user_in_calendar?(user_id, calendar_id),
+      persisted: persisted
     }
   end
 

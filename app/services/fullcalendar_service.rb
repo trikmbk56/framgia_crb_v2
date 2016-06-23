@@ -9,15 +9,16 @@ class FullcalendarService
     @event_shows = []
     @event_no_repeats = @events.no_repeats
     @event_no_repeats.each do |event|
-      @event_temp = EventFullcalendar.new event
+      @event_temp = EventFullcalendar.new event, true
       @event_shows << @event_temp.dup
     end
 
-    @event_has_repeats = @events - @event_no_repeats
-    @event_has_repeats.each do |event|
-      @event_temp = EventFullcalendar.new event
+    (@events - @event_no_repeats).each do |event|
+      @event_temp = EventFullcalendar.new event, true
+
       @repeat_every = event.repeat_every
-      preprocess_repeat_type event unless event.parent_id.present?
+
+      generate_repeat_from_event_parent event unless event.parent_id.present?
     end
 
     @event_shows
@@ -32,7 +33,7 @@ class FullcalendarService
     else
       @event_temp = EventFullcalendar.new event
       @repeat_every = event.repeat_every
-      preprocess_repeat_type event
+      generate_repeat_from_event_parent event
     end
 
     @event_shows
@@ -41,11 +42,11 @@ class FullcalendarService
   def generate_event_delay event
     @event_temp = EventFullcalendar.new event
     @repeat_every = event.repeat_every
-    preprocess_repeat_type event, Settings.notify_type.email
+    generate_repeat_from_event_parent event, Settings.notify_type.email
   end
 
   private
-  def preprocess_repeat_type event, function = nil
+  def generate_repeat_from_event_parent event, function = nil
     case event.repeat_type
     when "daily"
       repeat_daily event, event.start_repeat.to_date, function
@@ -127,7 +128,7 @@ class FullcalendarService
       elsif exception_event.edit_only?
         unless event.weekly? && start.wday != exception_event.exception_time.wday
           ex_update_events << exception_event.exception_time.to_date
-          @event_edit = EventFullcalendar.new exception_event
+          @event_edit = EventFullcalendar.new exception_event, true
 
           if function.present?
             NotificationEmailService.new(event, @event_edit).perform
@@ -164,6 +165,7 @@ class FullcalendarService
         @event_edit_follow.start_date = follow_time.to_datetime + start_time
         @event_edit_follow.finish_date = follow_time.to_datetime + end_time
         @event_edit_follow.id = SecureRandom.urlsafe_base64
+        @event_edit_follow.persisted = exception_event.start_date == @event_edit_follow.start_date
 
         if function.present?
           NotificationEmailService.new(event, @event_edit_follow).perform
@@ -187,6 +189,7 @@ class FullcalendarService
       @event_temp.start_date =  repeat_time.to_datetime + start_time
       @event_temp.finish_date = repeat_time.to_datetime + end_time
       @event_temp.id = SecureRandom.urlsafe_base64
+      @event_temp.persisted = true
 
       if function.present?
         NotificationEmailService.new(event, @event_temp).perform

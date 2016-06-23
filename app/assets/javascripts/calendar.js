@@ -66,6 +66,7 @@ $(document).on('page:change', function() {
               event_id: data.event_id,
               exception_type: data.exception_type,
               editable: data.editable,
+              persisted: data.persisted
             }
           });
           callback(events);
@@ -247,6 +248,7 @@ $(document).on('page:change', function() {
         finish_date: (event.end !== null) ? event.end.format('MM-DD-YYYY H:mm A') : '',
         start_date_before_delete: start_date_before_delete,
         finish_date_before_delete: finish_date_before_delete,
+        persisted: event.persisted ? 1 : 0
       },
       dataType: 'text',
       success: function(text){
@@ -333,14 +335,15 @@ $(document).on('page:change', function() {
       type: 'PUT',
       dataType: 'json',
       success: function(data) {
-        event.event_id = data.event.id;
-        event.exception_type = data.event.exception_type;
-        $('#full-calendar').fullCalendar('updateEvent', event);
-
-        if(exception_type == 'edit_all_follow' || exception_type == 'edit_all')
+        if (exception_type == 'edit_all_follow' || exception_type == 'edit_all') {
           $('#full-calendar').fullCalendar('refetchEvents');
-        else
+        } else {
+          event.event_id = data.event.id;
+          event.exception_type = data.event.exception_type;
+          $('#full-calendar').fullCalendar('updateEvent', event);
+
           $('#full-calendar').fullCalendar('renderEvent', event, true);
+        }
       }
     });
   }

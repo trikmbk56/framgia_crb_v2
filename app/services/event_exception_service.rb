@@ -104,6 +104,7 @@ class EventExceptionService
     end
 
     @event_after_update.update_attributes @event_params.permit!
+    self.new_event = @event_after_update
   end
 
   def event_exception_pre_nearest

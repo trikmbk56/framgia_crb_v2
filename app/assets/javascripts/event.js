@@ -39,8 +39,6 @@ $(document).on('page:change', function(){
 });
 
 $(document).ready(function() {
-  $("#event_repeat_type, #event_repeat_every, #start-date-repeat, #end-date-repeat")
-    .prop("disabled", true);
   $('.btn-del').click(function() {
     attendee = $(this).attr('id');
     var attendeeId = attendee.substr(4);

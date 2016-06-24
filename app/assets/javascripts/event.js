@@ -163,6 +163,7 @@ $(document).on('page:change', function(){
       enable_repeat_params();
       showRepeatOn();
       dialog_form.centerScreen();
+      disabled_start_date();
       showDialog('dialog-repeat-event-form');
     }
 
@@ -173,6 +174,14 @@ $(document).on('page:change', function(){
         $('.dialog-repeat-event').hide();
     }
   });
+
+  function disabled_start_date() {
+    if($('#start_date').val() != ''){
+        $('#start-date-repeat').val($('#start_date').val());
+        $('#start-date-repeat').attr('disabled', 'disabled');
+        $('#event_start_repeat').val($('#start_date').val());
+      }
+  }
 
   function enable_repeat_params() {
     $('#event_repeat_type, #event_repeat_every, #start-date-repeat, #end-date-repeat')

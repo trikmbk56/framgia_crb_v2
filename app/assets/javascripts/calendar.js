@@ -148,6 +148,7 @@ $(document).on('page:change', function() {
     eventDragStart: function( event, jsEvent, ui, view ) {
       hiddenDialog('new-event-dialog');
       hiddenDialog('popup');
+      setDateTime(event.start, event.end);
     },
     eventDrop: function(event, delta, revertFunc) {
       allDay = 0;
@@ -159,7 +160,6 @@ $(document).on('page:change', function() {
         allDay = 1;
         event.end = event.start;
       }
-
       updateEvent(event, allDay, null, 1);
     }
   });
@@ -307,8 +307,8 @@ $(document).on('page:change', function() {
 
   function updateEvent(event, allDay, exception_type, is_drop) {
     var start_time_before_drag, finish_time_before_drag;
+    var start_time = start_date, end_time = finish_date;
     event.end ? setDateTime(event.start, event.end) : setDateTime(event.start, event.start);
-
     if(event.title == '')
       event.title = I18n.t('calendars.events.no_title');
     if (event.allDay !== true){
@@ -339,9 +339,18 @@ $(document).on('page:change', function() {
           event.event_id = data.event.id;
           event.exception_type = data.event.exception_type;
           $('#full-calendar').fullCalendar('updateEvent', event);
-
           $('#full-calendar').fullCalendar('renderEvent', event, true);
         }
+      },
+      error: function(data) {
+        $('#dialog_overlap').dialog({
+          autoOpen: false,
+          modal: true
+        });
+        $('#dialog_overlap').dialog('open');
+        event.start = start_time;
+        event.end = end_time;
+        $('#full-calendar').fullCalendar('renderEvent', event, true);
       }
     });
   }

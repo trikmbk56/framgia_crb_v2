@@ -311,12 +311,10 @@ $(document).on('page:change', function() {
 
     if(event.title == '')
       event.title = I18n.t('calendars.events.no_title');
-
     if (event.allDay !== true){
-      start_time_before_drag = event.start._i;
       finish_time_before_drag = event.end._i;
     };
-
+    start_time_before_drag = event.start._i;
     $.ajax({
       url: '/api/events/' + event.event_id,
       data: {

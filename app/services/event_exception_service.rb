@@ -139,7 +139,9 @@ class EventExceptionService
     @event_params[:parent_id] = @event.id
     @event_params[:exception_type] = 0
     @event_params[:start_date] = @start_time_before_drag.to_datetime
-    @event_params[:finish_date] = @finish_time_before_drag.to_datetime
+    unless @event_params[:all_day] == "1"
+      @event_params[:finish_date] = @finish_time_before_drag.to_datetime
+    end
     @event_params[:exception_time] = @start_time_before_drag.to_datetime
     @event.dup.update_attributes @event_params.permit!
   end
